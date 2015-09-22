@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Vox.h>
+#include <Sweet.h>
 #include <node\Node.h>
 #include <typeinfo>
 #include <Texture.h>
@@ -25,7 +25,7 @@ int main(void){
 
 	Log::THROW_ON_ERROR = true;
 
-	vox::initialize("Game");
+	sweet::initialize("Game");
 	TTFB_ResourceManager::init();
 	TTFB_ResourceManager::load();
 	TTFB_Game * game = new TTFB_Game();
@@ -45,7 +45,7 @@ int main(void){
 	}
 #endif
 
-	vox::destruct();
+	sweet::destruct();
 	
 #ifdef _DEBUG
 	_CrtMemDumpAllObjectsSince(&s1);

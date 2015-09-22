@@ -83,7 +83,7 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 	cameras.pop_back();
 
 	//
-	glm::uvec2 sd = vox::getScreenDimensions();
+	glm::uvec2 sd = sweet::getScreenDimensions();
 	uiLayer.resize(0, sd.x, 0, sd.y);
 
 	// mouse cursor
@@ -115,6 +115,11 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 	SpotLight * light2 = new SpotLight(glm::vec3(0, 0, -1), glm::vec3(1,1,1), 45.f, 0.01f, 0.001f, -1.f);
 	lights.push_back(light2);
 	debugCam->childTransform->addChild(light2);
+
+	eventQueue.at(1,  [](){std::cout<<"500";});
+	eventQueue.at(5, [](){std::cout<<"1000";});
+	eventQueue.at(10, [](){std::cout<<"1500";});
+	eventQueue.at(15, [](){std::cout<<"2000";}); 
 }
 
 TTFB_MainScene::~TTFB_MainScene(){
@@ -131,7 +136,9 @@ TTFB_MainScene::~TTFB_MainScene(){
 
 void TTFB_MainScene::update(Step * _step){
 
-	glm::uvec2 sd = vox::getScreenDimensions();
+	eventQueue.update(_step);
+
+	glm::uvec2 sd = sweet::getScreenDimensions();
 	uiLayer.resize(0, sd.x, 0, sd.y);
 
 	mouseIndicator->parents.at(0)->translate(mouse->mouseX(), mouse->mouseY(), 0, false);
@@ -164,10 +171,9 @@ void TTFB_MainScene::update(Step * _step){
 	}
 
 	debugCam->update(_step);
-
 }
 
-void TTFB_MainScene::render(vox::MatrixStack * _matrixStack, RenderOptions * _renderOptions){
+void TTFB_MainScene::render(sweet::MatrixStack * _matrixStack, RenderOptions * _renderOptions){
 	clear();
 	screenFBO->resize(game->viewPortWidth, game->viewPortHeight);
 	//Bind frameBuffer

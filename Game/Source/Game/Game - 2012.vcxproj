@@ -12,11 +12,19 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\TTFB_Actor.cpp" />
+    <ClCompile Include="src\TTFB_Entity.cpp" />
+    <ClCompile Include="src\TTFB_Event.cpp" />
+    <ClCompile Include="src\TTFB_EventQueue.cpp" />
     <ClCompile Include="src\TTFB_Game.cpp" />
     <ClCompile Include="src\TTFB_MainScene.cpp" />
     <ClCompile Include="src\TTFB_ResourceManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\TTFB_Actor.h" />
+    <ClInclude Include="include\TTFB_Entity.h" />
+    <ClInclude Include="include\TTFB_Event.h" />
+    <ClInclude Include="include\TTFB_EventQueue.h" />
     <ClInclude Include="include\TTFB_Game.h" />
     <ClInclude Include="include\TTFB_MainScene.h" />
     <ClInclude Include="include\TTFB_ResourceManager.h" />

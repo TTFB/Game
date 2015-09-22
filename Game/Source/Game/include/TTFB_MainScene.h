@@ -4,6 +4,7 @@
 #include <UILayer.h>
 #include <BulletDebugDrawer.h>
 #include <BulletWorld.h>
+#include <TTFB_EventQueue.h>
 
 class PerspectiveCamera;
 class MousePerspectiveCamera;
@@ -32,6 +33,9 @@ class Room;
 
 class TTFB_MainScene : public Scene{
 public:
+
+	TTFB_EventQueue eventQueue;
+
 	Room * room;
 	
 	Shader * screenSurfaceShader;
@@ -57,7 +61,7 @@ public:
 	MousePerspectiveCamera * debugCam;
 
 	virtual void update(Step * _step) override;
-	virtual void render(vox::MatrixStack * _matrixStack, RenderOptions * _renderOptions) override;
+	virtual void render(sweet::MatrixStack * _matrixStack, RenderOptions * _renderOptions) override;
 	
 	virtual void load() override;
 	virtual void unload() override;
