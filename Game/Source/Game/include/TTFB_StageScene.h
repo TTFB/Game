@@ -27,6 +27,11 @@ class PointLight;
 class BulletMeshEntity;
 class ComponentShaderText;
 
+class Font;
+
+class TTFB_Stage;
+class TTFB_Actor;
+
 class TTFB_StageScene : public Scene{
 public:
 
@@ -51,6 +56,12 @@ public:
 
 	Box2DWorld * box2dWorld;
 	Box2DDebugDrawer * box2dDebug;
+	
+	Font * font;
+
+	UILayer uiLayer;
+
+	TTFB_Stage * stage;
 
 	virtual void update(Step * _step) override;
 	virtual void render(sweet::MatrixStack * _matrixStack, RenderOptions * _renderOptions) override;
@@ -58,8 +69,8 @@ public:
 	virtual void load() override;
 	virtual void unload() override;
 
-	UILayer uiLayer;
+	virtual TTFB_Actor * createActor();
 
-	TTFB_StageScene(Game * _game);
+	TTFB_StageScene(Game * _game, float _stageWidth);
 	~TTFB_StageScene();
 };

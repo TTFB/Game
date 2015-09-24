@@ -5,7 +5,7 @@
 #include <BulletDebugDrawer.h>
 #include <BulletWorld.h>
 #include <TTFB_EventQueue.h>
-#include <TTFB_Scene.h>
+#include <TTFB_StageScene.h>
 
 class TTFB_MainScene : public TTFB_StageScene{
 public:

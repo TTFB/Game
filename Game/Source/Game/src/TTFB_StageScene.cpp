@@ -1,7 +1,8 @@
 #pragma once
 
-#include <TTFB_Scene.h>
+#include <TTFB_StageScene.h>
 #include <TTFB_ResourceManager.h>
+#include <TTFB_Stage.h>
 
 #include <Game.h>
 #include <MeshEntity.h>
@@ -47,8 +48,9 @@
 #include <TTFB_Stage.h>
 #include <Box2DWorld.h>
 #include <Box2DDebugDrawer.h>
+#include <Font.h>
 
-TTFB_StageScene::TTFB_StageScene(Game * _game) :
+TTFB_StageScene::TTFB_StageScene(Game * _game, float _stageWidth) :
 	Scene(_game),
 	screenSurfaceShader(new Shader("assets/engine basics/DefaultRenderSurface", false, true)),
 	screenSurface(new RenderSurface(screenSurfaceShader)),
@@ -59,7 +61,8 @@ TTFB_StageScene::TTFB_StageScene(Game * _game) :
 	debugDrawer(nullptr),
 	uiLayer(this, 0,0,0,0),
 	box2dWorld(new Box2DWorld(b2Vec2(0.f, -10.0f))),
-	box2dDebug(new Box2DDebugDrawer(box2dWorld))
+	box2dDebug(new Box2DDebugDrawer(box2dWorld)),
+	font(new Font("assets/engine basics/OpenSans-Regular.ttf", 32, true))
 {
 	baseShader->addComponent(new ShaderComponentMVP(baseShader));
 	baseShader->addComponent(new ShaderComponentDiffuse(baseShader));
@@ -112,6 +115,9 @@ TTFB_StageScene::TTFB_StageScene(Game * _game) :
 	box2dDebug->AppendFlags(b2Draw::e_shapeBit);
 	box2dDebug->AppendFlags(b2Draw::e_centerOfMassBit);
 	box2dDebug->AppendFlags(b2Draw::e_jointBit);
+
+	stage = new TTFB_Stage(_stageWidth, box2dWorld, baseShader);
+	childTransform->addChild(stage);
 }
 
 TTFB_StageScene::~TTFB_StageScene(){
@@ -169,6 +175,9 @@ void TTFB_StageScene::update(Step * _step){
 
 void TTFB_StageScene::render(sweet::MatrixStack * _matrixStack, RenderOptions * _renderOptions){
 	clear();
+
+	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 	screenFBO->resize(game->viewPortWidth, game->viewPortHeight);
 	//Bind frameBuffer
 	screenFBO->bindFrameBuffer();
@@ -197,4 +206,8 @@ void TTFB_StageScene::unload(){
 	screenSurface->unload();
 
 	Scene::unload();	
+}
+
+TTFB_Actor * TTFB_StageScene::createActor() {
+	return new TTFB_Actor(box2dWorld, bulletWorld, this, font, textShader, baseShader);
 }

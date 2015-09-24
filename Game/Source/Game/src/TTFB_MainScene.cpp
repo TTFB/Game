@@ -4,7 +4,7 @@
 #include <TTFB_ResourceManager.h>
 #include <TTFB_Actor.h>
 #include <TTFB_Stage.h>
-#include <TTFB_Scene.h>
+#include <TTFB_StageScene.h>
 
 #include <Game.h>
 #include <MeshEntity.h>
@@ -47,24 +47,21 @@
 #include <BulletMeshEntity.h>
 #include <TextArea.h>
 
-
 TTFB_MainScene::TTFB_MainScene(Game * _game) :
-	TTFB_StageScene(_game)
+	TTFB_StageScene(_game, 50.0f)
 {
-	childTransform->addChild(new TTFB_Stage(40.0f, box2dWorld, baseShader));
-
 	SpotLight * light2 = new SpotLight(glm::vec3(0, 0, -1), glm::vec3(1,1,1), 45.f, 0.01f, 0.001f, -1.f);
 	lights.push_back(light2);
 	debugCam->childTransform->addChild(light2);
 
-	TTFB_Actor * ent = new TTFB_Actor(box2dWorld, baseShader);
+	TTFB_Actor * ent = createActor();
 	childTransform->addChild(ent);
 	ent->setTranslationPhysical(0.f, 10.0f, 0.f);
 
 	eventQueue.at(1,  [](){std::cout<<"500";});
-	eventQueue.at(5,  [](){std::cout<<"1000";});
-	eventQueue.at(5,  [=](){ent->move(10.0f);});
-	eventQueue.at(15, [](){std::cout<<"2000";}); 
+	eventQueue.at(2,  [=](){ent->move(3.0f);});
+	eventQueue.at(4,  [=](){ent->say(2, L"fsdf");});
+	eventQueue.at(5,  [=](){ent->move(-7.0f);}); 
 }
 
 TTFB_MainScene::~TTFB_MainScene(){
