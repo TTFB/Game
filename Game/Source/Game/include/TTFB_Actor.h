@@ -18,7 +18,7 @@ public:
 	virtual void update(Step * _step) override;
 	
 	void move(float _moveBy);
-	void  say(float _durationSeconds, std::wstring _say);
+	void  say(float _durationSeconds, std::wstring _say, bool _hideOnComplete);
 
 private:
 	TextArea * speechArea; 

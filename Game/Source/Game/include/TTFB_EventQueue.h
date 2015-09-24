@@ -14,7 +14,7 @@ public:
 
 	void update(Step * _step) override;
 
-	void at(long _millis, std::function<void()> _do);
+	void at(long _seconds, std::function<void()> _do);
 
 private:
 	std::vector<TTFB_Event *> events;

@@ -8,7 +8,11 @@ class MeshEntity;
 
 class TTFB_Stage : public Entity{
 public:	
+
 	 Box2DMeshEntity * stageBase;
+	 MeshEntity		 * stageBack;
+	 MeshEntity		 * stageFrontLeft;
+	 MeshEntity		 * stageFrontRight;
 
 	TTFB_Stage(float _width, Box2DWorld * _world, Shader * _shader = nullptr);
 	~TTFB_Stage();

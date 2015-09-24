@@ -16,6 +16,6 @@ void TTFB_EventQueue::update(Step* _step) {
 	}
 }
 
-void TTFB_EventQueue::at(long _millis, std::function<void()> _do) {
-	events.push_back(new TTFB_Event(_millis, _do));
+void TTFB_EventQueue::at(long _seconds, std::function<void()> _do) {
+	events.push_back(new TTFB_Event(_seconds, _do));
 }
