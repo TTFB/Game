@@ -19,6 +19,8 @@
     <ClCompile Include="src\TTFB_Game.cpp" />
     <ClCompile Include="src\TTFB_MainScene.cpp" />
     <ClCompile Include="src\TTFB_ResourceManager.cpp" />
+    <ClCompile Include="src\TTFB_Scene.cpp" />
+    <ClCompile Include="src\TTFB_Stage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\TTFB_Actor.h" />
@@ -28,6 +30,8 @@
     <ClInclude Include="include\TTFB_Game.h" />
     <ClInclude Include="include\TTFB_MainScene.h" />
     <ClInclude Include="include\TTFB_ResourceManager.h" />
+    <ClInclude Include="include\TTFB_Scene.h" />
+    <ClInclude Include="include\TTFB_Stage.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{96FE28A2-BB06-4424-ADED-0DEDAEAF84B5}</ProjectGuid>

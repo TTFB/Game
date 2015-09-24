@@ -1,0 +1,20 @@
+#pragma once
+
+#include <TTFB_Entity.h>
+#include <Entity.h>
+#include <Box2DMeshEntity.h>
+
+class MeshEntity;
+
+class TTFB_Stage : public Entity{
+public:	
+	 Box2DMeshEntity * stageBase;
+
+	TTFB_Stage(float _width, Box2DWorld * _world, Shader * _shader = nullptr);
+	~TTFB_Stage();
+
+	void setShader(Shader * _shader);
+
+private:
+	float width;
+};
