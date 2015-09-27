@@ -70,6 +70,7 @@ public:
 	virtual void unload() override;
 
 	virtual TTFB_Actor * createActor();
+	//virtual void expect(std::function<bool()> _expectaion, float _leeway);
 
 	TTFB_StageScene(Game * _game, float _stageWidth);
 	~TTFB_StageScene();

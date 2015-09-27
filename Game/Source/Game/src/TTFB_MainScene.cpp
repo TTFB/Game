@@ -58,11 +58,14 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 	childTransform->addChild(ent);
 	ent->setTranslationPhysical(0.f, 5.0f, 0.f);
 
-	eventQueue.at(1.f,   [](){std::cout<<"500";});
-	eventQueue.at(2.f,   [=](){ent->move(3.0f);});
-	eventQueue.at(4.f,   [=](){ent->say(2.0f, L"fsdf",  false);});
-	eventQueue.at(5.f,   [=](){ent->move(-7.0f);}); 
-	eventQueue.at(6.f,   [=](){ent->say(2.0f, L"sasas", true);});
+	int * i = new int(0);
+
+	eventQueue.at(6.f,  [=](){ent->move(3.0f);});
+	eventQueue.expectAt(6.f, 2.f, [i](){return *i == 1;}, [](){std::cout<<"Success";}, [](){std::cout<<"Failure";});
+	eventQueue.at(7.f,  [i](){*i = 1;});
+	eventQueue.at(9.f,  [=](){ent->say(2.0f, L"fsdf",  false);});
+	eventQueue.at(11.f, [=](){ent->say(2.0f, L"sasas", true);});
+	eventQueue.at(11.f, [=](){ent->move(-7.0f);}); 
 }
 
 TTFB_MainScene::~TTFB_MainScene(){
