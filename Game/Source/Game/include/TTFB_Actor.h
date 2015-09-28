@@ -9,6 +9,7 @@ class TextArea;
 class BulletWorld;
 class Scene;
 class Font;
+class TTFB_Subscription;
 
 class TTFB_Actor : public Box2DSprite, public TTFB_Whenable{
 public:
@@ -17,10 +18,13 @@ public:
 
 	virtual void update(Step * _step) override;
 	
-	void move(float _moveBy);
-	void  say(float _durationSeconds, std::wstring _say, bool _hideOnComplete);
+	virtual TTFB_Subscription * move(float _moveBy);
+	virtual TTFB_Subscription * say(float _durationSeconds, std::wstring _say, bool _hideOnComplete);
+	virtual void flip();
 
 private:
 	TextArea * speechArea; 
+	TTFB_Subscription * moveSubscription;
+	TTFB_Subscription * saySubscription;
 	int		   moveDirection;
 };

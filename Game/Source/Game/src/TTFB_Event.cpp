@@ -5,13 +5,15 @@
 TTFB_Event::TTFB_Event(long _doAt, std::function<void()> _func) :
 	doAt(_doAt),
 	func(_func),
-	funcCallCount(0)
+	funcCallCount(0),
+	onCallSubscription(new TTFB_Subscription())
 {
 }
 
 void TTFB_Event::call() {
 	func();
 	funcCallCount++;
+	onCallSubscription->publish();
 }
 
 int TTFB_Event::getFuncCallCount() {
@@ -23,4 +25,5 @@ long TTFB_Event::getDoAtTime() {
 }
 
 TTFB_Event::~TTFB_Event() {
+	delete onCallSubscription;
 }

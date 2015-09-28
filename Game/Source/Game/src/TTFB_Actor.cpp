@@ -9,11 +9,14 @@
 #include <Sweet.h>
 #include <TTFB_ResourceManager.h>
 #include <SpriteSheetAnimation.h>
+#include <TTFB_Subscription.h>
 
 TTFB_Actor::TTFB_Actor(Box2DWorld * _world, BulletWorld * _bulletWorld, Scene * _scene, Font * _font, Shader * _textShader, Shader * _shader) :
 	Box2DSprite(_world),
 	speechArea(new TextArea(_bulletWorld, _scene, _font, _textShader, 200.0f)),
-	moveDirection(0)
+	moveDirection(0),
+	saySubscription(new TTFB_Subscription()),
+	moveSubscription(new TTFB_Subscription())
 {
 	setShader(_shader);
 	createFixture(b2Filter());
@@ -25,15 +28,20 @@ TTFB_Actor::TTFB_Actor(Box2DWorld * _world, BulletWorld * _bulletWorld, Scene * 
 	speechArea->setBackgroundColour(1.0f, 1.0f, 1.0f, 1.0f);
 	speechArea->setVisible(false);
 
-	SpriteSheetAnimation * sh = new SpriteSheetAnimation(TTFB_ResourceManager::scenario->getTexture("SPRITESHEET")->texture, 0.1f);
-	sh->pushFramesInRange(0, 26, 128, 150);
-	addAnimation("walk", sh, true);
+	SpriteSheetAnimation * shWalk = new SpriteSheetAnimation(TTFB_ResourceManager::scenario->getTexture("SPRITESHEET")->texture, 0.1f);
+	shWalk->pushFramesInRange(0, 26, 128, 150);
+	
+	SpriteSheetAnimation * shStand = new SpriteSheetAnimation(TTFB_ResourceManager::scenario->getTexture("SPRITESHEET")->texture, 0.1f);
+	shStand->pushFramesInRange(7, 7, 128, 150);
+	
+	addAnimation("walk", shWalk, false);
+	addAnimation("stand", shStand, true);
 }
 
 TTFB_Actor::~TTFB_Actor() {
 }
 
-void TTFB_Actor::move(float _moveBy) {
+TTFB_Subscription * TTFB_Actor::move(float _moveBy) {
 	if(_moveBy > 0) {
 		moveDirection = 1;
 	}else if(_moveBy < 0) {
@@ -49,11 +57,13 @@ void TTFB_Actor::move(float _moveBy) {
 		},
 		[this](){
 			moveDirection = 0;
+			moveSubscription->publish();
 		});
 	}
+	return moveSubscription;
 }
 
-void TTFB_Actor::say(float _durationSeconds, std::wstring _say, bool _hideOnComplete) {
+TTFB_Subscription * TTFB_Actor::say(float _durationSeconds, std::wstring _say, bool _hideOnComplete) {
 	long targetTime = sweet::step.time + _durationSeconds;
 	speechArea->setVisible(true);
 	speechArea->setText(_say);
@@ -62,7 +72,15 @@ void TTFB_Actor::say(float _durationSeconds, std::wstring _say, bool _hideOnComp
 	},
 	[this, _hideOnComplete](){
 		speechArea->setVisible(!_hideOnComplete);
+		saySubscription->publish();
 	});
+	return saySubscription;
+}
+
+void TTFB_Actor::flip() {
+	if(firstParent() != nullptr) {
+		meshTransform->scale(-1 * firstParent()->getScaleVector().x, 1.f, 1.f);
+	}
 }
 
 void TTFB_Actor::update(Step* _step) {

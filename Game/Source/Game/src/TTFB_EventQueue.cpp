@@ -10,8 +10,8 @@ TTFB_EventQueue::~TTFB_EventQueue() {
 
 void TTFB_EventQueue::update(Step* _step) {
 	for(unsigned long int i = 0; i < events.size();) {
-		if(events[i].getDoAtTime() <= _step->time && events[i].getFuncCallCount() == 0) {
-			events[i].call();
+		if(events[i]->getDoAtTime() <= _step->time && events[i]->getFuncCallCount() == 0) {
+			events[i]->call();
 			events.erase(events.begin() + i);
 		}else {
 			i++;
@@ -34,8 +34,10 @@ void TTFB_EventQueue::update(Step* _step) {
 	}
 }
 
-void TTFB_EventQueue::at(float _seconds, std::function<void()> _do) {
-	events.push_back(TTFB_Event(_seconds, _do));
+TTFB_Subscription * TTFB_EventQueue::at(float _seconds, std::function<void()> _do) {
+	TTFB_Event * ev = new TTFB_Event(_seconds, _do);
+	events.push_back(ev);
+	return ev->onCallSubscription;
 }
 
 void TTFB_EventQueue::expectAt(float _seconds, float _leeway, std::function<bool()> _expecation, std::function<void()> _success, std::function<void()> _failure) {

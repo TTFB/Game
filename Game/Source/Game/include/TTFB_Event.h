@@ -1,6 +1,7 @@
 #pragma once
 
-#include<functional>
+#include <functional>
+#include <TTFB_Subscription.h>
 
 class TTFB_Event {
 public:
@@ -10,6 +11,7 @@ public:
 	void call();
 	int  getFuncCallCount();	
 	long getDoAtTime();
+	TTFB_Subscription * onCallSubscription;
 
 private:
 	long doAt;

@@ -22,6 +22,7 @@
     <ClCompile Include="src\TTFB_ResourceManager.cpp" />
     <ClCompile Include="src\TTFB_StageScene.cpp" />
     <ClCompile Include="src\TTFB_Stage.cpp" />
+    <ClCompile Include="src\TTFB_Subscription.cpp" />
     <ClCompile Include="src\TTFB_When.cpp" />
     <ClCompile Include="src\TTFB_Whenable.cpp" />
   </ItemGroup>
@@ -36,6 +37,7 @@
     <ClInclude Include="include\TTFB_ResourceManager.h" />
     <ClInclude Include="include\TTFB_StageScene.h" />
     <ClInclude Include="include\TTFB_Stage.h" />
+    <ClInclude Include="include\TTFB_Subscription.h" />
     <ClInclude Include="include\TTFB_When.h" />
     <ClInclude Include="include\TTFB_Whenable.h" />
   </ItemGroup>
