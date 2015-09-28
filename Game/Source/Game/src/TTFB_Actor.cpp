@@ -7,6 +7,8 @@
 #include <Scene.h>
 #include <Font.h>
 #include <Sweet.h>
+#include <TTFB_ResourceManager.h>
+#include <SpriteSheetAnimation.h>
 
 TTFB_Actor::TTFB_Actor(Box2DWorld * _world, BulletWorld * _bulletWorld, Scene * _scene, Font * _font, Shader * _textShader, Shader * _shader) :
 	Box2DSprite(_world),
@@ -17,18 +19,15 @@ TTFB_Actor::TTFB_Actor(Box2DWorld * _world, BulletWorld * _bulletWorld, Scene * 
 	createFixture(b2Filter());
 	maxVelocity = b2Vec2(5.0f, NO_VELOCITY_LIMIT);
 
-	mesh->vertices.at(0).blue = 0.f;
-	mesh->vertices.at(1).blue = 0.f;
-	mesh->vertices.at(2).blue = 0.f;
-	mesh->vertices.at(3).blue = 0.f;
-
-	mesh->dirty = true;
-
 	childTransform->addChild(speechArea);
 	speechArea->firstParent()->scale(0.05f, 0.05f, 0.05f);
 	speechArea->setTranslationPhysical(0.f, 2.f, 0.f);
 	speechArea->setBackgroundColour(1.0f, 1.0f, 1.0f, 1.0f);
 	speechArea->setVisible(false);
+
+	SpriteSheetAnimation * sh = new SpriteSheetAnimation(TTFB_ResourceManager::scenario->getTexture("SPRITESHEET")->texture, 0.1f);
+	sh->pushFramesInRange(0, 26, 128, 150);
+	addAnimation("walk", sh, true);
 }
 
 TTFB_Actor::~TTFB_Actor() {
