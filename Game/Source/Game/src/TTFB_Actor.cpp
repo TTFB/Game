@@ -19,7 +19,7 @@ TTFB_Actor::TTFB_Actor(Box2DWorld * _world, BulletWorld * _bulletWorld, Scene * 
 	moveSubscription(new TTFB_Subscription())
 {
 	setShader(_shader);
-	createFixture(b2Filter());
+	createFixture();
 	maxVelocity = b2Vec2(5.0f, NO_VELOCITY_LIMIT);
 
 	childTransform->addChild(speechArea);

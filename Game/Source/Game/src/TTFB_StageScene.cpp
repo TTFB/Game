@@ -31,6 +31,7 @@
 
 #include <MousePerspectiveCamera.h>
 #include <FollowCamera.h>
+#include <MouseCameraController.h>
 
 #include <System.h>
 #include <Mouse.h>
@@ -61,7 +62,7 @@ TTFB_StageScene::TTFB_StageScene(Game * _game, float _stageWidth) :
 	debugDrawer(nullptr),
 	uiLayer(this, 0,0,0,0),
 	box2dWorld(new Box2DWorld(b2Vec2(0.f, -10.0f))),
-	box2dDebug(new Box2DDebugDrawer(box2dWorld)),
+	box2dDebug(box2dWorld->createDebugDrawer()),
 	font(new Font("assets/engine basics/OpenSans-Regular.ttf", 32, true))
 {
 	baseShader->addComponent(new ShaderComponentMVP(baseShader));
@@ -109,15 +110,13 @@ TTFB_StageScene::TTFB_StageScene(Game * _game, float _stageWidth) :
 	mouseIndicator->mesh->dirty = true;
 	mouseIndicator->setShader(uiLayer.shader, true);
 
-	childTransform->addChild(box2dDebug, false);
-	box2dDebug->drawing = true;
-	box2dWorld->b2world->SetDebugDraw(box2dDebug);
-	box2dDebug->AppendFlags(b2Draw::e_shapeBit);
-	box2dDebug->AppendFlags(b2Draw::e_centerOfMassBit);
-	box2dDebug->AppendFlags(b2Draw::e_jointBit);
-
 	stage = new TTFB_Stage(_stageWidth, box2dWorld, baseShader);
 	childTransform->addChild(stage);
+
+	// Add the debug drawer last so it appears on top
+	childTransform->addChild(box2dDebug, true);
+
+	camController = new MouseCameraController(debugCam);
 }
 
 TTFB_StageScene::~TTFB_StageScene(){
@@ -129,6 +128,7 @@ TTFB_StageScene::~TTFB_StageScene(){
 	screenSurface->safeDelete();
 	//screenSurfaceShader->safeDelete();
 	screenFBO->safeDelete();
+	delete debugDrawer;
 }
 
 
@@ -149,26 +149,8 @@ void TTFB_StageScene::update(Step * _step){
 		cycleCamera();
 	}
 
-	float speed = 1;
-	MousePerspectiveCamera * cam = dynamic_cast<MousePerspectiveCamera *>(activeCamera);
-	if(cam != nullptr){
-		speed = cam->speed;
-	}
-	// camera controls
-	if (keyboard->keyDown(GLFW_KEY_UP)){
-		activeCamera->parents.at(0)->translate((activeCamera->forwardVectorRotated) * speed);
-	}
-	if (keyboard->keyDown(GLFW_KEY_DOWN)){
-		activeCamera->parents.at(0)->translate((activeCamera->forwardVectorRotated) * -speed);
-	}
-	if (keyboard->keyDown(GLFW_KEY_LEFT)){
-		activeCamera->parents.at(0)->translate((activeCamera->rightVectorRotated) * -speed);
-	}
-	if (keyboard->keyDown(GLFW_KEY_RIGHT)){
-		activeCamera->parents.at(0)->translate((activeCamera->rightVectorRotated) * speed);
-	}
-
 	debugCam->update(_step);
+	camController->update(_step);
 
 	Scene::update(_step);
 }

@@ -7,9 +7,9 @@ void TTFB_Subscription::subscribe(std::function<void()> _onPublish) {
 }
 
 void TTFB_Subscription::publish() {
-	for(auto subscriber : subscribers){
-		if(subscriber != nullptr){
-			subscriber();
+	for(unsigned long int i = 0; i < subscribers.size(); ++i){
+		if(subscribers[i] != nullptr){
+			subscribers[i]();
 		}
 	}
 }

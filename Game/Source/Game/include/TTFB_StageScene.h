@@ -8,6 +8,7 @@
 
 class PerspectiveCamera;
 class MousePerspectiveCamera;
+class MouseCameraController;
 
 class Box2DWorld;
 class Box2DDebugDrawer;
@@ -52,7 +53,9 @@ public:
 	
 	Sprite * mouseIndicator;
 	Sprite * crosshair;
+
 	MousePerspectiveCamera * debugCam;
+	MouseCameraController * camController;
 
 	Box2DWorld * box2dWorld;
 	Box2DDebugDrawer * box2dDebug;
@@ -70,7 +73,6 @@ public:
 	virtual void unload() override;
 
 	virtual TTFB_Actor * createActor();
-	//virtual void expect(std::function<bool()> _expectaion, float _leeway);
 
 	TTFB_StageScene(Game * _game, float _stageWidth);
 	~TTFB_StageScene();

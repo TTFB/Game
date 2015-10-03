@@ -72,8 +72,10 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 		[](){std::cout<<"Success";}, 
 		[](){std::cout<<"Failure";});
 	eventQueue.at(7.f,  [i](){*i = 1;});
+	eventQueue.at(7.f,  [i](){*i = 1;});
 	eventQueue.at(9.f,  [=](){ent->say(2.0f, L"fsdf",  false)->subscribe(
-		[=](){ent->say(2.0f, L"sasas", true);});
+			[=](){ent->say(2.0f, L"sasas", false);}
+		);
 	});
 	eventQueue.at(11.f, [=](){
 		ent->setCurrentAnimation("walk");
