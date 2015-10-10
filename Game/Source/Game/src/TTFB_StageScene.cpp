@@ -50,6 +50,7 @@
 #include <Box2DWorld.h>
 #include <Box2DDebugDrawer.h>
 #include <Font.h>
+#include <TTFB_Controller.h>
 
 TTFB_StageScene::TTFB_StageScene(Game * _game, float _stageWidth) :
 	Scene(_game),
@@ -63,9 +64,10 @@ TTFB_StageScene::TTFB_StageScene(Game * _game, float _stageWidth) :
 	uiLayer(this, 0,0,0,0),
 	box2dWorld(new Box2DWorld(b2Vec2(0.f, -10.0f))),
 	box2dDebug(box2dWorld->createDebugDrawer()),
-	font(new Font("assets/engine basics/OpenSans-Regular.ttf", 32, true))
+	font(new Font("assets/engine basics/OpenSans-Regular.ttf", 32, true)),
+	controller(new TTFB_Controller())
 {
-	baseShader->addComponent(new ShaderComponentMVP(baseShader));
+	baseShader->addComponent(new ShaderComponentMVP(baseShader)); 
 	baseShader->addComponent(new ShaderComponentDiffuse(baseShader));
 	baseShader->addComponent(new ShaderComponentTexture(baseShader));
 	baseShader->compileShader();
@@ -151,6 +153,8 @@ void TTFB_StageScene::update(Step * _step){
 
 	debugCam->update(_step);
 	camController->update(_step);
+
+	controller->update(_step);
 
 	Scene::update(_step);
 }
