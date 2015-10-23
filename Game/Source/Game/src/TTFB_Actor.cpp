@@ -10,19 +10,41 @@
 #include <TTFB_ResourceManager.h>
 #include <SpriteSheetAnimation.h>
 #include <TTFB_Subscription.h>
+#include <Box2DSprite.h>
 
 TTFB_Actor::TTFB_Actor(Box2DWorld * _world, BulletWorld * _bulletWorld, Scene * _scene, Font * _font, Shader * _textShader, Shader * _shader) :
-	Box2DSprite(_world),
+	Box2DSuperSprite(_world, 0),
 	speechArea(new TextArea(_bulletWorld, _scene, _font, _textShader, 200.0f)),
 	moveDirection(0),
 	saySubscription(new TTFB_Subscription()),
 	moveSubscription(new TTFB_Subscription())
 {
-	setShader(_shader);
-	createFixture();
-	maxVelocity = b2Vec2(5.0f, NO_VELOCITY_LIMIT);
+	setShader(_shader, true);
 
-	childTransform->addChild(speechArea);
+	b2Filter filt;
+	filt.categoryBits = Category::ACTOR;
+	filt.maskBits     = Category::BOUNDARY | 0x000000;
+
+	torso    = new Box2DSprite(_world);
+	head     = new Box2DSprite(_world);
+	leftArm  = new Box2DSprite(_world);
+	rightArm = new Box2DSprite(_world);
+	legs		 = new Box2DSprite(_world);
+
+	torso->createFixture(filt)->SetDensity(0.f);
+	head->createFixture(filt)->SetDensity(0.f);
+	leftArm->createFixture(filt)->SetDensity(0.f);
+	rightArm->createFixture(filt)->SetDensity(0.f);
+	legs->createFixture(filt)->SetDensity(100000.0f);
+
+	torso->maxVelocity = b2Vec2(5.0f, NO_VELOCITY_LIMIT);
+
+	head->setTranslationPhysical(0.0f, 10.0f, 0.0f, true);
+	torso->setTranslationPhysical(0.0f, 5.0f, 0.0f, true);
+	leftArm->setTranslationPhysical(-5.0f, 0.0f, 0.0f, true);
+	rightArm->setTranslationPhysical(5.0f, 0.0f, 0.0f, true);
+
+	torso->childTransform->addChild(speechArea);
 	speechArea->firstParent()->scale(0.05f, 0.05f, 0.05f);
 	speechArea->setTranslationPhysical(0.f, 2.f, 0.f);
 	speechArea->setBackgroundColour(1.0f, 1.0f, 1.0f, 1.0f);
@@ -34,8 +56,76 @@ TTFB_Actor::TTFB_Actor(Box2DWorld * _world, BulletWorld * _bulletWorld, Scene * 
 	SpriteSheetAnimation * shStand = new SpriteSheetAnimation(TTFB_ResourceManager::scenario->getTexture("SPRITESHEET")->texture, 0.1f);
 	shStand->pushFramesInRange(7, 7, 128, 150);
 	
-	addAnimation("walk", shWalk, false);
-	addAnimation("stand", shStand, true);
+	torso->addAnimation("walk", shWalk, false);
+	torso->addAnimation("stand", shStand, true);
+
+	// make the root component the torso
+	addComponent(&torso);
+	addComponent(&head);
+	addComponent(&leftArm);
+	addComponent(&rightArm);
+	addComponent(&legs);
+	rootComponent = torso;
+
+	b2RevoluteJointDef jth;
+	jth.bodyA = torso->body;
+	jth.bodyB = head->body;
+	jth.localAnchorA.Set(0, 0.5f * torso->getCorrectedHeight());
+	jth.localAnchorB.Set(0, -0.5f * head->getCorrectedHeight());
+	jth.collideConnected = false;
+	jth.enableLimit = true;
+	jth.enableMotor = true;
+	jth.maxMotorTorque = 0;
+	jth.motorSpeed = 0;
+	jth.referenceAngle = 0;
+	jth.lowerAngle = glm::radians(-15.f);
+	jth.upperAngle = glm::radians(15.f);
+	world->b2world->CreateJoint(&jth);
+
+	b2RevoluteJointDef jtar;
+	jtar.bodyA = torso->body;
+	jtar.bodyB = rightArm->body;
+	jtar.localAnchorA.Set(0.9f * torso->getCorrectedWidth(), 0.3f * torso->getCorrectedHeight());
+	jtar.localAnchorB.Set(0, 0.0f * rightArm->getCorrectedHeight());
+	jtar.collideConnected = false;
+	jtar.enableLimit = true;
+	jtar.enableMotor = true;
+	jtar.maxMotorTorque = 0;
+	jtar.motorSpeed = 0;
+	jtar.referenceAngle = glm::radians(90.f);
+	jtar.lowerAngle = glm::radians(-10.f);
+	jtar.upperAngle = glm::radians(10.f);
+	world->b2world->CreateJoint(&jtar);
+
+	b2RevoluteJointDef jtal;
+	jtal.bodyA = torso->body;
+	jtal.bodyB = leftArm->body;
+	jtal.localAnchorA.Set(-0.9f * torso->getCorrectedWidth(), 0.3f * torso->getCorrectedHeight());
+	jtal.localAnchorB.Set(0, 0.0f * leftArm->getCorrectedHeight());
+	jtal.collideConnected = false;
+	jtal.enableLimit = true;
+	jtal.enableMotor = true;
+	jtal.maxMotorTorque = 0;
+	jtal.motorSpeed = 0;
+	jtal.referenceAngle = glm::radians(-90.f);
+	jtal.lowerAngle = glm::radians(-10.f);
+	jtal.upperAngle = glm::radians(10.f);
+	world->b2world->CreateJoint(&jtal);
+
+	b2RevoluteJointDef jl;
+	jl.bodyA = torso->body;
+	jl.bodyB = legs->body;
+	jl.localAnchorA.Set(0, -0.5f * torso->getCorrectedHeight());
+	jl.localAnchorB.Set(0,  0.5f * legs->getCorrectedHeight());
+	jl.collideConnected = false;
+	jl.enableLimit = true;
+	jl.enableMotor = true;
+	jl.maxMotorTorque = 0;
+	jl.motorSpeed = 0;
+	jl.referenceAngle = 0;
+	jl.lowerAngle = glm::radians(-15.f);
+	jl.upperAngle = glm::radians(15.f);
+	world->b2world->CreateJoint(&jl);
 }
 
 TTFB_Actor::~TTFB_Actor() {
@@ -52,7 +142,7 @@ TTFB_Subscription * TTFB_Actor::move(float _moveBy) {
 	float target = firstParent()->getTranslationVector().x + _moveBy; 
 	if(firstParent() != nullptr){
 		when([target, this](){
-			float curX = body->GetPosition().x;
+			float curX = rootComponent->body->GetPosition().x;
 			return abs(curX) >= abs(target);
 		},
 		[this](){
@@ -79,12 +169,14 @@ TTFB_Subscription * TTFB_Actor::say(float _durationSeconds, std::wstring _say, b
 
 void TTFB_Actor::flip() {
 	if(firstParent() != nullptr) {
-		meshTransform->scale(-1 * firstParent()->getScaleVector().x, 1.f, 1.f);
+		rootComponent->meshTransform->scale(-1 * firstParent()->getScaleVector().x, 1.f, 1.f);
 	}
 }
 
 void TTFB_Actor::update(Step* _step) {
 	TTFB_Whenable::update(_step);
-	applyForce(moveDirection * 5.0f, 0.f, body->GetWorldCenter().x, body->GetWorldCenter().y);
-	Box2DSprite::update(_step);
+	rootComponent->applyForce(moveDirection * 100.0f, 0.f, rootComponent->body->GetWorldCenter().x, rootComponent->body->GetWorldCenter().y);
+	legs->applyForceDown(100.0f);
+	rootComponent->applyAngularImpulse(-rootComponent->body->GetAngle());
+	Box2DSuperSprite::update(_step);
 }

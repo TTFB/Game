@@ -7,8 +7,9 @@
 #include <TTFB_Event.h>
 #include <TTFB_Entity.h>
 #include <TTFB_Expectation.h>
+#include <TTFB_Whenable.h>
 
-class TTFB_EventQueue : NodeUpdatable{
+class TTFB_EventQueue : public TTFB_Whenable{
 public:
 	TTFB_EventQueue();
 	~TTFB_EventQueue();

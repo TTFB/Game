@@ -5,6 +5,7 @@
 #include <TTFB_Actor.h>
 #include <TTFB_Stage.h>
 #include <TTFB_StageScene.h>
+#include <TTFB_Controller.h>
 
 #include <Game.h>
 #include <MeshEntity.h>
@@ -57,14 +58,14 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 
 	TTFB_Actor * ent = createActor();
 	childTransform->addChild(ent);
-	ent->setTranslationPhysical(0.f, 5.0f, 0.f);
+	ent->translateComponents(0.f, 10.0f, 0.f);
 
 	int * i = new int(0);
 
 	eventQueue.at(6.f, [=](){
-			ent->setCurrentAnimation("walk");
+			//ent->setCurrentAnimation("walk");
 			ent->move(3.0f)->subscribe([=](){
-				ent->setCurrentAnimation("stand");
+				//ent->setCurrentAnimation("stand");
 			});
 		});
 	eventQueue.expectAt(6.f, 2.f, 
@@ -73,23 +74,35 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 		[](){std::cout<<"Failure";});
 	eventQueue.at(7.f,  [i](){*i = 1;});
 	eventQueue.at(7.f,  [i](){*i = 1;});
-	eventQueue.at(9.f,  [=](){ent->say(2.0f, L"fsdf",  false)->subscribe(
-			[=](){ent->say(2.0f, L"sasas", false);}
+	eventQueue.at(9.f,  [=](){ent->say(2.0f, L"fsdf",  true)->subscribe(
+			[=](){ent->say(2.0f, L"sasas", true);}
 		);
 	});
 	eventQueue.at(11.f, [=](){
-		ent->setCurrentAnimation("walk");
+		//ent->setCurrentAnimation("walk");
 		ent->flip();
 		ent->move(-7.0f)->subscribe([=](){
-			ent->setCurrentAnimation("stand");
+			//ent->setCurrentAnimation("stand");
 		});
 	}); 
+
+	eventQueue.when([=](){
+			return *i == 1;
+		},
+		[=](){
+			ent->say(3.0f, L"wwoowowowo", false);
+		}
+	);
 }
 
 TTFB_MainScene::~TTFB_MainScene(){
 }
 
 void TTFB_MainScene::update(Step * _step){
+
+	float lightOneVal = controller->buttonOne.currentState;
+	lights[0]->setIntensities(glm::vec3(lightOneVal + 0.5f));
+
 	eventQueue.update(_step);
 	TTFB_StageScene::update(_step);
 }

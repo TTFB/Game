@@ -13,6 +13,7 @@
   <ItemGroup>
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\TTFB_Actor.cpp" />
+    <ClCompile Include="src\TTFB_Button.cpp" />
     <ClCompile Include="src\TTFB_Controller.cpp" />
     <ClCompile Include="src\TTFB_Entity.cpp" />
     <ClCompile Include="src\TTFB_Event.cpp" />
@@ -29,6 +30,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\TTFB_Actor.h" />
+    <ClInclude Include="include\TTFB_Button.h" />
     <ClInclude Include="include\TTFB_Controller.h" />
     <ClInclude Include="include\TTFB_Entity.h" />
     <ClInclude Include="include\TTFB_Event.h" />

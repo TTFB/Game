@@ -2,7 +2,9 @@
 
 #include<TTFB_EventQueue.h>
 
-TTFB_EventQueue::TTFB_EventQueue() {
+TTFB_EventQueue::TTFB_EventQueue() :
+	TTFB_Whenable()
+{
 }
 
 TTFB_EventQueue::~TTFB_EventQueue() {
@@ -32,6 +34,7 @@ void TTFB_EventQueue::update(Step* _step) {
 			i++;
 		}
 	}
+	TTFB_Whenable::update(_step);
 }
 
 TTFB_Subscription * TTFB_EventQueue::at(float _seconds, std::function<void()> _do) {
