@@ -64,7 +64,7 @@ TTFB_StageScene::TTFB_StageScene(Game * _game, float _stageWidth) :
 	uiLayer(this, 0,0,0,0),
 	box2dWorld(new Box2DWorld(b2Vec2(0.f, -10.0f))),
 	box2dDebug(box2dWorld->createDebugDrawer()),
-	font(new Font("assets/engine basics/OpenSans-Regular.ttf", 32, true)),
+	font(new Font("assets/engine basics/OpenSans-Regular.ttf", 20, true)),
 	controller(new TTFB_Controller())
 {
 	baseShader->addComponent(new ShaderComponentMVP(baseShader)); 

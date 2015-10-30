@@ -25,11 +25,22 @@ TTFB_Actor::TTFB_Actor(Box2DWorld * _world, BulletWorld * _bulletWorld, Scene * 
 	filt.categoryBits = Category::ACTOR;
 	filt.maskBits     = Category::BOUNDARY | 0x000000;
 
-	torso    = new Box2DSprite(_world);
-	head     = new Box2DSprite(_world);
-	leftArm  = new Box2DSprite(_world);
-	rightArm = new Box2DSprite(_world);
-	legs		 = new Box2DSprite(_world);
+	torso    = new Box2DSprite(_world, TTFB_ResourceManager::scenario->getTextureSampler("kingArthurTorso")->textureSampler, b2_kinematicBody);
+	head     = new Box2DSprite(_world, TTFB_ResourceManager::scenario->getTextureSampler("kingArthurHead")->textureSampler);
+	leftArm  = new Box2DSprite(_world, TTFB_ResourceManager::scenario->getTextureSampler("kingArthurLeftArm")->textureSampler);
+	rightArm = new Box2DSprite(_world, TTFB_ResourceManager::scenario->getTextureSampler("kingArthurRightArm")->textureSampler);
+	legs	 = new Box2DSprite(_world, TTFB_ResourceManager::scenario->getTextureSampler("kingArthurLegs")->textureSampler);
+
+	torso->scale    = 0.01f;
+	head->scale     = 0.01f;
+	leftArm->scale  = 0.01f;
+	rightArm->scale = 0.01f;
+	legs->scale     = 0.01f;
+
+	head->body->SetGravityScale(-0.3f);
+	leftArm->body->SetGravityScale(0.3f);
+	rightArm->body->SetGravityScale(0.3f);
+	legs->body->SetGravityScale(0.3f);
 
 	torso->createFixture(filt)->SetDensity(0.f);
 	head->createFixture(filt)->SetDensity(0.f);
@@ -44,20 +55,21 @@ TTFB_Actor::TTFB_Actor(Box2DWorld * _world, BulletWorld * _bulletWorld, Scene * 
 	leftArm->setTranslationPhysical(-5.0f, 0.0f, 0.0f, true);
 	rightArm->setTranslationPhysical(5.0f, 0.0f, 0.0f, true);
 
-	torso->childTransform->addChild(speechArea);
+	head->childTransform->addChild(speechArea);
 	speechArea->firstParent()->scale(0.05f, 0.05f, 0.05f);
 	speechArea->setTranslationPhysical(0.f, 2.f, 0.f);
 	speechArea->setBackgroundColour(1.0f, 1.0f, 1.0f, 1.0f);
+	speechArea->horizontalAlignment = kCENTER;
 	speechArea->setVisible(false);
 
-	SpriteSheetAnimation * shWalk = new SpriteSheetAnimation(TTFB_ResourceManager::scenario->getTexture("SPRITESHEET")->texture, 0.1f);
-	shWalk->pushFramesInRange(0, 26, 128, 150);
+	//SpriteSheetAnimation * shWalk = new SpriteSheetAnimation(TTFB_ResourceManager::scenario->getTexture("SPRITESHEET")->texture, 0.1f);
+	//shWalk->pushFramesInRange(0, 26, 128, 150);
 	
-	SpriteSheetAnimation * shStand = new SpriteSheetAnimation(TTFB_ResourceManager::scenario->getTexture("SPRITESHEET")->texture, 0.1f);
-	shStand->pushFramesInRange(7, 7, 128, 150);
+	//SpriteSheetAnimation * shStand = new SpriteSheetAnimation(TTFB_ResourceManager::scenario->getTexture("SPRITESHEET")->texture, 0.1f);
+	//shStand->pushFramesInRange(7, 7, 128, 150);
 	
-	torso->addAnimation("walk", shWalk, false);
-	torso->addAnimation("stand", shStand, true);
+	//torso->addAnimation("walk", shWalk, false);
+	//torso->addAnimation("stand", shStand, true);
 
 	// make the root component the torso
 	addComponent(&torso);
@@ -92,7 +104,7 @@ TTFB_Actor::TTFB_Actor(Box2DWorld * _world, BulletWorld * _bulletWorld, Scene * 
 	jtar.enableMotor = true;
 	jtar.maxMotorTorque = 0;
 	jtar.motorSpeed = 0;
-	jtar.referenceAngle = glm::radians(90.f);
+	jtar.referenceAngle = glm::radians(0.f);
 	jtar.lowerAngle = glm::radians(-10.f);
 	jtar.upperAngle = glm::radians(10.f);
 	world->b2world->CreateJoint(&jtar);
@@ -175,8 +187,6 @@ void TTFB_Actor::flip() {
 
 void TTFB_Actor::update(Step* _step) {
 	TTFB_Whenable::update(_step);
-	rootComponent->applyForce(moveDirection * 100.0f, 0.f, rootComponent->body->GetWorldCenter().x, rootComponent->body->GetWorldCenter().y);
-	legs->applyForceDown(100.0f);
-	rootComponent->applyAngularImpulse(-rootComponent->body->GetAngle());
+	rootComponent->setTranslationPhysical(1.0f * moveDirection * 0.05f, 0.f, 0.f, true);
 	Box2DSuperSprite::update(_step);
 }

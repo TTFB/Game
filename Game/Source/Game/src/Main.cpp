@@ -23,7 +23,7 @@ int main(void){
 	_CrtMemCheckpoint( &s1 );
 #endif
 
-	Log::THROW_ON_ERROR = true;
+	Log::THROW_ON_ERROR = false;
 
 	sweet::initialize("Game");
 	TTFB_ResourceManager::init();
