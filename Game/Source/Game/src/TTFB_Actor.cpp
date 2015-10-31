@@ -97,8 +97,8 @@ TTFB_Actor::TTFB_Actor(Box2DWorld * _world, BulletWorld * _bulletWorld, Scene * 
 	b2RevoluteJointDef jtar;
 	jtar.bodyA = torso->body;
 	jtar.bodyB = rightArm->body;
-	jtar.localAnchorA.Set(0.9f * torso->getCorrectedWidth(), 0.3f * torso->getCorrectedHeight());
-	jtar.localAnchorB.Set(0, 0.0f * rightArm->getCorrectedHeight());
+	jtar.localAnchorA.Set(0.5f * torso->getCorrectedWidth(), 0.5f * torso->getCorrectedHeight());
+	jtar.localAnchorB.Set(-0.5f * rightArm->getCorrectedWidth(), 0.5f * rightArm->getCorrectedHeight());
 	jtar.collideConnected = false;
 	jtar.enableLimit = true;
 	jtar.enableMotor = true;
@@ -112,14 +112,14 @@ TTFB_Actor::TTFB_Actor(Box2DWorld * _world, BulletWorld * _bulletWorld, Scene * 
 	b2RevoluteJointDef jtal;
 	jtal.bodyA = torso->body;
 	jtal.bodyB = leftArm->body;
-	jtal.localAnchorA.Set(-0.9f * torso->getCorrectedWidth(), 0.3f * torso->getCorrectedHeight());
-	jtal.localAnchorB.Set(0, 0.0f * leftArm->getCorrectedHeight());
+	jtal.localAnchorA.Set(-0.5f * torso->getCorrectedWidth(), 0.5f * torso->getCorrectedHeight());
+	jtal.localAnchorB.Set(0.5f * leftArm->getCorrectedWidth(), 0.5f * leftArm->getCorrectedHeight());
 	jtal.collideConnected = false;
 	jtal.enableLimit = true;
 	jtal.enableMotor = true;
 	jtal.maxMotorTorque = 0;
 	jtal.motorSpeed = 0;
-	jtal.referenceAngle = glm::radians(-90.f);
+	jtal.referenceAngle = glm::radians(0.f);
 	jtal.lowerAngle = glm::radians(-10.f);
 	jtal.upperAngle = glm::radians(10.f);
 	world->b2world->CreateJoint(&jtal);
