@@ -17,7 +17,8 @@ TTFB_Actor::TTFB_Actor(Box2DWorld * _world, BulletWorld * _bulletWorld, Scene * 
 	speechArea(new TextArea(_bulletWorld, _scene, _font, _textShader, 200.0f)),
 	moveDirection(0),
 	saySubscription(new TTFB_Subscription()),
-	moveSubscription(new TTFB_Subscription())
+	moveSubscription(new TTFB_Subscription()),
+	speechAreaScale(0.05f)
 {
 	setShader(_shader, true);
 
@@ -55,8 +56,8 @@ TTFB_Actor::TTFB_Actor(Box2DWorld * _world, BulletWorld * _bulletWorld, Scene * 
 	leftArm->setTranslationPhysical(-5.0f, 0.0f, 0.0f, true);
 	rightArm->setTranslationPhysical(5.0f, 0.0f, 0.0f, true);
 
-	head->childTransform->addChild(speechArea);
-	speechArea->firstParent()->scale(0.05f, 0.05f, 0.05f);
+	childTransform->addChild(speechArea);
+	speechArea->firstParent()->scale(speechAreaScale, speechAreaScale, speechAreaScale);
 	speechArea->setTranslationPhysical(0.f, 2.f, 0.f);
 	speechArea->setBackgroundColour(1.0f, 1.0f, 1.0f, 1.0f);
 	speechArea->horizontalAlignment = kCENTER;
@@ -187,6 +188,9 @@ void TTFB_Actor::flip() {
 
 void TTFB_Actor::update(Step* _step) {
 	TTFB_Whenable::update(_step);
-	rootComponent->setTranslationPhysical(1.0f * moveDirection * 0.05f, 0.f, 0.f, true);
+	rootComponent->setTranslationPhysical(1.0f * moveDirection * 0.05, 0.f, 0.f, true);
+	speechArea->firstParent()->translate(head->body->GetWorldCenter().x - speechArea->getWidth() * 0.5f * speechAreaScale,
+		head->body->GetWorldCenter().y + speechArea->getHeight() * 0.5f * speechAreaScale + 1.0f,
+		speechArea->firstParent()->getTranslationVector().z, false);
 	Box2DSuperSprite::update(_step);
 }

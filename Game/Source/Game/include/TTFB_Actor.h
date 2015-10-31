@@ -41,4 +41,5 @@ private:
 	TTFB_Subscription * moveSubscription;
 	TTFB_Subscription * saySubscription;
 	int		   moveDirection;
+	float speechAreaScale;
 };
