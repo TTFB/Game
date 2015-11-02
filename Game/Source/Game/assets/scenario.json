@@ -6,34 +6,39 @@
       "src": "../engine basics/cursor.png"
     },
     {
-     "id": "SPRITESHEET",
+      "id": "SPRITESHEET",
       "type": "texture",
       "src": "spritesheet.png"
     },
     {
-    	"id":"kingArthurHead",
-    	"type":	"textureSampler",
-    	"src" : "kingArthur/head.png.def"
+      "id": "kingArthurHead",
+      "type": "textureSampler",
+      "src": "kingArthur/head.png.def"
     },
-      {
-    	"id":"kingArthurTorso",
-    	"type":	"textureSampler",
-    	"src" : "kingArthur/body.png.def"
+    {
+      "id": "kingArthurTorso",
+      "type": "textureSampler",
+      "src": "kingArthur/body.png.def"
     },
-      {
-    	"id":"kingArthurLeftArm",
-    	"type":	"textureSampler",
-    	"src" : "kingArthur/arm_left.png.def"
+    {
+      "id": "kingArthurLeftArm",
+      "type": "textureSampler",
+      "src": "kingArthur/arm_left.png.def"
     },
-      {
-    	"id":"kingArthurRightArm",
-    	"type":	"textureSampler",
-    	"src" : "kingArthur/arm_right.png.def"
+    {
+      "id": "kingArthurRightArm",
+      "type": "textureSampler",
+      "src": "kingArthur/arm_right.png.def"
     },
-      {
-    	"id":"kingArthurLegs",
-    	"type":	"textureSampler",
-    	"src" : "kingArthur/legs.png.def"
+    {
+      "id": "kingArthurLegs",
+      "type": "textureSampler",
+      "src": "kingArthur/legs.png.def"
+    },
+    {
+      "id": "audience",
+      "type": "texture",
+      "src": "audience.png"
     }
   ]
 }

@@ -3,6 +3,7 @@
 #include <TTFB_StageScene.h>
 #include <TTFB_ResourceManager.h>
 #include <TTFB_Stage.h>
+#include <TTFB_Audience.h>
 
 #include <Game.h>
 #include <MeshEntity.h>
@@ -115,10 +116,16 @@ TTFB_StageScene::TTFB_StageScene(Game * _game, float _stageWidth) :
 	stage = new TTFB_Stage(_stageWidth, box2dWorld, baseShader);
 	childTransform->addChild(stage);
 
+	audience = new TTFB_Audience(baseShader);
+	childTransform->addChild(audience)->translate(0.f, 15.f, 5.0f);
+	audience->firstParent()->scale(50.0f);
+
 	// Add the debug drawer last so it appears on top
 	childTransform->addChild(box2dDebug, true);
 
 	camController = new MouseCameraController(debugCam);
+
+	clearColor[0] = 1.0f;
 }
 
 TTFB_StageScene::~TTFB_StageScene(){

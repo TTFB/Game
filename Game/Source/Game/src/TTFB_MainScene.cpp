@@ -100,7 +100,7 @@ TTFB_MainScene::~TTFB_MainScene(){
 
 void TTFB_MainScene::update(Step * _step){
 
-	float lightOneVal = controller->buttonOne.currentState;
+	float lightOneVal = controller->soundButtonOne.currentState;
 	lights[0]->setIntensities(glm::vec3(lightOneVal + 0.5f));
 
 	eventQueue.update(_step);

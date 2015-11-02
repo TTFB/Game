@@ -6,6 +6,7 @@
 #include <BulletWorld.h>
 #include <TTFB_EventQueue.h>
 
+class TTFB_Audience;
 class TTFB_Controller;
 class PerspectiveCamera;
 class MousePerspectiveCamera;
@@ -67,7 +68,8 @@ public:
 
 	TTFB_Stage * stage;
 
-	TTFB_Controller * controller ;
+	TTFB_Controller * controller;
+	TTFB_Audience * audience;
 
 	virtual void update(Step * _step) override;
 	virtual void render(sweet::MatrixStack * _matrixStack, RenderOptions * _renderOptions) override;
