@@ -12,7 +12,7 @@
 #include <TTFB_Subscription.h>
 #include <Box2DSprite.h>
 
-TTFB_Actor::TTFB_Actor(Box2DWorld * _world, BulletWorld * _bulletWorld, Scene * _scene, Font * _font, Shader * _textShader, Shader * _shader) :
+TTFB_Actor::TTFB_Actor(std::string _name, Box2DWorld * _world, BulletWorld * _bulletWorld, Scene * _scene, Font * _font, Shader * _textShader, Shader * _shader) :
 	Box2DSuperSprite(_world, 0),
 	speechArea(new TextArea(_bulletWorld, _scene, _font, _textShader, 200.0f)),
 	moveDirection(0),
@@ -26,11 +26,11 @@ TTFB_Actor::TTFB_Actor(Box2DWorld * _world, BulletWorld * _bulletWorld, Scene * 
 	filt.categoryBits = Category::ACTOR;
 	filt.maskBits     = Category::BOUNDARY | 0x000000;
 
-	torso    = new Box2DSprite(_world, TTFB_ResourceManager::scenario->getTextureSampler("kingArthurTorso")->textureSampler, b2_kinematicBody);
-	head     = new Box2DSprite(_world, TTFB_ResourceManager::scenario->getTextureSampler("kingArthurHead")->textureSampler);
-	leftArm  = new Box2DSprite(_world, TTFB_ResourceManager::scenario->getTextureSampler("kingArthurLeftArm")->textureSampler);
-	rightArm = new Box2DSprite(_world, TTFB_ResourceManager::scenario->getTextureSampler("kingArthurRightArm")->textureSampler);
-	legs	 = new Box2DSprite(_world, TTFB_ResourceManager::scenario->getTextureSampler("kingArthurLegs")->textureSampler);
+	torso    = new Box2DSprite(_world, TTFB_ResourceManager::scenario->getTextureSampler(_name + "Torso")->textureSampler, b2_kinematicBody);
+	head     = new Box2DSprite(_world, TTFB_ResourceManager::scenario->getTextureSampler(_name + "Head")->textureSampler);
+	leftArm  = new Box2DSprite(_world, TTFB_ResourceManager::scenario->getTextureSampler(_name + "LeftArm")->textureSampler);
+	rightArm = new Box2DSprite(_world, TTFB_ResourceManager::scenario->getTextureSampler(_name + "RightArm")->textureSampler);
+	legs	     = new Box2DSprite(_world, TTFB_ResourceManager::scenario->getTextureSampler(_name + "Legs")->textureSampler);
 
 	torso->scale    = 0.01f;
 	head->scale     = 0.01f;
@@ -183,7 +183,13 @@ TTFB_Subscription * TTFB_Actor::say(float _durationSeconds, std::wstring _say, b
 void TTFB_Actor::flip() {
 	if(firstParent() != nullptr) {
 		rootComponent->meshTransform->scale(-1 * firstParent()->getScaleVector().x, 1.f, 1.f);
+		head->meshTransform->scale(-1 * firstParent()->getScaleVector().x, 1.f, 1.f);
+		legs->meshTransform->scale(-1 * firstParent()->getScaleVector().x, 1.f, 1.f);
 	}
+}
+
+float TTFB_Actor::getLegsOffset() {
+	return torso->getCorrectedHeight() * 0.5 + legs->getCorrectedHeight();
 }
 
 void TTFB_Actor::update(Step* _step) {

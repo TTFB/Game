@@ -21,7 +21,7 @@ enum Category {
 
 class TTFB_Actor : public Box2DSuperSprite, public TTFB_Whenable{
 public:
-	TTFB_Actor(Box2DWorld * _world, BulletWorld * _bulletWorld, Scene * _scene, Font * _font, Shader * _textShader, Shader * _shader = nullptr);
+	TTFB_Actor(std::string _name, Box2DWorld * _world, BulletWorld * _bulletWorld, Scene * _scene, Font * _font, Shader * _textShader, Shader * _shader = nullptr);
 	~TTFB_Actor();
 
 	virtual void update(Step * _step) override;
@@ -29,6 +29,7 @@ public:
 	virtual TTFB_Subscription * move(float _moveBy);
 	virtual TTFB_Subscription * say(float _durationSeconds, std::wstring _say, bool _hideOnComplete);
 	virtual void flip();
+	virtual float getLegsOffset();
 
 private:
 	Box2DSprite * torso;

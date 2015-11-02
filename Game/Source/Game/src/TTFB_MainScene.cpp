@@ -56,9 +56,9 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 	lights.push_back(light2);
 	debugCam->childTransform->addChild(light2);
 
-	TTFB_Actor * ent = createActor();
+	TTFB_Actor * ent = createActor("kingArthur");
 	childTransform->addChild(ent);
-	ent->translateComponents(0.f, 10.0f, 0.f);
+	ent->translateComponents(0.f, ent->getLegsOffset(), 0.f);
 
 	int * i = new int(0);
 

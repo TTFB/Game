@@ -77,7 +77,7 @@ public:
 	virtual void load() override;
 	virtual void unload() override;
 
-	virtual TTFB_Actor * createActor();
+	virtual TTFB_Actor * createActor(std::string _name);
 
 	TTFB_StageScene(Game * _game, float _stageWidth);
 	~TTFB_StageScene();

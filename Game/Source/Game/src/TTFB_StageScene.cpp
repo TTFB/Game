@@ -199,6 +199,6 @@ void TTFB_StageScene::unload(){
 	Scene::unload();	
 }
 
-TTFB_Actor * TTFB_StageScene::createActor() {
-	return new TTFB_Actor(box2dWorld, bulletWorld, this, font, textShader, baseShader);
+TTFB_Actor * TTFB_StageScene::createActor(std::string _name) {
+	return new TTFB_Actor(_name, box2dWorld, bulletWorld, this, font, textShader, baseShader);
 }
