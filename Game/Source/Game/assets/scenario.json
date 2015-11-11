@@ -39,6 +39,16 @@
       "id": "audience",
       "type": "texture",
       "src": "audience.png"
+    },
+    {
+      "id": "speechBubble",
+      "type": "texture",
+      "src": "speech_bubble.png"
+    },
+    {
+      "id": "logo",
+      "type": "texture",
+      "src": "logo.png"
     }
   ]
 }

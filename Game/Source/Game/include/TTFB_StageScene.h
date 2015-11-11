@@ -52,6 +52,7 @@ public:
 	BulletDebugDrawer * debugDrawer;
 	
 	MousePerspectiveCamera * playerCam;
+	PerspectiveCamera * stageCam;
 	
 	Sprite * mouseIndicator;
 	Sprite * crosshair;

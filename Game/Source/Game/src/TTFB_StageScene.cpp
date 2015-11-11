@@ -52,6 +52,7 @@
 #include <Box2DDebugDrawer.h>
 #include <Font.h>
 #include <TTFB_Controller.h>
+#include <RenderOptions.h>
 
 TTFB_StageScene::TTFB_StageScene(Game * _game, float _stageWidth) :
 	Scene(_game),
@@ -62,15 +63,17 @@ TTFB_StageScene::TTFB_StageScene(Game * _game, float _stageWidth) :
 	characterShader(new ComponentShaderBase(true)),
 	textShader(new ComponentShaderText(true)),
 	debugDrawer(nullptr),
-	uiLayer(this, 0,0,0,0),
+	uiLayer(0,0,0,0),
 	box2dWorld(new Box2DWorld(b2Vec2(0.f, -10.0f))),
 	box2dDebug(box2dWorld->createDebugDrawer()),
-	font(new Font("assets/engine basics/OpenSans-Regular.ttf", 20, true)),
+	font(new Font("assets/engine basics/OpenSans-Regular.ttf", 100, true)),
 	controller(new TTFB_Controller())
 {
 	baseShader->addComponent(new ShaderComponentMVP(baseShader)); 
 	baseShader->addComponent(new ShaderComponentDiffuse(baseShader));
-	baseShader->addComponent(new ShaderComponentTexture(baseShader));
+	ShaderComponentTexture * texComp = new ShaderComponentTexture(baseShader);
+	texComp->alphaDiscardThreshold = 0.05f;
+	baseShader->addComponent(texComp);
 	baseShader->compileShader();
 
 	textShader->textComponent->setColor(glm::vec3(0.0f, 0.0f, 0.0f));
@@ -86,7 +89,12 @@ TTFB_StageScene::TTFB_StageScene(Game * _game, float _stageWidth) :
 	debugCam->pitch = -10.0f;
 	debugCam->speed = 1;
 
-	activeCamera = debugCam;
+	stageCam = new PerspectiveCamera();
+	cameras.push_back(stageCam);
+	childTransform->addChild(stageCam);
+	stageCam->firstParent()->translate(0.0f, 10.f, 29.598f);
+	stageCam->yaw = 90.0f;
+	activeCamera = stageCam;
 	
 	// remove initial camera
 	childTransform->removeChild(cameras.at(0)->parents.at(0));
@@ -125,7 +133,7 @@ TTFB_StageScene::TTFB_StageScene(Game * _game, float _stageWidth) :
 
 	camController = new MouseCameraController(debugCam);
 
-	clearColor[0] = 1.0f;
+	box2dDebug->drawing = false;
 }
 
 TTFB_StageScene::~TTFB_StageScene(){
@@ -142,6 +150,15 @@ TTFB_StageScene::~TTFB_StageScene(){
 
 
 void TTFB_StageScene::update(Step * _step){
+
+	// Toggle debug drawer
+	if(keyboard->keyJustUp(GLFW_KEY_2)){
+		box2dDebug->drawing = !box2dDebug->drawing;
+	}
+
+	if(keyboard->keyJustUp(GLFW_KEY_1)){
+		cycleCamera();
+	}
 
 	box2dWorld->update(_step);
 
@@ -167,13 +184,14 @@ void TTFB_StageScene::update(Step * _step){
 }
 
 void TTFB_StageScene::render(sweet::MatrixStack * _matrixStack, RenderOptions * _renderOptions){
-	clear();
 
 	screenFBO->resize(game->viewPortWidth, game->viewPortHeight);
 	//Bind frameBuffer
 	screenFBO->bindFrameBuffer();
 	//render the scene to the buffer
-	
+
+	//_renderOptions->depthEnabled = false;
+	_renderOptions->clear();
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	Scene::render(_matrixStack, _renderOptions);
 
@@ -200,5 +218,5 @@ void TTFB_StageScene::unload(){
 }
 
 TTFB_Actor * TTFB_StageScene::createActor(std::string _name) {
-	return new TTFB_Actor(_name, box2dWorld, bulletWorld, this, font, textShader, baseShader);
+	return new TTFB_Actor(_name, box2dWorld, bulletWorld, font, textShader, baseShader);
 }

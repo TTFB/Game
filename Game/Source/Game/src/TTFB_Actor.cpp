@@ -11,14 +11,15 @@
 #include <SpriteSheetAnimation.h>
 #include <TTFB_Subscription.h>
 #include <Box2DSprite.h>
+#include <RenderOptions.h>
 
-TTFB_Actor::TTFB_Actor(std::string _name, Box2DWorld * _world, BulletWorld * _bulletWorld, Scene * _scene, Font * _font, Shader * _textShader, Shader * _shader) :
+TTFB_Actor::TTFB_Actor(std::string _name, Box2DWorld * _world, BulletWorld * _bulletWorld, Font * _font, Shader * _textShader, Shader * _shader) :
 	Box2DSuperSprite(_world, 0),
-	speechArea(new TextArea(_bulletWorld, _scene, _font, _textShader, 200.0f)),
+	speechArea(new TextArea(_bulletWorld, _font, _textShader, 1000.0f)),
 	moveDirection(0),
 	saySubscription(new TTFB_Subscription()),
 	moveSubscription(new TTFB_Subscription()),
-	speechAreaScale(0.05f)
+	speechAreaScale(0.01f)
 {
 	setShader(_shader, true);
 
@@ -30,7 +31,7 @@ TTFB_Actor::TTFB_Actor(std::string _name, Box2DWorld * _world, BulletWorld * _bu
 	head     = new Box2DSprite(_world, TTFB_ResourceManager::scenario->getTextureSampler(_name + "Head")->textureSampler);
 	leftArm  = new Box2DSprite(_world, TTFB_ResourceManager::scenario->getTextureSampler(_name + "LeftArm")->textureSampler);
 	rightArm = new Box2DSprite(_world, TTFB_ResourceManager::scenario->getTextureSampler(_name + "RightArm")->textureSampler);
-	legs	     = new Box2DSprite(_world, TTFB_ResourceManager::scenario->getTextureSampler(_name + "Legs")->textureSampler);
+	legs	 = new Box2DSprite(_world, TTFB_ResourceManager::scenario->getTextureSampler(_name + "Legs")->textureSampler);
 
 	torso->scale    = 0.01f;
 	head->scale     = 0.01f;
@@ -62,6 +63,8 @@ TTFB_Actor::TTFB_Actor(std::string _name, Box2DWorld * _world, BulletWorld * _bu
 	speechArea->setBackgroundColour(1.0f, 1.0f, 1.0f, 1.0f);
 	speechArea->horizontalAlignment = kCENTER;
 	speechArea->setVisible(false);
+	speechArea->background->mesh->pushTexture2D(TTFB_ResourceManager::scenario->getTexture("speechBubble")->texture);
+	speechArea->setPaddingBottom(50.f);
 
 	//SpriteSheetAnimation * shWalk = new SpriteSheetAnimation(TTFB_ResourceManager::scenario->getTexture("SPRITESHEET")->texture, 0.1f);
 	//shWalk->pushFramesInRange(0, 26, 128, 150);
@@ -73,17 +76,17 @@ TTFB_Actor::TTFB_Actor(std::string _name, Box2DWorld * _world, BulletWorld * _bu
 	//torso->addAnimation("stand", shStand, true);
 
 	// make the root component the torso
-	addComponent(&torso);
-	addComponent(&head);
 	addComponent(&leftArm);
 	addComponent(&rightArm);
 	addComponent(&legs);
+	addComponent(&torso);
+	addComponent(&head);
 	rootComponent = torso;
 
 	b2RevoluteJointDef jth;
 	jth.bodyA = torso->body;
 	jth.bodyB = head->body;
-	jth.localAnchorA.Set(0, 0.5f * torso->getCorrectedHeight());
+	jth.localAnchorA.Set(0, 0.4f * torso->getCorrectedHeight());
 	jth.localAnchorB.Set(0, -0.5f * head->getCorrectedHeight());
 	jth.collideConnected = false;
 	jth.enableLimit = true;
@@ -98,7 +101,7 @@ TTFB_Actor::TTFB_Actor(std::string _name, Box2DWorld * _world, BulletWorld * _bu
 	b2RevoluteJointDef jtar;
 	jtar.bodyA = torso->body;
 	jtar.bodyB = rightArm->body;
-	jtar.localAnchorA.Set(0.5f * torso->getCorrectedWidth(), 0.5f * torso->getCorrectedHeight());
+	jtar.localAnchorA.Set(0.3f * torso->getCorrectedWidth(), 0.5f * torso->getCorrectedHeight());
 	jtar.localAnchorB.Set(-0.5f * rightArm->getCorrectedWidth(), 0.5f * rightArm->getCorrectedHeight());
 	jtar.collideConnected = false;
 	jtar.enableLimit = true;
@@ -113,7 +116,7 @@ TTFB_Actor::TTFB_Actor(std::string _name, Box2DWorld * _world, BulletWorld * _bu
 	b2RevoluteJointDef jtal;
 	jtal.bodyA = torso->body;
 	jtal.bodyB = leftArm->body;
-	jtal.localAnchorA.Set(-0.5f * torso->getCorrectedWidth(), 0.5f * torso->getCorrectedHeight());
+	jtal.localAnchorA.Set(-0.3f * torso->getCorrectedWidth(), 0.5f * torso->getCorrectedHeight());
 	jtal.localAnchorB.Set(0.5f * leftArm->getCorrectedWidth(), 0.5f * leftArm->getCorrectedHeight());
 	jtal.collideConnected = false;
 	jtal.enableLimit = true;
@@ -128,7 +131,7 @@ TTFB_Actor::TTFB_Actor(std::string _name, Box2DWorld * _world, BulletWorld * _bu
 	b2RevoluteJointDef jl;
 	jl.bodyA = torso->body;
 	jl.bodyB = legs->body;
-	jl.localAnchorA.Set(0, -0.5f * torso->getCorrectedHeight());
+	jl.localAnchorA.Set(0, -0.4f * torso->getCorrectedHeight());
 	jl.localAnchorB.Set(0,  0.5f * legs->getCorrectedHeight());
 	jl.collideConnected = false;
 	jl.enableLimit = true;
@@ -199,4 +202,10 @@ void TTFB_Actor::update(Step* _step) {
 		head->body->GetWorldCenter().y + speechArea->getHeight() * 0.5f * speechAreaScale + 1.0f,
 		speechArea->firstParent()->getTranslationVector().z, false);
 	Box2DSuperSprite::update(_step);
+}
+
+void TTFB_Actor::render(sweet::MatrixStack* _matrixStack, RenderOptions* _renderOptions) {
+	glDisable(GL_DEPTH_TEST);
+	Entity::render(_matrixStack, _renderOptions);
+	glEnable(GL_DEPTH_TEST);
 }

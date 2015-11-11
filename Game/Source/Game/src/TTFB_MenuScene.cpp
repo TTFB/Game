@@ -15,6 +15,7 @@
 #include <Mouse.h>
 #include <Game.h>
 #include <TextArea.h>
+#include <RenderOptions.h>
 
 TTFB_MenuScene::TTFB_MenuScene(Game* _game)  :
 	Scene(_game),
@@ -24,7 +25,7 @@ TTFB_MenuScene::TTFB_MenuScene(Game* _game)  :
 	baseShader(new ComponentShaderBase(true)),
 	characterShader(new ComponentShaderBase(true)),
 	textShader(new ComponentShaderText(true)),
-	uiLayer(this, 0,0,0,0),
+	uiLayer(0,0,0,0),
 	font(new Font("assets/engine basics/OpenSans-Regular.ttf", 32, true)) {
 
 	bulletWorld = new BulletWorld();
@@ -74,18 +75,45 @@ TTFB_MenuScene::TTFB_MenuScene(Game* _game)  :
 	mouseIndicator->mesh->dirty = true;
 	mouseIndicator->setShader(uiLayer.shader, true);
 
-	TextArea * playButton = new TextArea(bulletWorld, this, font, textShader, 200);
+	VerticalLinearLayout * buttonLayout = new VerticalLinearLayout(bulletWorld);
+	buttonLayout->setRationalWidth(1, &uiLayer);
+	buttonLayout->setRationalHeight(1, &uiLayer);
+	buttonLayout->horizontalAlignment = kCENTER;
+	buttonLayout->verticalAlignment   = kMIDDLE;
+	uiLayer.addChild(buttonLayout);
 
-	playButton->onClickFunction = [=](NodeUI * _node){
+	NodeUI * logo = new NodeUI(bulletWorld);
+	logo->setPixelWidth(759);
+	logo->setPixelHeight(557);
+	logo->background->mesh->pushTexture2D(TTFB_ResourceManager::scenario->getTexture("logo")->texture);
+	buttonLayout->addChild(logo);
+
+
+	TextArea * playButton = new TextArea(bulletWorld, font, textShader, 200);
+
+	playButton->onClickFunction = [=](){
 		game->switchScene("stageScene", false);
 	};
 
+	playButton->onMouseInFunction = [=](){
+		playButton->setBackgroundColour(1, 0, 0, 1);
+	};
+
+	playButton->onMouseOutFunction = [=](){
+		playButton->setBackgroundColour(1, 1, 1, 1);
+	};
+
+	playButton->onMouseDownFunction = [=](){
+		playButton->setBackgroundColour(0, 0, 1, 1);
+	};
+
+	playButton->horizontalAlignment = kCENTER;
+	playButton->verticalAlignment = kMIDDLE;
 	playButton->setMouseEnabled(true);
 	playButton->setText(L"PLAY");
 	playButton->setBackgroundColour(1.0f, 1.0f, 1.0f, 1.0f);
-	uiLayer.addChild(playButton);
+	buttonLayout->addChild(playButton);
 	playButton->makeLayoutDirty();
-	clearColor[0] = 1.0f;
 }
 
 TTFB_MenuScene::~TTFB_MenuScene() {
@@ -124,7 +152,7 @@ void TTFB_MenuScene::update(Step* _step) {
 }
 
 void TTFB_MenuScene::render(sweet::MatrixStack* _matrixStack, RenderOptions* _renderOptions) {
-	clear();
+	_renderOptions->clear();
 	screenFBO->resize(game->viewPortWidth, game->viewPortHeight);
 	//Bind frameBuffer
 	screenFBO->bindFrameBuffer();

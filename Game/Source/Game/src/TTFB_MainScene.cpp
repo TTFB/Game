@@ -52,9 +52,11 @@
 TTFB_MainScene::TTFB_MainScene(Game * _game) :
 	TTFB_StageScene(_game, 50.0f)
 {
+
 	SpotLight * light2 = new SpotLight(glm::vec3(0, 0, -1), glm::vec3(1,1,1), 45.f, 0.01f, 0.001f, -1.f);
 	lights.push_back(light2);
-	debugCam->childTransform->addChild(light2);
+	childTransform->addChild(light2);
+	light2->firstParent()->translate(0, 0, 30);
 
 	TTFB_Actor * ent = createActor("kingArthur");
 	childTransform->addChild(ent);
