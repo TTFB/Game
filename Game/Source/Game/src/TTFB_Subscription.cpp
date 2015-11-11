@@ -12,4 +12,5 @@ void TTFB_Subscription::publish() {
 			subscribers[i]();
 		}
 	}
+	subscribers.clear();
 }

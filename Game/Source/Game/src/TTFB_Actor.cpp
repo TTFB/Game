@@ -39,16 +39,16 @@ TTFB_Actor::TTFB_Actor(std::string _name, Box2DWorld * _world, BulletWorld * _bu
 	rightArm->scale = 0.01f;
 	legs->scale     = 0.01f;
 
-	head->body->SetGravityScale(-0.3f);
-	leftArm->body->SetGravityScale(0.3f);
-	rightArm->body->SetGravityScale(0.3f);
-	legs->body->SetGravityScale(0.3f);
+	//head->body->SetGravityScale(-0.3f);
+	//leftArm->body->SetGravityScale(0.3f);
+	///rightArm->body->SetGravityScale(0.3f);
+	//legs->body->SetGravityScale(0.3f);
 
-	torso->createFixture(filt)->SetDensity(0.f);
-	head->createFixture(filt)->SetDensity(0.f);
-	leftArm->createFixture(filt)->SetDensity(0.f);
-	rightArm->createFixture(filt)->SetDensity(0.f);
-	legs->createFixture(filt)->SetDensity(100000.0f);
+	torso->createFixture(filt)->SetDensity(1.f);
+	head->createFixture(filt)->SetDensity(1.f);
+	leftArm->createFixture(filt)->SetDensity(1.f);
+	rightArm->createFixture(filt)->SetDensity(1.f);
+	legs->createFixture(filt)->SetDensity(1.f);
 
 	torso->maxVelocity = b2Vec2(5.0f, NO_VELOCITY_LIMIT);
 
@@ -64,7 +64,7 @@ TTFB_Actor::TTFB_Actor(std::string _name, Box2DWorld * _world, BulletWorld * _bu
 	speechArea->horizontalAlignment = kCENTER;
 	speechArea->setVisible(false);
 	speechArea->background->mesh->pushTexture2D(TTFB_ResourceManager::scenario->getTexture("speechBubble")->texture);
-	speechArea->setPaddingBottom(50.f);
+	speechArea->setPadding(15, 15, 50, 15);
 
 	//SpriteSheetAnimation * shWalk = new SpriteSheetAnimation(TTFB_ResourceManager::scenario->getTexture("SPRITESHEET")->texture, 0.1f);
 	//shWalk->pushFramesInRange(0, 26, 128, 150);
@@ -159,7 +159,7 @@ TTFB_Subscription * TTFB_Actor::move(float _moveBy) {
 	if(firstParent() != nullptr){
 		when([target, this](){
 			float curX = rootComponent->body->GetPosition().x;
-			return abs(curX) >= abs(target);
+			return moveDirection > 0 ? curX > target : curX < target;
 		},
 		[this](){
 			moveDirection = 0;
@@ -191,13 +191,56 @@ void TTFB_Actor::flip() {
 	}
 }
 
+void TTFB_Actor::breakLeftArmJoint() {
+	breakJoint(leftArm);
+}
+
+void TTFB_Actor::breakRightArmJoint() {
+	breakJoint(rightArm);
+}
+
+void TTFB_Actor::breakLegsJoint() {
+	breakJoint(legs);
+}
+
+void TTFB_Actor::applyImpulseLeftArm(float _x, float _y) {
+	b2Vec2 center = leftArm->body->GetWorldCenter();
+	leftArm->applyLinearImpulse(_x ,_y, center.x, center.y);
+}
+
+void TTFB_Actor::applyImpulseRighttArm(float _x, float _y) {
+	b2Vec2 center = rightArm->body->GetWorldCenter();
+	rightArm->applyLinearImpulse(_x ,_y, center.x, center.y);
+}
+
+void TTFB_Actor::applyImpulseLegs(float _x, float _y) {
+	b2Vec2 center = legs->body->GetWorldCenter();
+	legs->applyLinearImpulse(_x ,_y, center.x, center.y);
+}
+
+void TTFB_Actor::applyImpulseHead(float _x, float _y) {
+	b2Vec2 center = head->body->GetWorldCenter();
+	head->applyLinearImpulse(_x ,_y, center.x, center.y);
+}
+
+void TTFB_Actor::breakHeadJoint() {
+	breakJoint(head);
+}
+
+void TTFB_Actor::breakJoint(Box2DSprite* _sprite) {
+	world->b2world->DestroyJoint(_sprite->body->GetJointList()->joint);
+}
+
 float TTFB_Actor::getLegsOffset() {
 	return torso->getCorrectedHeight() * 0.5 + legs->getCorrectedHeight();
 }
 
 void TTFB_Actor::update(Step* _step) {
 	TTFB_Whenable::update(_step);
-	rootComponent->setTranslationPhysical(1.0f * moveDirection * 0.05, 0.f, 0.f, true);
+	float curX = rootComponent->body->GetPosition().x;
+	float curY = rootComponent->body->GetPosition().y;
+	float targX = curX + (1.0f * moveDirection * 0.05);
+	rootComponent->setTranslationPhysical(targX, curY, 0.f);
 	speechArea->firstParent()->translate(head->body->GetWorldCenter().x - speechArea->getWidth() * 0.5f * speechAreaScale,
 		head->body->GetWorldCenter().y + speechArea->getHeight() * 0.5f * speechAreaScale + 1.0f,
 		speechArea->firstParent()->getTranslationVector().z, false);

@@ -48,6 +48,7 @@
 #include <BulletMeshEntity.h>
 #include <TextArea.h>
 #include <SpriteSheetAnimation.h>
+#include <Box2DSprite.h>
 
 TTFB_MainScene::TTFB_MainScene(Game * _game) :
 	TTFB_StageScene(_game, 50.0f)
@@ -58,15 +59,242 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 	childTransform->addChild(light2);
 	light2->firstParent()->translate(0, 0, 30);
 
-	TTFB_Actor * ent = createActor("kingArthur");
-	childTransform->addChild(ent);
-	ent->translateComponents(0.f, ent->getLegsOffset(), 0.f);
+	TTFB_Actor * kingArthur = createActor("kingArthur");
+	childTransform->addChild(kingArthur);
+	kingArthur->translateComponents(-10.f, kingArthur->getLegsOffset(), 0.f);
 
-	int * i = new int(0);
+	TTFB_Actor * blackKnight = createActor("kingArthur");
+	childTransform->addChild(blackKnight);
+	blackKnight->translateComponents(10.f, blackKnight->getLegsOffset(), 0.f);
+
+	blackKnight->flip();
+
+	eventQueue.at(4.0f, [=](){
+		blackKnight->say(2.0f, L"None shall pass", true);
+	});
+
+	eventQueue.at(6.5f, [=](){
+		kingArthur->say(1.0f, L"What?", true);
+	});
+
+	eventQueue.at(8.0f, [=](){
+		blackKnight->say(2.0f, L"None shall pass", true);
+	});
+	
+	eventQueue.at(10.5, [=](){
+		kingArthur->say(4.0f, L"I have no quarrel with you, good Sir knight", false);
+	});
+	
+	eventQueue.at(14.5f, [=](){
+		kingArthur->say(3.0f, L"but I must cross this bridge", true);
+	});
+
+	eventQueue.at(18.0f, [=](){
+		blackKnight->say(2.0f, L"Then you shall die", true);
+	});
+
+	eventQueue.at(20.0f, [=](){
+		kingArthur->say(3.0f, L"I command you as King of the Britons to stand aside!", true);
+		kingArthur->move(7.0f);
+	});
+
+	eventQueue.at(23.0f, [=](){
+		blackKnight->say(2.0f, L"I move for no man", true);
+	});
+
+	eventQueue.at(25.0f, [=](){
+		kingArthur->say(3.0f, L"So be it!", true)->subscribe(
+			[=](){
+				blackKnight->breakLeftArmJoint();		
+				blackKnight->applyImpulseLeftArm(0.0f, 5.0f);
+			}
+		);
+	});
+
+	eventQueue.at(29.0f, [=](){
+		kingArthur->say(2.0f, L"Now stand aside, worthy adversary", true);
+	});
+
+	eventQueue.at(31.0f, [=](){
+		blackKnight->say(2.0f, L"'Tis but a scratch", true);
+	});
+
+	eventQueue.at(33.0f, [=](){
+		kingArthur->say(2.0f, L"A scratch? Your arm's off", true);
+	});
+
+	eventQueue.at(35.0f, [=](){
+		blackKnight->say(2.0f, L"No it isn't", true);
+	});
+
+	eventQueue.at(37.0f, [=](){
+		kingArthur->say(2.0f, L"What's that then?", true);
+	});
+
+	eventQueue.at(39.0f, [=](){
+		blackKnight->say(2.0f, L"I've had worse", true);
+	});
+
+	eventQueue.at(41.0f, [=](){
+		kingArthur->say(2.0f, L"You liar!", true);
+	});
+
+	eventQueue.at(43.0f, [=](){
+		blackKnight->say(2.0f, L"Come on you pansy!", true);
+	});
+
+	eventQueue.at(45.0f, [=](){
+		kingArthur->say(1.0f, L"Hah", true)->subscribe(
+			[=](){
+				blackKnight->breakRightArmJoint();
+				blackKnight->applyImpulseRighttArm(0.0f, 5.0f);
+			}
+		);
+	});
+
+	eventQueue.at(47.0f, [=](){
+		kingArthur->say(2.0f, L"Victory is mine!", true);
+	});
+
+	eventQueue.at(47.0f, [=](){
+		kingArthur->say(2.0f, L"Victory is mine!", false);
+	});
+
+	eventQueue.at(49.0f, [=](){
+		kingArthur->say(2.0f, L"We thank the Lord, that in thy merc-", true);
+	});
+
+	eventQueue.at(50.7f, [=](){
+		blackKnight->say(2.0f, L"Come on then", true);
+	});
+
+	eventQueue.at(53.f, [=](){
+		kingArthur->say(1.0f, L"What?", true);
+	});
+
+	eventQueue.at(54.f, [=](){
+		blackKnight->say(1.5f, L"Have at you!", true);
+	});
+
+	eventQueue.at(55.5f, [=](){
+		kingArthur->say(2.0f, L"You are indeed brave, Sir Knight?", false);
+	});
+
+	eventQueue.at(57.5f, [=](){
+		kingArthur->say(1.5f, L"but this fight is mine", true);
+	});
+
+	eventQueue.at(59.f, [=](){
+		blackKnight->say(2.0f, L"Oh, had enough, eh?", true);
+	});
+
+	eventQueue.at(61.f, [=](){
+		kingArthur->say(2.0f, L"Look, you stupid bastard", false);
+	});
+
+	eventQueue.at(63.f, [=](){
+		kingArthur->say(2.0f, L"you've got no arms left", true);
+	});
+
+	eventQueue.at(65.f, [=](){
+		blackKnight->say(2.0f, L"Yes I have", true);
+	});
+
+	eventQueue.at(67.f, [=](){
+		kingArthur->say(1.0f, L"Look!", true);
+	});
+
+	eventQueue.at(68.f, [=](){
+		blackKnight->say(2.0f, L"Just a flesh wound", true);
+	});
+	
+	eventQueue.at(70.f, [=](){
+		kingArthur->say(2.0f, L"Look, stop that", true);
+	});
+
+	eventQueue.at(72.f, [=](){
+		blackKnight->say(2.0f, L"Chicken! Chicken!", true);
+	});
+
+	eventQueue.at(74.f, [=](){
+		kingArthur->say(2.0f, L"I'll have your legs. Right!", true)->subscribe(
+			[=](){
+				blackKnight->breakLegsJoint();
+				blackKnight->applyImpulseLegs(0.3f, 5.0f);
+				blackKnight->rootComponent->body->SetType(b2_dynamicBody);
+			}
+		);
+	});
+
+	eventQueue.at(78.f, [=](){
+		blackKnight->say(2.0f, L"Right, I'll do you for that!", true);
+	});
+
+	eventQueue.at(80.f, [=](){
+		kingArthur->say(2.0f, L"You'll what?", true);
+	});
+
+	eventQueue.at(82.f, [=](){
+		blackKnight->say(2.0f, L"Come 'ere!", true);
+	});
+
+	eventQueue.at(84.f, [=](){
+		kingArthur->say(2.0f, L"What are you going to do, bleed on me?", true);
+	});
+
+	eventQueue.at(86.f, [=](){
+		blackKnight->say(2.0f, L"I'm invincible!", true);
+	});
+
+	eventQueue.at(88.f, [=](){
+		kingArthur->say(2.0f, L"You're a loony", true);
+	});
+
+	eventQueue.at(90.f, [=](){
+		blackKnight->say(2.0f, L"The Black Knight always triumphs!", true);
+	});
+
+	eventQueue.at(92.f, [=](){
+		blackKnight->say(2.0f, L"Have at you! Come on then", true);
+	});
+
+	eventQueue.at(94.f, [=](){
+		blackKnight->say(2.0f, L"All right; we'll call it a draw", true);
+	});
+
+	eventQueue.at(96.f, [=](){
+		kingArthur->say(2.0f, L"Come, Patsy", true)->subscribe(
+			[=](){
+				kingArthur->move(15.0f);
+			}
+		);
+	});
+	
+	eventQueue.at(98.f, [=](){
+		blackKnight->say(2.0f, L"Oh, oh, I see, running away then", false);
+	});
+	
+	eventQueue.at(100.f, [=](){
+		blackKnight->say(2.0f, L"You yellow bastards!", false);
+	});
+
+	eventQueue.at(102.f, [=](){
+		blackKnight->say(2.0f, L"Come back here and takes what's coming to you", false);
+	});
+
+	eventQueue.at(104.f, [=](){
+		blackKnight->say(2.0f, L"I'll bite your legs off!", true);
+	});
+
+	//eventQueue.at(6.0f, [=](){
+	//	kingArthur->say(1.0f, L"What?", true);
+	//});
+
+	/*int * i = new int(0);
 
 	eventQueue.at(6.f, [=](){
 			//ent->setCurrentAnimation("walk");
-			ent->move(3.0f)->subscribe([=](){
+			kingArthur->move(3.0f)->subscribe([=](){
 				//ent->setCurrentAnimation("stand");
 			});
 		});
@@ -76,14 +304,14 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 		[](){std::cout<<"Failure";});
 	eventQueue.at(7.f,  [i](){*i = 1;});
 	eventQueue.at(7.f,  [i](){*i = 1;});
-	eventQueue.at(9.f,  [=](){ent->say(2.0f, L"fsdf",  true)->subscribe(
-			[=](){ent->say(2.0f, L"sasas", true);}
+	eventQueue.at(9.f,  [=](){kingArthur->say(2.0f, L"fsdf",  true)->subscribe(
+			[=](){kingArthur->say(2.0f, L"sasas", true);}
 		);
 	});
 	eventQueue.at(11.f, [=](){
 		//ent->setCurrentAnimation("walk");
-		ent->flip();
-		ent->move(-7.0f)->subscribe([=](){
+		kingArthur->flip();
+		kingArthur->move(-7.0f)->subscribe([=](){
 			//ent->setCurrentAnimation("stand");
 		});
 	}); 
@@ -92,9 +320,9 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 			return *i == 1;
 		},
 		[=](){
-			ent->say(3.0f, L"wwoowowowo", false);
+			kingArthur->say(3.0f, L"wwoowowowo", false);
 		}
-	);
+	);*/
 }
 
 TTFB_MainScene::~TTFB_MainScene(){

@@ -32,6 +32,16 @@ public:
 	virtual void flip();
 	virtual float getLegsOffset();
 
+	void breakLeftArmJoint();
+	void breakRightArmJoint();
+	void breakLegsJoint();
+	void breakHeadJoint();
+
+	void applyImpulseLeftArm(float _x, float _y);
+	void applyImpulseRighttArm(float _x, float _y);
+	void applyImpulseLegs(float _x, float _y);
+	void applyImpulseHead(float _x, float _y);
+
 private:
 	Box2DSprite * torso;
 	Box2DSprite * head;
@@ -44,4 +54,6 @@ private:
 	TTFB_Subscription * saySubscription;
 	int		   moveDirection;
 	float speechAreaScale;
+
+	void breakJoint(Box2DSprite * _sprite);
 };
