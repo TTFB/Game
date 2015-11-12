@@ -3,7 +3,9 @@
 #include<TTFB_EventQueue.h>
 
 TTFB_EventQueue::TTFB_EventQueue() :
-	TTFB_Whenable()
+	TTFB_Whenable(),
+	firstUpdate(true),
+	timeOffset(0.0f)
 {
 }
 
@@ -11,8 +13,12 @@ TTFB_EventQueue::~TTFB_EventQueue() {
 }
 
 void TTFB_EventQueue::update(Step* _step) {
+	if(firstUpdate) {
+		timeOffset = _step->time;
+		firstUpdate = false;
+	}
 	for(unsigned long int i = 0; i < events.size();) {
-		if(events[i]->getDoAtTime() <= _step->time && events[i]->getFuncCallCount() == 0) {
+		if(events[i]->getDoAtTime() <= _step->time - timeOffset && events[i]->getFuncCallCount() == 0) {
 			events[i]->call();
 			events.erase(events.begin() + i);
 		}else {
@@ -20,14 +26,14 @@ void TTFB_EventQueue::update(Step* _step) {
 		}
 	}
 	for(unsigned long int i = 0; i < expectations.size();) {
-		if(expectations[i].inTimeRange(_step->time) == 0){
+		if(expectations[i].inTimeRange(_step->time - timeOffset) == 0){
 			if(expectations[i].expectationMet()) {
 				expectations[i].success();
 				expectations.erase(expectations.begin() + i);
 			}else {
 				i++;
 			}
-		}else if(expectations[i].inTimeRange(_step->time) == 1){
+		}else if(expectations[i].inTimeRange(_step->time - timeOffset) == 1){
 			expectations[i].failure();
 			expectations.erase(expectations.begin() + i);
 		}else {

@@ -22,4 +22,6 @@ public:
 private:
 	std::vector<TTFB_Event * >  events;
 	std::vector<TTFB_Expectation> expectations;
+	bool firstUpdate;
+	float timeOffset;
 };
