@@ -49,6 +49,36 @@
       "id": "logo",
       "type": "texture",
       "src": "logo.png"
+    },
+    {
+      "id": "L1_CrowdNeutral",
+      "type": "texture",
+      "src": "Level1_Assets/Level1_Crowd_Neutral.png"
+    },
+    {
+      "id": "L1_Floor",
+      "type": "texture",
+      "src": "Level1_Assets/Level1_Floor.png"
+    },
+    {
+      "id": "L1_Background",
+      "type": "texture",
+      "src": "Level1_Assets/Level1_StageBackground.png"
+    },
+    {
+      "id": "L1_Bottom",
+      "type": "texture",
+      "src": "Level1_Assets/Level1_StageBottom.png"
+    },
+    {
+      "id": "L1_Foreground",
+      "type": "texture",
+      "src": "Level1_Assets/Level1_StageForeground.png"
+    },
+    {
+      "id": "L1_Top",
+      "type": "texture",
+      "src": "Level1_Assets/Level1_StageTop.png"
     }
   ]
 }
