@@ -54,7 +54,7 @@
 #include <TTFB_Controller.h>
 #include <RenderOptions.h>
 
-TTFB_StageScene::TTFB_StageScene(Game * _game, float _stageWidth) :
+TTFB_StageScene::TTFB_StageScene(Game * _game, float _stageWidth, std::string _floorTex, std::string _sideTex, std::string _backTex) :
 	Scene(_game),
 	screenSurfaceShader(new Shader("assets/engine basics/DefaultRenderSurface", false, true)),
 	screenSurface(new RenderSurface(screenSurfaceShader)),
@@ -92,14 +92,15 @@ TTFB_StageScene::TTFB_StageScene(Game * _game, float _stageWidth) :
 	stageCam = new PerspectiveCamera();
 	cameras.push_back(stageCam);
 	childTransform->addChild(stageCam);
-	stageCam->firstParent()->translate(0.0f, 10.f, 29.598f);
+	stageCam->firstParent()->translate(0.0f, 15.f, 29.598f);
 	stageCam->yaw = 90.0f;
+	stageCam->pitch = -7.f;
 	activeCamera = stageCam;
 	
 	// remove initial camera
-	childTransform->removeChild(cameras.at(0)->parents.at(0));
-	delete cameras.at(0)->parents.at(0);
-	cameras.pop_back();
+	//childTransform->removeChild(cameras.at(0)->parents.at(0));
+	//delete cameras.at(0)->parents.at(0);
+	//cameras.pop_back();
 
 	//
 	glm::uvec2 sd = sweet::getScreenDimensions();
@@ -121,12 +122,12 @@ TTFB_StageScene::TTFB_StageScene(Game * _game, float _stageWidth) :
 	mouseIndicator->mesh->dirty = true;
 	mouseIndicator->setShader(uiLayer.shader, true);
 
-	stage = new TTFB_Stage(_stageWidth, box2dWorld, baseShader);
+	stage = new TTFB_Stage(_stageWidth, box2dWorld, _floorTex, _sideTex, _backTex, baseShader);
 	childTransform->addChild(stage);
 
 	audience = new TTFB_Audience(baseShader);
-	childTransform->addChild(audience)->translate(0.f, 15.f, 5.0f);
-	audience->firstParent()->scale(50.0f);
+	childTransform->addChild(audience)->translate(0.f, 17.f, 20.0f);
+	audience->firstParent()->scale(25.0f);
 
 	// Add the debug drawer last so it appears on top
 	childTransform->addChild(box2dDebug, true);

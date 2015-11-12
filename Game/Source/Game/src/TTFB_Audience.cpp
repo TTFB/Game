@@ -8,7 +8,7 @@
 TTFB_Audience::TTFB_Audience(Shader * _shader) :
 	Sprite(_shader)
 {
-	mesh->pushTexture2D(TTFB_ResourceManager::scenario->getTexture("audience")->texture);
+	mesh->pushTexture2D(TTFB_ResourceManager::scenario->getTexture("L1_CrowdNeutral")->texture);
 }
 
 TTFB_Audience::~TTFB_Audience() {

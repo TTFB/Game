@@ -79,6 +79,11 @@
       "id": "L1_Top",
       "type": "texture",
       "src": "Level1_Assets/Level1_StageTop.png"
+    },
+    {
+      "id": "L1_Side",
+      "type": "texture",
+      "src": "Level1_Assets/Level1_SideWalls.png"
     }
   ]
 }
