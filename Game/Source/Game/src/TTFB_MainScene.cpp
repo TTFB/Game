@@ -51,7 +51,7 @@
 #include <Box2DSprite.h>
 
 TTFB_MainScene::TTFB_MainScene(Game * _game) :
-	TTFB_StageScene(_game, 100.0f, "L1_Floor", "L1_Side", "L1_Background")
+	TTFB_StageScene(_game, 100.0f, "L1_Floor", "L1_Side", "L1_Background", "L1_Top", "L1_Bottom")
 {
 
 	SpotLight * light2 = new SpotLight(glm::vec3(0, 0, -1), glm::vec3(1,1,1), 45.f, 0.01f, 0.001f, -1.f);

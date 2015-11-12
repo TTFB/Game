@@ -54,7 +54,7 @@
 #include <TTFB_Controller.h>
 #include <RenderOptions.h>
 
-TTFB_StageScene::TTFB_StageScene(Game * _game, float _stageWidth, std::string _floorTex, std::string _sideTex, std::string _backTex) :
+TTFB_StageScene::TTFB_StageScene(Game * _game, float _stageWidth, std::string _floorTex, std::string _sideTex, std::string _backTex, std::string _topTex, std::string _frontTex) :
 	Scene(_game),
 	screenSurfaceShader(new Shader("assets/engine basics/DefaultRenderSurface", false, true)),
 	screenSurface(new RenderSurface(screenSurfaceShader)),
@@ -122,7 +122,7 @@ TTFB_StageScene::TTFB_StageScene(Game * _game, float _stageWidth, std::string _f
 	mouseIndicator->mesh->dirty = true;
 	mouseIndicator->setShader(uiLayer.shader, true);
 
-	stage = new TTFB_Stage(_stageWidth, box2dWorld, _floorTex, _sideTex, _backTex, baseShader);
+	stage = new TTFB_Stage(_stageWidth, box2dWorld, _floorTex, _sideTex, _backTex, _topTex, _frontTex, baseShader);
 	childTransform->addChild(stage);
 
 	audience = new TTFB_Audience(baseShader);

@@ -80,6 +80,6 @@ public:
 
 	virtual TTFB_Actor * createActor(std::string _name);
 
-	TTFB_StageScene(Game * _game, float _stageWidth, std::string _floorTex, std::string _sideTex, std::string _backTex);
+	TTFB_StageScene(Game * _game, float _stageWidth, std::string _floorTex, std::string _sideTex, std::string _backTex, std::string _topTex, std::string _frontTex);
 	~TTFB_StageScene();
 };

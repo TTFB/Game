@@ -6,7 +6,7 @@
 #include <MeshInterface.h>
 #include <TTFB_ResourceManager.h>
 
-TTFB_Stage::TTFB_Stage(float _width, Box2DWorld * _world, std::string _floorTex, std::string _sideTex, std::string _backTex, Shader * _shader) : 
+TTFB_Stage::TTFB_Stage(float _width, Box2DWorld * _world, std::string _floorTex, std::string _sideTex, std::string _backTex, std::string _topTex, std::string _bottomTex, Shader * _shader) : 
 	Entity(),
 	width(_width)
 {
@@ -32,13 +32,33 @@ TTFB_Stage::TTFB_Stage(float _width, Box2DWorld * _world, std::string _floorTex,
 	stageFrontLeft->mesh->pushTexture2D(TTFB_ResourceManager::scenario->getTexture(_sideTex)->texture);
 	childTransform->addChild(stageFrontLeft);
 	stageFrontLeft->firstParent()->scale(-_width * 0.5f, 50.0f, 1.f);
-	stageFrontLeft->firstParent()->translate(-_width * 0.5f, 15.f, 3.f);
+	stageFrontLeft->firstParent()->translate(-_width * 0.5f, 15.f, 3.5f);
 
 	stageFrontRight = new MeshEntity(MeshFactory::getPlaneMesh(), _shader);
 	stageFrontRight->mesh->pushTexture2D(TTFB_ResourceManager::scenario->getTexture(_sideTex)->texture);
 	childTransform->addChild(stageFrontRight);
 	stageFrontRight->firstParent()->scale(_width * 0.5f, 50.0f, 1.f);
-	stageFrontRight->firstParent()->translate(_width * 0.5f, 15.f, 3.f);
+	stageFrontRight->firstParent()->translate(_width * 0.5f, 15.f, 3.5f);
+
+	{
+		stageTop = new MeshEntity(MeshFactory::getPlaneMesh(), _shader);
+		Texture * top = TTFB_ResourceManager::scenario->getTexture(_topTex)->texture;
+		stageTop->mesh->pushTexture2D(top);
+		float ratio = (float)top->height/(float)top->width;
+		childTransform->addChild(stageTop);
+		stageTop->firstParent()->scale(_width * 0.5f,  ratio * _width * 0.5f, 1.f);
+		stageTop->firstParent()->translate(0.f, 25.f, 3.0f);
+	}
+
+	{
+		stageBottom = new MeshEntity(MeshFactory::getPlaneMesh(), _shader);
+		Texture * bottom = TTFB_ResourceManager::scenario->getTexture(_bottomTex)->texture;
+		stageBottom->mesh->pushTexture2D(bottom);
+		float ratio = (float)bottom->height/(float)bottom->width;
+		childTransform->addChild(stageBottom);
+		stageBottom->firstParent()->scale(_width * 0.65f,  ratio * _width * 0.65f, 1.f);
+		stageBottom->firstParent()->translate(0.f, -0.5f, 3.0f);
+	}
 }
 
 TTFB_Stage::~TTFB_Stage() {
