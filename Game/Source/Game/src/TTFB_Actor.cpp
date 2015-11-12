@@ -64,7 +64,8 @@ TTFB_Actor::TTFB_Actor(std::string _name, Box2DWorld * _world, BulletWorld * _bu
 	speechArea->horizontalAlignment = kCENTER;
 	speechArea->setVisible(false);
 	speechArea->background->mesh->pushTexture2D(TTFB_ResourceManager::scenario->getTexture("speechBubble")->texture);
-	speechArea->setPadding(15, 15, 50, 15);
+	speechArea->setPadding(50, 50, 100, 50);
+	speechArea->setWrapMode(kWORD);
 
 	//SpriteSheetAnimation * shWalk = new SpriteSheetAnimation(TTFB_ResourceManager::scenario->getTexture("SPRITESHEET")->texture, 0.1f);
 	//shWalk->pushFramesInRange(0, 26, 128, 150);
