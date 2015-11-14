@@ -6,16 +6,17 @@
 #define SET_BUTTON_TWO      7
 #define SET_BUTTON_THREE    8
 #define SET_BUTTON_FOUR     9
-#define SPECIAL_FOG SWITCH  10
+#define SPECIAL_FOG_SWITCH  10
 #define SPECIAL_FIRE_BUTTON 11
 
 #define SPECIAL_CURTAIN_POT        A0
 #define SPECIAL_LIGHT_SLIDER_ONE   A1
 #define SPECIAL_LIGHT_SLIDER_TWO   A2
-#degine SPECIAL_LIGHT_SLIDER_THREE A3
+#define SPECIAL_LIGHT_SLIDER_THREE A3
 
 void setup() {
   analogReference(EXTERNAL); 
+  Serial.begin(9600);
 }
 
 void loop() {
@@ -33,7 +34,7 @@ void loop() {
 
   int specialCurtainPot       = analogRead(SPECIAL_CURTAIN_POT);
   int specialLightSliderOne   = analogRead(SPECIAL_LIGHT_SLIDER_ONE);
-  int specialLightSliderTwo   = analogRead(SPEICAL_LIGHT_SLIDER_TWO);
+  int specialLightSliderTwo   = analogRead(SPECIAL_LIGHT_SLIDER_TWO);
   int specialLightSliderThree = analogRead(SPECIAL_LIGHT_SLIDER_THREE);
 
   Serial.print("[");

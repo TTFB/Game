@@ -54,10 +54,17 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 	TTFB_StageScene(_game, 100.0f, "L1_Floor", "L1_Side", "L1_Background", "L1_Top", "L1_Bottom")
 {
 
-	SpotLight * light2 = new SpotLight(glm::vec3(0, 0, -1), glm::vec3(1,1,1), 45.f, 0.01f, 0.001f, -1.f);
+	//PointLight * light2 = new PointLight(glm::vec3(1, 1, 1),  0.01f, 0.001f, -1.f);
+
+	SpotLight * light2 = new SpotLight(glm::vec3(0, 0, -1), glm::vec3(0,0,0), 45.f, 0.01f, 0.001f, -1.f);
 	lights.push_back(light2);
 	childTransform->addChild(light2);
 	light2->firstParent()->translate(0, 0, 30);
+
+	SpotLight * light3 = new SpotLight(glm::vec3(0, 0, -1), glm::vec3(1,1,1), 45.f, 0.01f, 0.001f, -1.f);
+	lights.push_back(light3);
+	childTransform->addChild(light3);
+	light3->firstParent()->translate(0, 0, 30);
 
 	TTFB_Actor * kingArthur = createActor("kingArthur");
 	childTransform->addChild(kingArthur);
@@ -330,8 +337,8 @@ TTFB_MainScene::~TTFB_MainScene(){
 
 void TTFB_MainScene::update(Step * _step){
 
-	float lightOneVal = controller->soundButtonOne.currentState;
-	lights[0]->setIntensities(glm::vec3(lightOneVal + 0.5f));
+	//float lightOneVal = controller->soundButtonOne.currentState;
+	//lights[0]->setIntensities(glm::vec3(lightOneVal + 0.5f));
 
 	eventQueue.update(_step);
 	TTFB_StageScene::update(_step);
