@@ -1,0 +1,70 @@
+Margomil 
+
+Spin around the map - When a wall is hit bounce off in opposite direction
+
+Hit by player -> Was three for current plate? 
+If yes then lose plate
+
+Last plate?
+If yes show eye
+otherwise resume original pattern
+
+Once the player has knocked off enough sections they can use 
+the tornado to stun the boss and hit the eye that comes out
+
+
+Moldorm
+
+Move across map changing direction when a wall is hit
+
+When player hits tail -> contract body parts and spin
+
+Was tail hit three times for current anger level?
+	Yes-> Last anger level?
+		Yes -> Die
+		No  -> Increase speed, become more red, reusume previous behaviour
+	No -> resume previous begaviour
+
+
+
+Stalbind
+
+Is player on shield?
+	Yes -> Look around confused
+	No  -> Shoot black magic at player, swing sword
+			Raise sheild when player attacks
+
+	Taken three hits while holding sheild ? 
+	Yes -> Throw sheild away
+				Perofrm spin attack moving around map
+				become dizzy for a bit afterwards
+				Do slash attack 
+				Repeat
+
+	Taken three hits after throwing shield?
+	Yes -> 	Flash Red
+			Take off head
+				Head flys around map shooting black magic
+				Perfom slash attack
+				
+	After some more hits die
+
+
+
+Zaganaga 
+
+Move from pillar to pillar, showing a trail of dirt
+Once a pillar is reached pop up 
+
+Once hit a number of times change forms opening flower
+	Start shooting smaller flowers at the player
+	continue moving from pillar to pillar
+
+
+Spin and move around map->Lose body piece
+Lose body piece->Expose eye
+Expose eye->Regain body parts
+Expose eye->Hit by player
+Hit by player->Take damage
+Take Damage->Regain body parts
+Regain body parts->Spin and move around map
