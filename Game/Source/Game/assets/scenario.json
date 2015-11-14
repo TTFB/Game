@@ -84,6 +84,36 @@
       "id": "L1_Side",
       "type": "texture",
       "src": "Level1_Assets/Level1_SideWalls.png"
+    },
+	{
+      "id": "L1_Tree1",
+      "type": "texture",
+      "src": "Level1_Assets/Level1_tree1.png"
+    },
+	{
+      "id": "L1_Tree2",
+      "type": "texture",
+      "src": "Level1_Assets/Level1_tree2.png"
+    },
+	{
+      "id": "L1_Bush",
+      "type": "texture",
+      "src": "Level1_Assets/Level1_bush.png"
+    },
+	{
+      "id": "L1_mattePainting",
+      "type": "texture",
+      "src": "Level1_Assets/Level1_mattePainting.png"
+    },
+	{
+      "id": "sword",
+      "type": "texture",
+      "src": "props/sword.png"
+    },
+	{
+      "id": "blood",
+      "type": "texture",
+      "src": "Particles/blood.png"
     }
   ]
 }
