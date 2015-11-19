@@ -166,6 +166,8 @@ void TTFB_StageScene::update(Step * _step){
 	glm::uvec2 sd = sweet::getScreenDimensions();
 	uiLayer.resize(0, sd.x, 0, sd.y);
 
+	uiLayer.update(_step);
+
 	mouseIndicator->parents.at(0)->translate(mouse->mouseX(), mouse->mouseY(), 0, false);
 
 	if(keyboard->keyJustDown(GLFW_KEY_F12)){

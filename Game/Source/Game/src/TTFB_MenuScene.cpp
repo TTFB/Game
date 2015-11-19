@@ -16,6 +16,10 @@
 #include <Game.h>
 #include <TextArea.h>
 #include <RenderOptions.h>
+#include <Resource.h>
+#include <PointLight.h>
+#include <MouseCameraController.h>
+
 
 TTFB_MenuScene::TTFB_MenuScene(Game* _game)  :
 	Scene(_game),
@@ -114,6 +118,19 @@ TTFB_MenuScene::TTFB_MenuScene(Game* _game)  :
 	playButton->setBackgroundColour(1.0f, 1.0f, 1.0f, 1.0f);
 	buttonLayout->addChild(playButton);
 	playButton->makeLayoutDirty();
+
+	PointLight * light2 = new PointLight(glm::vec3(1, 1, 1),  0.01f, 0.001f, -1.f);
+	lights.push_back(light2);
+	childTransform->addChild(light2);
+	light2->firstParent()->translate(0, 0, -5);
+
+	auto cheeseMesh = Resource::loadMeshFromObj("assets/meshes/cheese.obj");
+	cheese = new MeshEntity(cheeseMesh[0], baseShader);
+	childTransform->addChild(cheese);
+	cheese->firstParent()->scale(20);
+
+
+	camController = new MouseCameraController(debugCam);
 }
 
 TTFB_MenuScene::~TTFB_MenuScene() {
@@ -147,6 +164,8 @@ void TTFB_MenuScene::update(Step* _step) {
 	}
 
 	debugCam->update(_step);
+
+	camController->update(_step);
 
 	Scene::update(_step);
 }

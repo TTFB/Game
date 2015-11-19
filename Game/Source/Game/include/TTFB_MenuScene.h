@@ -54,6 +54,8 @@ public:
 
 	MousePerspectiveCamera * debugCam;
 	MouseCameraController * camController;
+
+	MeshEntity * cheese;
 	
 	Font * font;
 

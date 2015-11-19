@@ -49,11 +49,13 @@
 #include <TextArea.h>
 #include <SpriteSheetAnimation.h>
 #include <Box2DSprite.h>
+#include <TTFB_NewsArticle.h>
+#include <TTFB_Constants.h>
+#include <VerticalLinearLayout.h>
 
 TTFB_MainScene::TTFB_MainScene(Game * _game) :
 	TTFB_StageScene(_game, 100.0f, "L1_Floor", "L1_Side", "L1_Background", "L1_Top", "L1_Bottom")
 {
-
 	//PointLight * light2 = new PointLight(glm::vec3(1, 1, 1),  0.01f, 0.001f, -1.f);
 
 	SpotLight * light2 = new SpotLight(glm::vec3(0, 0, -1), glm::vec3(0,0,0), 45.f, 0.01f, 0.001f, -1.f);
@@ -74,6 +76,23 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 	childTransform->addChild(blackKnight);
 	blackKnight->translateComponents(10.f, blackKnight->getLegsOffset(), 0.f);
 
+	glm::uvec2 sd = sweet::getScreenDimensions();
+	uiLayer.resize(0, sd.x, 0, sd.y);
+
+	VerticalLinearLayout * articleContainer = new VerticalLinearLayout(bulletWorld);
+	articleContainer->horizontalAlignment = kCENTER;
+	articleContainer->verticalAlignment = kMIDDLE;
+	articleContainer->setRationalWidth(1, &uiLayer);
+	articleContainer->setRationalHeight(1, &uiLayer);
+
+	TTFB_NewsArticle * testArticle = new TTFB_NewsArticle(baseShader, BLACK_KNIGHT, 3);
+	testArticle->setPixelWidth(800);
+	testArticle->setPixelHeight(1000);
+
+	articleContainer->addChild(testArticle);
+
+	uiLayer.addChild(articleContainer);
+
 	blackKnight->flip();
 
 	eventQueue.at(4.0f, [=](){
@@ -81,7 +100,7 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 	});
 
 	eventQueue.at(6.5f, [=](){
-		kingArthur->say(1.0f, L"What?", true);
+		kingArthur->say(1.5f, L"What?", true);
 	});
 
 	eventQueue.at(8.0f, [=](){
@@ -339,6 +358,8 @@ void TTFB_MainScene::update(Step * _step){
 
 	//float lightOneVal = controller->soundButtonOne.currentState;
 	//lights[0]->setIntensities(glm::vec3(lightOneVal + 0.5f));
+
+
 
 	eventQueue.update(_step);
 	TTFB_StageScene::update(_step);
