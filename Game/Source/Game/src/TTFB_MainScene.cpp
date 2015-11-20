@@ -72,7 +72,7 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 	childTransform->addChild(kingArthur);
 	kingArthur->translateComponents(-10.f, kingArthur->getLegsOffset(), 0.f);
 
-	TTFB_Actor * blackKnight = createActor("kingArthur");
+	TTFB_Actor * blackKnight = createActor("blackKnight");
 	childTransform->addChild(blackKnight);
 	blackKnight->translateComponents(10.f, blackKnight->getLegsOffset(), 0.f);
 
@@ -237,7 +237,7 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 	eventQueue.at(74.f, [=](){
 		kingArthur->say(2.0f, L"I'll have your legs. Right!", true)->subscribe(
 			[=](){
-				blackKnight->breakLegsJoint();
+				blackKnight->breakLeftLegJoint();
 				blackKnight->applyImpulseLegs(0.3f, 5.0f);
 				blackKnight->rootComponent->body->SetType(b2_dynamicBody);
 			}

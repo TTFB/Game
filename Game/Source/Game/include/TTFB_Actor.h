@@ -37,7 +37,8 @@ public:
 
 	void breakLeftArmJoint();
 	void breakRightArmJoint();
-	void breakLegsJoint();
+	void breakLeftLegJoint();
+	void breakRightLegJoint();
 	void breakHeadJoint();
 
 	void applyImpulseLeftArm(float _x, float _y);
@@ -56,7 +57,8 @@ private:
 	Box2DSprite * head;
 	Box2DSprite * leftArm;
 	Box2DSprite * rightArm;
-	Box2DSprite * legs;
+	Box2DSprite* rightLeg;
+	Box2DSprite* leftLeg;
 
 	TextArea * speechArea; 
 	TTFB_Subscription * moveSubscription;

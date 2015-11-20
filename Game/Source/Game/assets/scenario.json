@@ -33,12 +33,12 @@
     {
       "id": "kingArthurRightLeg",
       "type": "textureSampler",
-      "src": "kingArthur/leg_right.png.def"
+      "src": "kingArthur/leg_left.png.def"
     },
 	{
       "id": "kingArthurLeftLeg",
       "type": "textureSampler",
-      "src": "kingArthur/leg_left.png.def"
+      "src": "kingArthur/leg_right.png.def"
     },
 	{
       "id": "blackKnightHead",
@@ -53,12 +53,12 @@
     {
       "id": "blackKnightLeftArm",
       "type": "textureSampler",
-      "src": "blackKnight/arm_left.png.def"
+      "src": "blackKnight/arm_right.png.def"
     },
     {
       "id": "blackKnightRightArm",
       "type": "textureSampler",
-      "src": "blackKnight/arm_right.png.def"
+      "src": "blackKnight/arm_left.png.def"
     },
     {
       "id": "blackKnightRightLeg",

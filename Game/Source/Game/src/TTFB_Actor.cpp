@@ -32,13 +32,15 @@ TTFB_Actor::TTFB_Actor(std::string _name, Box2DWorld * _world, BulletWorld * _bu
 	head     = new Box2DSprite(_world, TTFB_ResourceManager::scenario->getTextureSampler(_name + "Head")->textureSampler);
 	leftArm  = new Box2DSprite(_world, TTFB_ResourceManager::scenario->getTextureSampler(_name + "LeftArm")->textureSampler);
 	rightArm = new Box2DSprite(_world, TTFB_ResourceManager::scenario->getTextureSampler(_name + "RightArm")->textureSampler);
-	legs	 = new Box2DSprite(_world, TTFB_ResourceManager::scenario->getTextureSampler(_name + "Legs")->textureSampler);
+	leftLeg	 = new Box2DSprite(_world, TTFB_ResourceManager::scenario->getTextureSampler(_name + "LeftLeg")->textureSampler);
+	rightLeg	 = new Box2DSprite(_world, TTFB_ResourceManager::scenario->getTextureSampler(_name + "RightLeg")->textureSampler);
 
 	torso->scale    = 0.01f;
 	head->scale     = 0.01f;
 	leftArm->scale  = 0.01f;
 	rightArm->scale = 0.01f;
-	legs->scale     = 0.01f;
+	leftLeg->scale     = 0.01f;
+	rightLeg->scale     = 0.01f;
 
 	//head->body->SetGravityScale(-0.3f);
 	//leftArm->body->SetGravityScale(0.3f);
@@ -49,7 +51,8 @@ TTFB_Actor::TTFB_Actor(std::string _name, Box2DWorld * _world, BulletWorld * _bu
 	head->createFixture(filt)->SetDensity(1.f);
 	leftArm->createFixture(filt)->SetDensity(1.f);
 	rightArm->createFixture(filt)->SetDensity(1.f);
-	legs->createFixture(filt)->SetDensity(1.f);
+	leftLeg->createFixture(filt)->SetDensity(1.f);
+	rightLeg->createFixture(filt)->SetDensity(1.f);
 
 	torso->maxVelocity = b2Vec2(5.0f, NO_VELOCITY_LIMIT);
 
@@ -80,7 +83,8 @@ TTFB_Actor::TTFB_Actor(std::string _name, Box2DWorld * _world, BulletWorld * _bu
 	// make the root component the torso
 	addComponent(&leftArm);
 	addComponent(&rightArm);
-	addComponent(&legs);
+	addComponent(&leftLeg);
+	addComponent(&rightLeg);
 	addComponent(&torso);
 	addComponent(&head);
 	rootComponent = torso;
@@ -132,9 +136,9 @@ TTFB_Actor::TTFB_Actor(std::string _name, Box2DWorld * _world, BulletWorld * _bu
 
 	b2RevoluteJointDef jl;
 	jl.bodyA = torso->body;
-	jl.bodyB = legs->body;
-	jl.localAnchorA.Set(0, -0.4f * torso->getCorrectedHeight());
-	jl.localAnchorB.Set(0,  0.5f * legs->getCorrectedHeight());
+	jl.bodyB = leftLeg->body;
+	jl.localAnchorA.Set(-0.3f * torso->getCorrectedWidth(), -0.4f * torso->getCorrectedHeight());
+	jl.localAnchorB.Set(0,  0.5f * leftLeg->getCorrectedHeight());
 	jl.collideConnected = false;
 	jl.enableLimit = true;
 	jl.enableMotor = true;
@@ -144,6 +148,22 @@ TTFB_Actor::TTFB_Actor(std::string _name, Box2DWorld * _world, BulletWorld * _bu
 	jl.lowerAngle = glm::radians(-15.f);
 	jl.upperAngle = glm::radians(15.f);
 	world->b2world->CreateJoint(&jl);
+	
+	b2RevoluteJointDef jr;
+	jr.bodyA = torso->body;
+	jr.bodyB = rightLeg->body;
+	jr.localAnchorA.Set(0.3f * torso->getCorrectedWidth(), -0.4f * torso->getCorrectedHeight());
+	jr.localAnchorB.Set(0,  0.5f * rightLeg->getCorrectedHeight());
+	jr.collideConnected = false;
+	jr.enableLimit = true;
+	jr.enableMotor = true;
+	jr.maxMotorTorque = 0;
+	jr.motorSpeed = 0;
+	jr.referenceAngle = 0;
+	jr.lowerAngle = glm::radians(-15.f);
+	jr.upperAngle = glm::radians(15.f);
+	world->b2world->CreateJoint(&jr);
+	
 }
 
 TTFB_Actor::~TTFB_Actor() {
@@ -189,7 +209,8 @@ void TTFB_Actor::flip() {
 	if(firstParent() != nullptr) {
 		rootComponent->meshTransform->scale(-1 * firstParent()->getScaleVector().x, 1.f, 1.f);
 		head->meshTransform->scale(-1 * firstParent()->getScaleVector().x, 1.f, 1.f);
-		legs->meshTransform->scale(-1 * firstParent()->getScaleVector().x, 1.f, 1.f);
+		leftLeg->meshTransform->scale(-1 * firstParent()->getScaleVector().x, 1.f, 1.f);
+		rightLeg->meshTransform->scale(-1 * firstParent()->getScaleVector().x, 1.f, 1.f);
 	}
 }
 
@@ -197,12 +218,16 @@ void TTFB_Actor::breakLeftArmJoint() {
 	breakJoint(leftArm);
 }
 
-void TTFB_Actor::breakRightArmJoint() {
-	breakJoint(rightArm);
+void TTFB_Actor::breakLeftLegJoint() {
+	breakJoint(leftLeg);
 }
 
-void TTFB_Actor::breakLegsJoint() {
-	breakJoint(legs);
+void TTFB_Actor::breakRightLegJoint() {
+	breakJoint(rightLeg);
+}
+
+void TTFB_Actor::breakRightArmJoint() {
+	breakJoint(rightArm);
 }
 
 void TTFB_Actor::applyImpulseLeftArm(float _x, float _y) {
@@ -216,8 +241,14 @@ void TTFB_Actor::applyImpulseRighttArm(float _x, float _y) {
 }
 
 void TTFB_Actor::applyImpulseLegs(float _x, float _y) {
-	b2Vec2 center = legs->body->GetWorldCenter();
-	legs->applyLinearImpulse(_x ,_y, center.x, center.y);
+	{
+		b2Vec2 center = leftLeg->body->GetWorldCenter();
+		leftLeg->applyLinearImpulse(_x ,_y, center.x, center.y);
+	}
+	{
+		b2Vec2 center = rightLeg->body->GetWorldCenter();
+		rightLeg->applyLinearImpulse(_x ,_y, center.x, center.y);
+	}
 }
 
 void TTFB_Actor::pickupPropLeft(TTFB_Prop * _prop) {
@@ -278,7 +309,7 @@ void TTFB_Actor::breakJoint(Box2DSprite* _sprite) {
 }
 
 float TTFB_Actor::getLegsOffset() {
-	return torso->getCorrectedHeight() * 0.5 + legs->getCorrectedHeight();
+	return torso->getCorrectedHeight() * 0.5 + leftLeg->getCorrectedHeight();
 }
 
 void TTFB_Actor::update(Step* _step) {
