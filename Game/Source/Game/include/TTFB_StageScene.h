@@ -6,6 +6,7 @@
 #include <BulletWorld.h>
 #include <TTFB_EventQueue.h>
 
+class TTFB_Prop;
 class TTFB_Audience;
 class TTFB_Controller;
 class PerspectiveCamera;
@@ -37,6 +38,8 @@ class TTFB_Actor;
 
 class TTFB_StageScene : public Scene{
 public:
+
+	int score;
 
 	TTFB_EventQueue eventQueue;
 	
@@ -79,6 +82,8 @@ public:
 	virtual void unload() override;
 
 	virtual TTFB_Actor * createActor(std::string _name);
+	virtual void endScene(std::string _sceneKey);
+	virtual TTFB_Prop * addProp(std::string _samplerResourceId, glm::vec3 _pos);
 
 	TTFB_StageScene(Game * _game, float _stageWidth, std::string _floorTex, std::string _sideTex, std::string _backTex, std::string _topTex, std::string _frontTex);
 	~TTFB_StageScene();

@@ -12,6 +12,7 @@
 #include <TTFB_Subscription.h>
 #include <Box2DSprite.h>
 #include <RenderOptions.h>
+#include <TTFB_Prop.h>
 
 TTFB_Actor::TTFB_Actor(std::string _name, Box2DWorld * _world, BulletWorld * _bulletWorld, Font * _font, Shader * _textShader, Shader * _shader) :
 	Box2DSuperSprite(_world, 0),
@@ -219,6 +220,50 @@ void TTFB_Actor::applyImpulseLegs(float _x, float _y) {
 	legs->applyLinearImpulse(_x ,_y, center.x, center.y);
 }
 
+void TTFB_Actor::pickupPropLeft(TTFB_Prop * _prop) {
+	b2RevoluteJointDef joint;
+	joint.bodyA = leftArm->body;
+	joint.bodyB = _prop->body;
+	joint.localAnchorA.Set(-0.5f * leftArm->getCorrectedWidth(), 0);
+	joint.localAnchorB.Set(-0.5f * rightArm->getCorrectedWidth(), 0);
+	joint.collideConnected = false;
+	joint.enableLimit = true;
+	joint.enableMotor = true;
+	joint.maxMotorTorque = 0;
+	joint.motorSpeed = 0;
+	joint.referenceAngle = 0;
+	joint.lowerAngle = glm::radians(-15.f);
+	joint.upperAngle = glm::radians(15.f);
+	world->b2world->CreateJoint(&joint);
+}
+
+void TTFB_Actor::swingRightArm() {
+	b2Vec2 point = rightArm->body->GetWorldCenter();
+	rightArm->applyLinearImpulse(0.0f, 50.0f, point.x, point.y);
+}
+
+void TTFB_Actor::swingLeftArm() {
+	b2Vec2 point= leftArm->body->GetWorldCenter();
+	leftArm->applyLinearImpulse(0.0f, 50.0f, point.x, point.y);
+}
+
+void TTFB_Actor::pickupPropRight(TTFB_Prop* _prop) {
+	b2RevoluteJointDef joint;
+	joint.bodyA = rightArm->body;
+	joint.bodyB = _prop->body;
+	joint.localAnchorA.Set(0.5f * rightArm->getCorrectedWidth(), 0);
+	joint.localAnchorB.Set(-0.5f * rightArm->getCorrectedWidth(), 0);
+	joint.collideConnected = false;
+	joint.enableLimit = true;
+	joint.enableMotor = true;
+	joint.maxMotorTorque = 0;
+	joint.motorSpeed = 0;
+	joint.referenceAngle = 0;
+	joint.lowerAngle = glm::radians(-15.f);
+	joint.upperAngle = glm::radians(15.f);
+	world->b2world->CreateJoint(&joint);
+}
+
 void TTFB_Actor::applyImpulseHead(float _x, float _y) {
 	b2Vec2 center = head->body->GetWorldCenter();
 	head->applyLinearImpulse(_x ,_y, center.x, center.y);
@@ -249,7 +294,7 @@ void TTFB_Actor::update(Step* _step) {
 }
 
 void TTFB_Actor::render(sweet::MatrixStack* _matrixStack, RenderOptions* _renderOptions) {
-	glDisable(GL_DEPTH_TEST);
+	//glDisable(GL_DEPTH_TEST);
 	Entity::render(_matrixStack, _renderOptions);
-	glEnable(GL_DEPTH_TEST);
+	//glEnable(GL_DEPTH_TEST);
 }

@@ -49,7 +49,6 @@
 #include <TextArea.h>
 #include <SpriteSheetAnimation.h>
 #include <Box2DSprite.h>
-#include <TTFB_NewsArticle.h>
 #include <TTFB_Constants.h>
 #include <VerticalLinearLayout.h>
 
@@ -78,22 +77,10 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 
 	glm::uvec2 sd = sweet::getScreenDimensions();
 	uiLayer.resize(0, sd.x, 0, sd.y);
-
-	VerticalLinearLayout * articleContainer = new VerticalLinearLayout(bulletWorld);
-	articleContainer->horizontalAlignment = kCENTER;
-	articleContainer->verticalAlignment = kMIDDLE;
-	articleContainer->setRationalWidth(1, &uiLayer);
-	articleContainer->setRationalHeight(1, &uiLayer);
-
-	TTFB_NewsArticle * testArticle = new TTFB_NewsArticle(baseShader, BLACK_KNIGHT, 3);
-	testArticle->setPixelWidth(800);
-	testArticle->setPixelHeight(1000);
-
-	articleContainer->addChild(testArticle);
-
-	uiLayer.addChild(articleContainer);
-
+	
 	blackKnight->flip();
+
+	kingArthur->pickupPropRight(addProp("kingArthurLeftArm", glm::vec3(-8, 10, 0.f)));
 
 	eventQueue.at(4.0f, [=](){
 		blackKnight->say(2.0f, L"None shall pass", true);
@@ -105,6 +92,7 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 
 	eventQueue.at(8.0f, [=](){
 		blackKnight->say(2.0f, L"None shall pass", true);
+		kingArthur->swingRightArm();
 	});
 	
 	eventQueue.at(10.5, [=](){

@@ -5,6 +5,7 @@
 
 #include <string>
 
+class TTFB_Prop;
 class TextArea;
 class BulletWorld;
 class Scene;
@@ -14,6 +15,7 @@ class TTFB_Subscription;
 enum Category {
 	BOUNDARY =          0x0001,
     ACTOR	 =          0x0002,
+	PROP     =			0x0004
     //ENEMY_SHIP =        0x0004,
     //FRIENDLY_AIRCRAFT = 0x0008,
     //ENEMY_AIRCRAFT =    0x0010,
@@ -41,6 +43,12 @@ public:
 	void applyImpulseRighttArm(float _x, float _y);
 	void applyImpulseLegs(float _x, float _y);
 	void applyImpulseHead(float _x, float _y);
+
+	void pickupPropLeft(TTFB_Prop * _prop);
+	void pickupPropRight(TTFB_Prop * _prop);
+
+	void swingRightArm();
+	void swingLeftArm();
 
 private:
 	Box2DSprite * torso;

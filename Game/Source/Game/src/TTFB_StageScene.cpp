@@ -53,6 +53,9 @@
 #include <Font.h>
 #include <TTFB_Controller.h>
 #include <RenderOptions.h>
+#include <TTFB_NewsArticle.h>
+#include <TTFB_Constants.h>
+#include <TTFB_Prop.h>
 
 TTFB_StageScene::TTFB_StageScene(Game * _game, float _stageWidth, std::string _floorTex, std::string _sideTex, std::string _backTex, std::string _topTex, std::string _frontTex) :
 	Scene(_game),
@@ -67,7 +70,8 @@ TTFB_StageScene::TTFB_StageScene(Game * _game, float _stageWidth, std::string _f
 	box2dWorld(new Box2DWorld(b2Vec2(0.f, -10.0f))),
 	box2dDebug(box2dWorld->createDebugDrawer()),
 	font(new Font("assets/engine basics/OpenSans-Regular.ttf", 100, true)),
-	controller(new TTFB_Controller())
+	controller(new TTFB_Controller()),
+	score(1)
 {
 	baseShader->addComponent(new ShaderComponentMVP(baseShader)); 
 	baseShader->addComponent(new ShaderComponentDiffuse(baseShader));
@@ -126,8 +130,8 @@ TTFB_StageScene::TTFB_StageScene(Game * _game, float _stageWidth, std::string _f
 	childTransform->addChild(stage);
 
 	audience = new TTFB_Audience(baseShader);
-	childTransform->addChild(audience)->translate(0.f, 17.f, 20.0f);
-	audience->firstParent()->scale(25.0f);
+	//childTransform->addChild(audience)->translate(0.f, 17.f, 20.0f);
+	//audience->firstParent()->scale(25.0f);
 
 	// Add the debug drawer last so it appears on top
 	childTransform->addChild(box2dDebug, true);
@@ -188,6 +192,8 @@ void TTFB_StageScene::update(Step * _step){
 
 void TTFB_StageScene::render(sweet::MatrixStack * _matrixStack, RenderOptions * _renderOptions){
 
+	glEnable(GL_DEPTH_TEST);
+	_renderOptions->depthEnabled = true;
 	screenFBO->resize(game->viewPortWidth, game->viewPortHeight);
 	//Bind frameBuffer
 	screenFBO->bindFrameBuffer();
@@ -222,4 +228,27 @@ void TTFB_StageScene::unload(){
 
 TTFB_Actor * TTFB_StageScene::createActor(std::string _name) {
 	return new TTFB_Actor(_name, box2dWorld, bulletWorld, font, textShader, baseShader);
+}
+
+void TTFB_StageScene::endScene(std::string _sceneKey) {
+	
+	TTFB_NewsArticle * testArticle = new TTFB_NewsArticle(baseShader, _sceneKey, score);
+	
+	VerticalLinearLayout * articleContainer = new VerticalLinearLayout(bulletWorld);
+	articleContainer->horizontalAlignment = kCENTER;
+	articleContainer->verticalAlignment = kMIDDLE;
+	articleContainer->setRationalWidth(1, &uiLayer);
+	articleContainer->setRationalHeight(1, &uiLayer);
+
+	articleContainer->addChild(testArticle);
+	testArticle->firstParent()->translate(testArticle->getWidth()/2, testArticle->getHeight()/2, 0);
+
+	uiLayer.addChild(articleContainer);
+}
+
+TTFB_Prop * TTFB_StageScene::addProp(std::string _samplerResourceId, glm::vec3 _pos) {
+	TTFB_Prop * prop = new TTFB_Prop(box2dWorld, _samplerResourceId, baseShader);
+	childTransform->addChild(prop);
+	prop->setTranslationPhysical(_pos);
+	return prop;
 }

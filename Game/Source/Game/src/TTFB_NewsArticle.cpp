@@ -63,6 +63,9 @@ TTFB_NewsArticle::TTFB_NewsArticle(Shader * _shader, std::string _play, int _sco
 		throw "Bad play name";
 	}
 	background->mesh->pushTexture2D(article);
+	setPixelWidth(800);
+	setPixelHeight(1000);
+	background->firstParent()->translate(-200, -300, 0.f);
 }
 
 void TTFB_NewsArticle::update(Step* _step) {

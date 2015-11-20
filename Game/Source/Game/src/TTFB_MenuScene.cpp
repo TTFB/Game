@@ -92,7 +92,6 @@ TTFB_MenuScene::TTFB_MenuScene(Game* _game)  :
 	logo->background->mesh->pushTexture2D(TTFB_ResourceManager::scenario->getTexture("logo")->texture);
 	buttonLayout->addChild(logo);
 
-
 	TextArea * playButton = new TextArea(bulletWorld, font, textShader, 200);
 
 	playButton->onClickFunction = [=](){
@@ -183,7 +182,7 @@ void TTFB_MenuScene::render(sweet::MatrixStack* _matrixStack, RenderOptions* _re
 	//Render the buffer to the render surface
 	screenSurface->render(screenFBO->getTextureId());
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	uiLayer.render(_matrixStack, _renderOptions);
+	uiLayer.render(_matrixStack, _renderOptions); 
 }
 
 void TTFB_MenuScene::load() {
