@@ -80,7 +80,7 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 	
 	blackKnight->flip();
 
-	kingArthur->pickupPropRight(addProp("kingArthurLeftArm", glm::vec3(-8, 10, 0.f)));
+	kingArthur->pickupPropRight(addProp("sword", glm::vec3(-8, 10, 0.f)));
 
 	eventQueue.at(4.0f, [=](){
 		blackKnight->say(2.0f, L"None shall pass", true);

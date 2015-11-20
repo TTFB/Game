@@ -177,18 +177,18 @@
   	},
 	{
       "id": "L1_Tree1",
-      "type": "texture",
-      "src": "Level1_Assets/Level1_tree1.png"
+      "type": "textureSampler",
+      "src": "Level1_Assets/Level1_tree1.png.def"
     },
 	{
       "id": "L1_Tree2",
-      "type": "texture",
-      "src": "Level1_Assets/Level1_tree2.png"
+      "type": "textureSampler",
+      "src": "Level1_Assets/Level1_tree2.png.def"
     },
 	{
       "id": "L1_Bush",
-      "type": "texture",
-      "src": "Level1_Assets/Level1_bush.png"
+      "type": "textureSampler",
+      "src": "Level1_Assets/Level1_bush.png.def"
     },
 	{
       "id": "L1_mattePainting",
@@ -197,13 +197,13 @@
     },
 	{
       "id": "sword",
-      "type": "texture",
-      "src": "props/sword.png"
+      "type": "textureSampler",
+      "src": "props/sword.png.def"
     },
 	{
       "id": "blood",
-      "type": "texture",
-      "src": "Particles/blood.png"
+      "type": "textureSampler",
+      "src": "Particles/blood.png.def"
     }
   ]
 }
