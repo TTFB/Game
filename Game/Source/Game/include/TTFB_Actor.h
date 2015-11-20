@@ -15,7 +15,8 @@ class TTFB_Subscription;
 enum Category {
 	BOUNDARY =          0x0001,
     ACTOR	 =          0x0002,
-	PROP     =			0x0004
+	PROP     =			0x0004,
+	SET_PIECE =			0x0008
     //ENEMY_SHIP =        0x0004,
     //FRIENDLY_AIRCRAFT = 0x0008,
     //ENEMY_AIRCRAFT =    0x0010,

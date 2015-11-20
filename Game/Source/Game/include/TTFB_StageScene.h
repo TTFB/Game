@@ -6,6 +6,7 @@
 #include <BulletWorld.h>
 #include <TTFB_EventQueue.h>
 
+class TTFB_SetPiece;
 class TTFB_Prop;
 class TTFB_Audience;
 class TTFB_Controller;
@@ -84,6 +85,7 @@ public:
 	virtual TTFB_Actor * createActor(std::string _name);
 	virtual void endScene(std::string _sceneKey);
 	virtual TTFB_Prop * addProp(std::string _samplerResourceId, glm::vec3 _pos);
+	virtual TTFB_SetPiece * addSetPiece(std::string _samplerResourceId, glm::vec3 _pos);
 
 	TTFB_StageScene(Game * _game, float _stageWidth, std::string _floorTex, std::string _sideTex, std::string _backTex, std::string _topTex, std::string _frontTex);
 	~TTFB_StageScene();

@@ -12,6 +12,8 @@ public:
 
 	TTFB_EventQueue eventQueue;
 
+	TTFB_SetPiece * setPiece;
+
 	virtual void update(Step * _step) override;
 	virtual void render(sweet::MatrixStack * _matrixStack, RenderOptions * _renderOptions) override;
 	

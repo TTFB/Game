@@ -56,6 +56,7 @@
 #include <TTFB_NewsArticle.h>
 #include <TTFB_Constants.h>
 #include <TTFB_Prop.h>
+#include <TTFB_SetPiece.h>
 
 TTFB_StageScene::TTFB_StageScene(Game * _game, float _stageWidth, std::string _floorTex, std::string _sideTex, std::string _backTex, std::string _topTex, std::string _frontTex) :
 	Scene(_game),
@@ -130,8 +131,8 @@ TTFB_StageScene::TTFB_StageScene(Game * _game, float _stageWidth, std::string _f
 	childTransform->addChild(stage);
 
 	audience = new TTFB_Audience(baseShader);
-	//childTransform->addChild(audience)->translate(0.f, 17.f, 20.0f);
-	//audience->firstParent()->scale(25.0f);
+	childTransform->addChild(audience)->translate(0.f, 11.f, 20.0f);
+	audience->firstParent()->scale(25.0f, 25.0f * 0.562f, 1.0f);
 
 	// Add the debug drawer last so it appears on top
 	childTransform->addChild(box2dDebug, true);
@@ -251,4 +252,11 @@ TTFB_Prop * TTFB_StageScene::addProp(std::string _samplerResourceId, glm::vec3 _
 	childTransform->addChild(prop);
 	prop->setTranslationPhysical(_pos);
 	return prop;
+}
+
+TTFB_SetPiece * TTFB_StageScene::addSetPiece(std::string _samplerResourceId, glm::vec3 _pos) {
+	TTFB_SetPiece * set = new TTFB_SetPiece(box2dWorld, _samplerResourceId, baseShader);
+	childTransform->addChild(set);
+	set->setTranslationPhysical(_pos);
+	return set;
 }

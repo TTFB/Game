@@ -51,6 +51,7 @@
 #include <Box2DSprite.h>
 #include <TTFB_Constants.h>
 #include <VerticalLinearLayout.h>
+#include <TTFB_SetPiece.h>
 
 TTFB_MainScene::TTFB_MainScene(Game * _game) :
 	TTFB_StageScene(_game, 100.0f, "L1_Floor", "L1_Side", "L1_Background", "L1_Top", "L1_Bottom")
@@ -82,12 +83,15 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 
 	kingArthur->pickupPropRight(addProp("sword", glm::vec3(-8, 10, 0.f)));
 
+	setPiece = addSetPiece("L1_Tree2", glm::vec3(0.f, 10.f, -0.5f));
+
 	eventQueue.at(4.0f, [=](){
 		blackKnight->say(2.0f, L"None shall pass", true);
 	});
 
 	eventQueue.at(6.5f, [=](){
 		kingArthur->say(1.5f, L"What?", true);
+		setPiece->raise();
 	});
 
 	eventQueue.at(8.0f, [=](){
@@ -346,8 +350,6 @@ void TTFB_MainScene::update(Step * _step){
 
 	//float lightOneVal = controller->soundButtonOne.currentState;
 	//lights[0]->setIntensities(glm::vec3(lightOneVal + 0.5f));
-
-
 
 	eventQueue.update(_step);
 	TTFB_StageScene::update(_step);
