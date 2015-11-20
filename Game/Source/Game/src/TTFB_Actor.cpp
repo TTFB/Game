@@ -239,12 +239,12 @@ void TTFB_Actor::pickupPropLeft(TTFB_Prop * _prop) {
 
 void TTFB_Actor::swingRightArm() {
 	b2Vec2 point = rightArm->body->GetWorldCenter();
-	rightArm->applyLinearImpulse(0.0f, 50.0f, point.x, point.y);
+	rightArm->applyLinearImpulse(0.0f, 200.0f, point.x, point.y);
 }
 
 void TTFB_Actor::swingLeftArm() {
 	b2Vec2 point= leftArm->body->GetWorldCenter();
-	leftArm->applyLinearImpulse(0.0f, 50.0f, point.x, point.y);
+	leftArm->applyLinearImpulse(0.0f, 200.0f, point.x, point.y);
 }
 
 void TTFB_Actor::pickupPropRight(TTFB_Prop* _prop) {
