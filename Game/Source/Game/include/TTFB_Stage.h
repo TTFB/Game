@@ -3,6 +3,7 @@
 #include <TTFB_Entity.h>
 #include <Entity.h>
 #include <Box2DMeshEntity.h>
+#include <Rectangle.h>
 
 class MeshEntity;
 
@@ -20,6 +21,8 @@ public:
 	~TTFB_Stage();
 
 	void setShader(Shader * _shader);
+	sweet::Rectangle getVisibleBounds();
+
 
 private:
 	float width;

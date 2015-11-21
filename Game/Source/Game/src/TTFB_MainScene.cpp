@@ -97,6 +97,7 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 	eventQueue.at(8.0f, [=](){
 		blackKnight->say(2.0f, L"None shall pass", true);
 		kingArthur->swingRightArm();
+		setPiece->lower();
 	});
 	
 	eventQueue.at(10.5, [=](){
