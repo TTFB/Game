@@ -16,11 +16,18 @@
 
 void setup() {
   analogReference(EXTERNAL); 
-  Serial.begin(9600);
+  Serial.begin(115200);
 }
 
 void loop() {
 
+  if(Serial.available() > 0){
+    while(Serial.available() > 0){
+      Serial.read();
+    }
+    Serial.print("-");
+  }
+  
   int soundButtonOne          = digitalRead(SOUND_BUTTON_ONE);
   int soundButtonTwo          = digitalRead(SOUND_BUTTON_TWO);
   int soundButtonThree        = digitalRead(SOUND_BUTTON_THREE);

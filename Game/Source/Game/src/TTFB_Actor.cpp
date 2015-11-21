@@ -316,7 +316,7 @@ void TTFB_Actor::update(Step* _step) {
 	TTFB_Whenable::update(_step);
 	float curX = rootComponent->body->GetPosition().x;
 	float curY = rootComponent->body->GetPosition().y;
-	float targX = curX + (1.0f * moveDirection * 0.05);
+	float targX = curX + (1.0f * moveDirection * 0.05 * _step->deltaTimeCorrection);
 	rootComponent->setTranslationPhysical(targX, curY, 0.f);
 	speechArea->firstParent()->translate(head->body->GetWorldCenter().x - speechArea->getWidth() * 0.5f * speechAreaScale,
 		head->body->GetWorldCenter().y + speechArea->getHeight() * 0.5f * speechAreaScale + 1.0f,

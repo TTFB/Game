@@ -4,10 +4,23 @@
 #include <StringUtils.h>
 
 #include <iostream>
+#include <Log.h>
+#include <string>
 
-TTFB_Controller::TTFB_Controller() : Arduino("COM7"),
+TTFB_Controller::TTFB_Controller() : Arduino(""),
 	lastQue(0)
 {
+	// Go through the COM ports looking for one with data
+	// The controller is always writing so there should be something in the queue
+	for(unsigned long int i = 0; i < 255; i++) {
+		connect("COM" + std::to_string(i));
+		if(connected){
+			ClearCommError(this->hSerial, &this->errors, &this->status);
+			if(status.cbInQue > 0) {
+				break;
+			}
+		}
+	}
 }
 
 void TTFB_Controller::update(Step* _step) {
@@ -31,8 +44,8 @@ void TTFB_Controller::update(Step* _step) {
 
 		ClearCommError(this->hSerial, &this->errors, &this->status);
 		int inQ = status.cbInQue;
-		wchar_t * buf = new wchar_t[lastQue + 1]();
-		int numRead = ReadData((char *)buf, lastQue);
+		char * buf = new char[lastQue + 1]();
+		int numRead = ReadData(buf, lastQue);
 		buf[lastQue] = '\0';
 		if(numRead > 0){
 			int posLeft  = -1;
@@ -49,7 +62,7 @@ void TTFB_Controller::update(Step* _step) {
 			buffer += buf;
 			if(posLeft != -1 && posRight != -1) {
 				current = buffer.substr(posLeft + 1, posRight - posLeft - 1);
-				buffer = L"";
+				buffer = "";
 				auto split = StringUtils::split(current, ',');
 				updateValues(split);
 			}
@@ -59,20 +72,20 @@ void TTFB_Controller::update(Step* _step) {
 	}
 }
 
-void TTFB_Controller::updateValues(std::vector<std::wstring> _stringVals) {
+void TTFB_Controller::updateValues(std::vector<std::string> _stringVals) {
 
-	soundButtonOne.currentState    = (ButtonState)atoi((char *)_stringVals[(int)SOUND_BUTTON_ONE].c_str());
-	soundButtonTwo.currentState    = (ButtonState)atoi((char *)_stringVals[(int)SOUND_BUTTON_TWO].c_str());
-	soundButtonThree.currentState  = (ButtonState)atoi((char *)_stringVals[(int)SOUND_BUTTON_THREE].c_str());
-	soundMicSwitch.currentState    = (ButtonState)atoi((char *)_stringVals[(int)SOUND_MIC_SWITCH].c_str());
-	lightSliderOne.currentState    = atoi((char *)_stringVals[(int)LIGHT_SLIDER_ONE].c_str());
-	lightSliderTwo.currentState    = atoi((char *)_stringVals[(int)LIGHT_SLIDER_TWO].c_str());
-	lightSliderThree.currentState  = atoi((char *)_stringVals[(int)LIGHT_SLIDER_THREE].c_str());
-	setButtonOne.currentState      = (ButtonState)atoi((char *)_stringVals[(int)SET_BUTTON_ONE].c_str());
-	setButtonTwo.currentState      = (ButtonState)atoi((char *)_stringVals[(int)SET_BUTTON_TWO].c_str());
-	setButtonThree.currentState    = (ButtonState)atoi((char *)_stringVals[(int)SET_BUTTON_THREE].c_str());
-	setButtonFour.currentState     = (ButtonState)atoi((char *)_stringVals[(int)SET_BUTTON_FOUR].c_str());
-	specialFogSwitch.currentState  = (ButtonState)atoi((char *)_stringVals[(int)SPECIAL_FOG_SWITCH].c_str());
-	specialFireButton.currentState = (ButtonState)atoi((char *)_stringVals[(int)SPECIAL_FIRE_BUTTON].c_str());
-	specialCurtainPot.currentState = atoi((char *)_stringVals[(int)SPECIAL_CURTAIN_POT].c_str());
+	soundButtonOne.currentState    = (ButtonState)atoi(_stringVals[(int)SOUND_BUTTON_ONE].c_str());
+	soundButtonTwo.currentState    = (ButtonState)atoi(_stringVals[(int)SOUND_BUTTON_TWO].c_str());
+	soundButtonThree.currentState  = (ButtonState)atoi(_stringVals[(int)SOUND_BUTTON_THREE].c_str());
+	soundMicSwitch.currentState    = (ButtonState)atoi(_stringVals[(int)SOUND_MIC_SWITCH].c_str());
+	lightSliderOne.currentState    = atoi(_stringVals[(int)LIGHT_SLIDER_ONE].c_str());
+	lightSliderTwo.currentState    = atoi(_stringVals[(int)LIGHT_SLIDER_TWO].c_str());
+	lightSliderThree.currentState  = atoi(_stringVals[(int)LIGHT_SLIDER_THREE].c_str());
+	setButtonOne.currentState      = (ButtonState)atoi(_stringVals[(int)SET_BUTTON_ONE].c_str());
+	setButtonTwo.currentState      = (ButtonState)atoi(_stringVals[(int)SET_BUTTON_TWO].c_str());
+	setButtonThree.currentState    = (ButtonState)atoi(_stringVals[(int)SET_BUTTON_THREE].c_str());
+	setButtonFour.currentState     = (ButtonState)atoi(_stringVals[(int)SET_BUTTON_FOUR].c_str());
+	specialFogSwitch.currentState  = (ButtonState)atoi(_stringVals[(int)SPECIAL_FOG_SWITCH].c_str());
+	specialFireButton.currentState = (ButtonState)atoi(_stringVals[(int)SPECIAL_FIRE_BUTTON].c_str());
+	specialCurtainPot.currentState = atoi(_stringVals[(int)SPECIAL_CURTAIN_POT].c_str());
 }

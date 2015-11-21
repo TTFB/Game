@@ -26,9 +26,10 @@ enum ControllerMapping {
 
 class TTFB_Controller : public Arduino {
 public:	
+
 	int lastQue;
-	std::wstring buffer;
-	std::wstring current;
+	std::string buffer;
+	std::string current;
 
 	TTFB_Button soundButtonOne;
 	TTFB_Button soundButtonTwo;
@@ -48,5 +49,5 @@ public:
 	TTFB_Controller();
 
 	void update(Step * _step) override;
-	void updateValues(std::vector<std::wstring> _stringVals);
+	void updateValues(std::vector<std::string> _stringVals);
 };
