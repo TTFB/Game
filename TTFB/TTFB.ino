@@ -20,13 +20,6 @@ void setup() {
 }
 
 void loop() {
-
-  if(Serial.available() > 0){
-    while(Serial.available() > 0){
-      Serial.read();
-    }
-    Serial.print("-");
-  }
   
   int soundButtonOne          = digitalRead(SOUND_BUTTON_ONE);
   int soundButtonTwo          = digitalRead(SOUND_BUTTON_TWO);
@@ -53,6 +46,12 @@ void loop() {
   Serial.print(",");
   Serial.print(soundMicSwitch);
   Serial.print(",");
+  Serial.print(specialLightSliderOne);
+  Serial.print(",");
+  Serial.print(specialLightSliderTwo);
+  Serial.print(",");
+  Serial.print(specialLightSliderThree);
+  Serial.print(",");
   Serial.print(setButtonOne);
   Serial.print(",");
   Serial.print(setButtonTwo); 
@@ -66,11 +65,5 @@ void loop() {
   Serial.print(specialFireButton);
   Serial.print(",");
   Serial.print(specialCurtainPot);
-  Serial.print(",");
-  Serial.print(specialLightSliderOne);
-  Serial.print(",");
-  Serial.print(specialLightSliderTwo);
-  Serial.print(",");
-  Serial.print(specialLightSliderThree);
   Serial.print("]\n");
 }

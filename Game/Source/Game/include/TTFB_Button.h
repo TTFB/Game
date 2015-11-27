@@ -1,6 +1,7 @@
 #pragma once
 
 #include <node/NodeUpdatable.h>
+#include <functional>
 
 enum ButtonState {
 	LOW  = 0,
@@ -16,7 +17,11 @@ public :
 	TTFB_Button();
 
 	void update(Step * _step) override;
+	void bind(std::function<void(int)> _bind);
 
 	bool justUp();
 	bool justDown();
+
+private:
+	std::function<void(int)> bindFunc;
 };

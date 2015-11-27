@@ -5,7 +5,8 @@
 TTFB_Button::TTFB_Button() :
 	NodeUpdatable(),
 	currentState(LOW),
-	lastState(LOW)
+	lastState(LOW),
+	bindFunc(nullptr)
 {
 }
 
@@ -18,5 +19,12 @@ bool TTFB_Button::justDown() {
 }
 
 void TTFB_Button::update(Step* _step) {
+	if(bindFunc != nullptr){
+		bindFunc((int)currentState);
+	}
 	lastState = currentState;
+}
+
+void TTFB_Button::bind(std::function<void(int)> _bind) {
+	bindFunc = _bind;
 }

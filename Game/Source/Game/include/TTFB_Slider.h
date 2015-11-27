@@ -1,6 +1,7 @@
 #pragma once
 
 #include <node/NodeUpdatable.h>
+#include <functional>
 
 class TTFB_Slider : public NodeUpdatable {
 public :
@@ -12,4 +13,8 @@ public :
 
 	void update(Step * _step) override;
 
+	void bind(std::function<void(int)> _bind);
+
+private:
+	std::function<void(int)> bindFunc;
 };

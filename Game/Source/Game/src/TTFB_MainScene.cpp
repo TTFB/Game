@@ -85,19 +85,38 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 
 	setPiece = addSetPiece("L1_Tree2", glm::vec3(0.f, 10.f, -0.5f));
 
+	// Setup Controller Bindings
+	controller->lightSliderOne.bind([=](int _value){
+		lights[1]->setIntensities(glm::vec3(((float)_value + 0.0001f)/256));
+	});
+	
+	controller->setButtonOne.bind([=](int _value) {
+		if(controller->setButtonOne.justDown()) {
+			setPiece->toggle();
+		}
+	});
+
+	controller->lightSliderTwo.bind([=](int _value){
+		float increase = _value / 30.0f;
+		glm::vec3 leftTrans = stage->curtainLeft->firstParent()->getTranslationVector();
+		glm::vec3 rightTrans = stage->curtainRight->firstParent()->getTranslationVector();
+		leftTrans.x  = (-increase - 12);
+		rightTrans.x = (increase + 12);
+		stage->curtainLeft->firstParent()->translate(leftTrans, false);
+		stage->curtainRight->firstParent()->translate(rightTrans, false);
+	});
+
 	eventQueue.at(4.0f, [=](){
 		blackKnight->say(2.0f, L"None shall pass", true);
 	});
 
 	eventQueue.at(6.5f, [=](){
 		kingArthur->say(1.5f, L"What?", true);
-		setPiece->raise();
 	});
 
 	eventQueue.at(8.0f, [=](){
 		blackKnight->say(2.0f, L"None shall pass", true);
 		kingArthur->swingRightArm();
-		setPiece->lower();
 	});
 	
 	eventQueue.at(10.5, [=](){

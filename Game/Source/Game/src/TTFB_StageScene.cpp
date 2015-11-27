@@ -22,6 +22,7 @@
 #include <shader\ShaderComponentDiffuse.h>
 #include <shader\ShaderComponentHsv.h>
 #include <shader\ShaderComponentMVP.h>
+#include <shader\ShaderComponentDepthOffset.h>
 
 #include <shader\ShaderComponentIndexedTexture.h>
 #include <TextureColourTable.h>
@@ -74,11 +75,13 @@ TTFB_StageScene::TTFB_StageScene(Game * _game, float _stageWidth, std::string _f
 	controller(new TTFB_Controller()),
 	score(1)
 {
+
 	baseShader->addComponent(new ShaderComponentMVP(baseShader)); 
 	baseShader->addComponent(new ShaderComponentDiffuse(baseShader));
 	ShaderComponentTexture * texComp = new ShaderComponentTexture(baseShader);
 	texComp->alphaDiscardThreshold = 0.05f;
 	baseShader->addComponent(texComp);
+	baseShader->addComponent(new ShaderComponentDepthOffset(baseShader));
 	baseShader->compileShader();
 
 	textShader->textComponent->setColor(glm::vec3(0.0f, 0.0f, 0.0f));
@@ -193,7 +196,9 @@ void TTFB_StageScene::update(Step * _step){
 
 void TTFB_StageScene::render(sweet::MatrixStack * _matrixStack, RenderOptions * _renderOptions){
 
+
 	glEnable(GL_DEPTH_TEST);
+
 	_renderOptions->depthEnabled = true;
 	screenFBO->resize(game->viewPortWidth, game->viewPortHeight);
 	//Bind frameBuffer

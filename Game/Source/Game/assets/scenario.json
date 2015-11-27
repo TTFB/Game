@@ -35,12 +35,12 @@
       "type": "textureSampler",
       "src": "kingArthur/leg_left.png.def"
     },
-	{
+    {
       "id": "kingArthurLeftLeg",
       "type": "textureSampler",
       "src": "kingArthur/leg_right.png.def"
     },
-	{
+    {
       "id": "blackKnightHead",
       "type": "textureSampler",
       "src": "blackKnight/head.png.def"
@@ -65,7 +65,7 @@
       "type": "textureSampler",
       "src": "blackKnight/leg_right.png.def"
     },
-	{
+    {
       "id": "blackKnightLeftLeg",
       "type": "textureSampler",
       "src": "blackKnight/leg_left.png.def"
@@ -209,36 +209,41 @@
       "id": "dracula_three_stars_sound",
       "type": "audio",
       "src": "tempArticleSound.wav"
-  	},
-	{
+    },
+    {
       "id": "L1_Tree1",
       "type": "textureSampler",
       "src": "Level1_Assets/Level1_tree1.png.def"
     },
-	{
+    {
       "id": "L1_Tree2",
       "type": "textureSampler",
       "src": "Level1_Assets/Level1_tree2.png.def"
     },
-	{
+    {
       "id": "L1_Bush",
       "type": "textureSampler",
       "src": "Level1_Assets/Level1_bush.png.def"
     },
-	{
+    {
       "id": "L1_mattePainting",
       "type": "texture",
       "src": "Level1_Assets/Level1_mattePainting.png"
     },
-	{
+    {
       "id": "sword",
       "type": "textureSampler",
       "src": "props/sword.png.def"
     },
-	{
+    {
       "id": "blood",
       "type": "textureSampler",
       "src": "Particles/blood.png.def"
+    },
+    {
+      "id": "curtain",
+      "type": "textureSampler",
+      "src": "curtain.png.def"
     }
   ]
 }

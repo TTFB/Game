@@ -16,6 +16,8 @@ public:
 	 MeshEntity		 * stageFrontRight;
 	 MeshEntity		 * stageBottom;
 	 MeshEntity		 * stageTop;
+	 Sprite		     * curtainLeft;
+	 Sprite			 * curtainRight;
 
 	TTFB_Stage(float _width, Box2DWorld * _world, std::string _floorTex, std::string _sideTex, std::string _backTex, std::string _stageTop, std::string _stageBottom, Shader * _shader = nullptr);
 	~TTFB_Stage();

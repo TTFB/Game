@@ -94,21 +94,21 @@ TTFB_MenuScene::TTFB_MenuScene(Game* _game)  :
 
 	TextArea * playButton = new TextArea(bulletWorld, font, textShader, 200);
 
-	playButton->onClickFunction = [=](){
+	playButton->eventManager.addEventListener("click", [=](sweet::Event * _event){
 		game->switchScene("stageScene", false);
-	};
+	});
 
-	playButton->onMouseInFunction = [=](){
+	playButton->eventManager.addEventListener("mousein", [=](sweet::Event * _event){
 		playButton->setBackgroundColour(1, 0, 0, 1);
-	};
+	});
 
-	playButton->onMouseOutFunction = [=](){
+	playButton->eventManager.addEventListener("mouseout", [=](sweet::Event * _event){
 		playButton->setBackgroundColour(1, 1, 1, 1);
-	};
+	});
 
-	playButton->onMouseDownFunction = [=](){
+	playButton->eventManager.addEventListener("mouseup", [=](sweet::Event * _event){
 		playButton->setBackgroundColour(0, 0, 1, 1);
-	};
+	});
 
 	playButton->horizontalAlignment = kCENTER;
 	playButton->verticalAlignment = kMIDDLE;

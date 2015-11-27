@@ -7,7 +7,8 @@
 TTFB_SetPiece::TTFB_SetPiece(Box2DWorld* _world, std::string _samplerResourceId, Shader* _shader, sweet::Rectangle _stageBounds) :
 	Box2DSprite(_world, TTFB_ResourceManager::scenario->getTextureSampler(_samplerResourceId)->textureSampler),
 	raiseDir(0),
-	stageBounds(_stageBounds)
+	stageBounds(_stageBounds),
+	forceFrame(false)
 {
 	b2Filter filt;
 	filt.categoryBits = Category::SET_PIECE;
@@ -20,13 +21,16 @@ TTFB_SetPiece::TTFB_SetPiece(Box2DWorld* _world, std::string _samplerResourceId,
 }
 
 void TTFB_SetPiece::update(Step* _step) {
-	if(stageBounds.getTopLeft().y + 10 < body->GetPosition().y + getCorrectedHeight() * 0.5f) {
-		raiseDir = 0;
-	}
-	if(stageBounds.getBottomLeft().y >= body->GetPosition().y - getCorrectedHeight() * 0.5f) {
-		raiseDir = 0;
-	}
 	setTranslationPhysical(0.0f, 0.1f * raiseDir, 0.0f, true);
+	if(!forceFrame){
+		if(stageBounds.getTopLeft().y + 10 < body->GetPosition().y + getCorrectedHeight() * 0.5f) {
+			raiseDir = 0;
+		}
+		if(stageBounds.getBottomLeft().y >= body->GetPosition().y - getCorrectedHeight() * 0.5f) {
+			raiseDir = 0;
+		}
+	}
+	forceFrame = false;
 	Box2DSprite::update(_step);
 }
 
@@ -36,4 +40,13 @@ void TTFB_SetPiece::raise() {
 
 void TTFB_SetPiece::lower() {
 	raiseDir = -1;
+}
+
+void TTFB_SetPiece::toggle() {
+	if(stageBounds.getTopLeft().y + 10 < body->GetPosition().y + getCorrectedHeight() * 0.5f || raiseDir == 1) {
+		raiseDir = -1;	
+	}else {
+		raiseDir = 1;
+	}
+	forceFrame = true;
 }

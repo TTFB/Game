@@ -12,8 +12,10 @@ public:
 
 	void raise();
 	void lower();
+	void toggle();
 
 private:
 	int raiseDir;
+	bool forceFrame;
 	sweet::Rectangle stageBounds;
 };
