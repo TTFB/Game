@@ -56,8 +56,9 @@
 TTFB_MainScene::TTFB_MainScene(Game * _game) :
 	TTFB_StageScene(_game, 100.0f, "L1_Floor", "L1_Side", "L1_Background", "L1_Top", "L1_Bottom")
 {
-	//PointLight * light2 = new PointLight(glm::vec3(1, 1, 1),  0.01f, 0.001f, -1.f);
 
+#pragma region LightSetup
+	
 	SpotLight * light2 = new SpotLight(glm::vec3(0, 0, -1), glm::vec3(0,0,0), 45.f, 0.01f, 0.001f, -1.f);
 	lights.push_back(light2);
 	childTransform->addChild(light2);
@@ -67,6 +68,10 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 	lights.push_back(light3);
 	childTransform->addChild(light3);
 	light3->firstParent()->translate(0, 0, 30);
+
+#pragma endregion 
+
+#pragma region ActorSetup
 
 	TTFB_Actor * kingArthur = createActor("kingArthur");
 	childTransform->addChild(kingArthur);
@@ -83,8 +88,15 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 
 	kingArthur->pickupPropRight(addProp("sword", glm::vec3(-8, 10, 0.f)));
 
+#pragma endregion 
+
+#pragma region SetSetup
+
 	setPiece = addSetPiece("L1_Tree2", glm::vec3(0.f, 10.f, -0.5f));
 
+#pragma endregion 
+
+#pragma region ControllerBindings
 	// Setup Controller Bindings
 	controller->lightSliderOne.bind([=](int _value){
 		lights[1]->setIntensities(glm::vec3(((float)_value + 0.0001f)/256));
@@ -96,6 +108,7 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 		}
 	});
 
+	// Move this into stage scene
 	controller->lightSliderTwo.bind([=](int _value){
 		float increase = _value / 30.0f;
 		glm::vec3 leftTrans = stage->curtainLeft->firstParent()->getTranslationVector();
@@ -106,11 +119,16 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 		stage->curtainRight->firstParent()->translate(rightTrans, false);
 	});
 	
+#pragma endregion 
+
+#pragma region AudioSetup
 
 	TTFB_ResourceManager::scenario->getAudio("spamalot_bg")->sound->play();
-
 	dialoguePlayer = new TTFB_DialoguePlayer("spamalot");
 
+#pragma endregion 
+
+#pragma region Events
 
 	eventQueue.at(4.0f, [=](){
 		dialoguePlayer->playNext();
@@ -337,6 +355,8 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 	eventQueue.at(104.f, [=](){
 		blackKnight->say(2.0f, L"I'll bite your legs off!", true);
 	});
+
+#pragma endregion 
 
 	//eventQueue.at(6.0f, [=](){
 	//	kingArthur->say(1.0f, L"What?", true);
