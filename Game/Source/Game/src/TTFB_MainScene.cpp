@@ -105,21 +105,31 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 		stage->curtainLeft->firstParent()->translate(leftTrans, false);
 		stage->curtainRight->firstParent()->translate(rightTrans, false);
 	});
+	
+
+	TTFB_ResourceManager::scenario->getAudio("spamalot_bg")->sound->play();
+
+	dialoguePlayer = new TTFB_DialoguePlayer("spamalot");
+
 
 	eventQueue.at(4.0f, [=](){
+		dialoguePlayer->playNext();
 		blackKnight->say(2.0f, L"None shall pass", true);
 	});
 
 	eventQueue.at(6.5f, [=](){
+		dialoguePlayer->playNext();
 		kingArthur->say(1.5f, L"What?", true);
 	});
 
 	eventQueue.at(8.0f, [=](){
+		dialoguePlayer->playNext();
 		blackKnight->say(2.0f, L"None shall pass", true);
 		kingArthur->swingRightArm();
 	});
 	
 	eventQueue.at(10.5, [=](){
+		dialoguePlayer->playNext();
 		kingArthur->say(4.0f, L"I have no quarrel with you, good Sir knight", false);
 	});
 	
@@ -128,19 +138,23 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 	});
 
 	eventQueue.at(18.0f, [=](){
+		dialoguePlayer->playNext();
 		blackKnight->say(2.0f, L"Then you shall die", true);
 	});
 
 	eventQueue.at(20.0f, [=](){
+		dialoguePlayer->playNext();
 		kingArthur->say(3.0f, L"I command you as King of the Britons to stand aside!", true);
 		kingArthur->move(7.0f);
 	});
 
 	eventQueue.at(23.0f, [=](){
+		dialoguePlayer->playNext();
 		blackKnight->say(2.0f, L"I move for no man", true);
 	});
 
 	eventQueue.at(25.0f, [=](){
+		dialoguePlayer->playNext();
 		kingArthur->say(3.0f, L"So be it!", true)->subscribe(
 			[=](){
 				blackKnight->breakLeftArmJoint();		

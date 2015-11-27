@@ -244,6 +244,246 @@
       "id": "curtain",
       "type": "textureSampler",
       "src": "curtain.png.def"
+    },
+    {
+      "id": "spamalot_bg",
+      "type": "audio",
+      "src": "level1_bgMusic.ogg"
+    },
+    {
+      "id": "spamalot1",
+      "type": "audio",
+      "src": "SpamalotDialogue/1.ogg"
+    },
+    {
+      "id": "spamalot2",
+      "type": "audio",
+      "src": "SpamalotDialogue/2.ogg"
+    },
+    {
+      "id": "spamalot3",
+      "type": "audio",
+      "src": "SpamalotDialogue/3.ogg"
+    },
+    {
+      "id": "spamalot3",
+      "type": "audio",
+      "src": "SpamalotDialogue/3.ogg"
+    },
+    {
+      "id": "spamalot4",
+      "type": "audio",
+      "src": "SpamalotDialogue/4.ogg"
+    },
+    {
+      "id": "spamalot5",
+      "type": "audio",
+      "src": "SpamalotDialogue/5.ogg"
+    },
+    {
+      "id": "spamalot6",
+      "type": "audio",
+      "src": "SpamalotDialogue/6.ogg"
+    },
+    {
+      "id": "spamalot7",
+      "type": "audio",
+      "src": "SpamalotDialogue/7.ogg"
+    },
+    {
+      "id": "spamalot8",
+      "type": "audio",
+      "src": "SpamalotDialogue/8.ogg"
+    },
+    {
+      "id": "spamalot9",
+      "type": "audio",
+      "src": "SpamalotDialogue/9.ogg"
+    },
+    {
+      "id": "spamalot10",
+      "type": "audio",
+      "src": "SpamalotDialogue/10.ogg"
+    },
+    {
+      "id": "spamalot11",
+      "type": "audio",
+      "src": "SpamalotDialogue/11.ogg"
+    },
+    {
+      "id": "spamalot12",
+      "type": "audio",
+      "src": "SpamalotDialogue/12.ogg"
+    },
+    {
+      "id": "spamalot13",
+      "type": "audio",
+      "src": "SpamalotDialogue/13.ogg"
+    },
+    {
+      "id": "spamalot14",
+      "type": "audio",
+      "src": "SpamalotDialogue/14.ogg"
+    },
+    {
+      "id": "spamalot15",
+      "type": "audio",
+      "src": "SpamalotDialogue/15.ogg"
+    },
+    {
+      "id": "spamalot16",
+      "type": "audio",
+      "src": "SpamalotDialogue/16.ogg"
+    },
+    {
+      "id": "spamalot17",
+      "type": "audio",
+      "src": "SpamalotDialogue/17.ogg"
+    },
+    {
+      "id": "spamalot18",
+      "type": "audio",
+      "src": "SpamalotDialogue/18.ogg"
+    },
+    {
+      "id": "spamalot19",
+      "type": "audio",
+      "src": "SpamalotDialogue/19.ogg"
+    },
+    {
+      "id": "spamalot20",
+      "type": "audio",
+      "src": "SpamalotDialogue/20.ogg"
+    },
+    {
+      "id": "spamalot21",
+      "type": "audio",
+      "src": "SpamalotDialogue/21.ogg"
+    },
+    {
+      "id": "spamalot22",
+      "type": "audio",
+      "src": "SpamalotDialogue/22.ogg"
+    },
+    {
+      "id": "spamalot23",
+      "type": "audio",
+      "src": "SpamalotDialogue/23.ogg"
+    },
+    {
+      "id": "spamalot24",
+      "type": "audio",
+      "src": "SpamalotDialogue/24.ogg"
+    },
+    {
+      "id": "spamalot25",
+      "type": "audio",
+      "src": "SpamalotDialogue/25.ogg"
+    },
+    {
+      "id": "spamalot26",
+      "type": "audio",
+      "src": "SpamalotDialogue/26.ogg"
+    },
+    {
+      "id": "spamalot27",
+      "type": "audio",
+      "src": "SpamalotDialogue/27.ogg"
+    },
+    {
+      "id": "spamalot28",
+      "type": "audio",
+      "src": "SpamalotDialogue/28.ogg"
+    },
+    {
+      "id": "spamalot29",
+      "type": "audio",
+      "src": "SpamalotDialogue/29.ogg"
+    },
+    {
+      "id": "spamalot30",
+      "type": "audio",
+      "src": "SpamalotDialogue/30.ogg"
+    },
+    {
+      "id": "spamalot31",
+      "type": "audio",
+      "src": "SpamalotDialogue/31.ogg"
+    },
+    {
+      "id": "spamalot32",
+      "type": "audio",
+      "src": "SpamalotDialogue/32.ogg"
+    },
+    {
+      "id": "spamalot33",
+      "type": "audio",
+      "src": "SpamalotDialogue/33.ogg"
+    },
+    {
+      "id": "spamalot34",
+      "type": "audio",
+      "src": "SpamalotDialogue/34.ogg"
+    },
+    {
+      "id": "spamalot35",
+      "type": "audio",
+      "src": "SpamalotDialogue/35.ogg"
+    },
+    {
+      "id": "spamalot36",
+      "type": "audio",
+      "src": "SpamalotDialogue/36.ogg"
+    },
+    {
+      "id": "spamalot37",
+      "type": "audio",
+      "src": "SpamalotDialogue/37.ogg"
+    },
+    {
+      "id": "spamalot38",
+      "type": "audio",
+      "src": "SpamalotDialogue/38.ogg"
+    },
+    {
+      "id": "spamalot39",
+      "type": "audio",
+      "src": "SpamalotDialogue/39.ogg"
+    },
+    {
+      "id": "spamalot40",
+      "type": "audio",
+      "src": "SpamalotDialogue/40.ogg"
+    },
+    {
+      "id": "spamalot41",
+      "type": "audio",
+      "src": "SpamalotDialogue/41.ogg"
+    },
+    {
+      "id": "spamalot42",
+      "type": "audio",
+      "src": "SpamalotDialogue/42.ogg"
+    },
+    {
+      "id": "spamalot43",
+      "type": "audio",
+      "src": "SpamalotDialogue/43.ogg"
+    },
+    {
+      "id": "spamalot44",
+      "type": "audio",
+      "src": "SpamalotDialogue/44.ogg"
+    },
+    {
+      "id": "spamalot45",
+      "type": "audio",
+      "src": "SpamalotDialogue/45.ogg"
+    },
+    {
+      "id": "spamalot46",
+      "type": "audio",
+      "src": "SpamalotDialogue/46.ogg"
     }
   ]
 }
