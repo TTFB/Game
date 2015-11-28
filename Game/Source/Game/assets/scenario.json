@@ -236,9 +236,14 @@
       "src": "props/sword.png.def"
     },
     {
+    	"id"   : "fog",
+    	"type" : "textureSampler",
+    	"src"  : "fog.png.def"
+	},
+    {
       "id": "blood",
-      "type": "textureSampler",
-      "src": "Particles/blood.png.def"
+      "type": "texture",
+      "src": "Particles/blood.png"
     },
     {
       "id": "curtain",

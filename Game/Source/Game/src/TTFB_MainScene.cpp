@@ -52,6 +52,7 @@
 #include <TTFB_Constants.h>
 #include <VerticalLinearLayout.h>
 #include <TTFB_SetPiece.h>
+#include <ParticleSystem.h>
 
 TTFB_MainScene::TTFB_MainScene(Game * _game) :
 	TTFB_StageScene(_game, 100.0f, "L1_Floor", "L1_Side", "L1_Background", "L1_Top", "L1_Bottom"),
@@ -60,25 +61,35 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 
 #pragma region LightSetup
 	
-	SpotLight * light2 = new SpotLight(glm::vec3(0, 0, -1), glm::vec3(0,0,0), 45.f, 0.01f, 0.001f, -1.f);
+	SpotLight * light0 = new SpotLight(glm::vec3(0, 0, -1), glm::vec3(0,0,0), 45.f, 0.001f, 0.001f, -1.f);
+	lights.push_back(light0);
+	childTransform->addChild(light0);
+	light0->firstParent()->translate(0, 0, 30);
+	
+	SpotLight * light1 = new SpotLight(glm::vec3(0, 0, -1), glm::vec3(1,1,1), 45.f, 0.001f, 0.001f, -1.f);
+	lights.push_back(light1);
+	childTransform->addChild(light1);
+	light1->firstParent()->translate(-20, 10, 13);
+
+	SpotLight * light2 = new SpotLight(glm::vec3(0, 0, -1), glm::vec3(1,1,1), 45.f, 0.001f, 0.001f, -1.f);
 	lights.push_back(light2);
 	childTransform->addChild(light2);
-	light2->firstParent()->translate(0, 0, 30);
+	light2->firstParent()->translate(0, 10, 13);
 
-	SpotLight * light3 = new SpotLight(glm::vec3(0, 0, -1), glm::vec3(1,1,1), 45.f, 0.01f, 0.001f, -1.f);
+	SpotLight * light3 = new SpotLight(glm::vec3(0, 0, -1), glm::vec3(1,1,1), 45.f, 0.001f, 0.001f, -1.f);
 	lights.push_back(light3);
 	childTransform->addChild(light3);
-	light3->firstParent()->translate(0, 0, 30);
+	light3->firstParent()->translate(20, 10, 13);
 
 #pragma endregion 
 
 #pragma region ActorSetup
 
-	TTFB_Actor * kingArthur = createActor("kingArthur");
+	kingArthur = createActor("kingArthur");
 	childTransform->addChild(kingArthur);
 	kingArthur->translateComponents(-10.f, kingArthur->getLegsOffset(), 0.f);
 
-	TTFB_Actor * blackKnight = createActor("blackKnight");
+	blackKnight = createActor("blackKnight");
 	childTransform->addChild(blackKnight);
 	blackKnight->translateComponents(10.f, blackKnight->getLegsOffset(), 0.f);
 
@@ -93,24 +104,28 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 
 #pragma region SetSetup
 
-	setPiece = addSetPiece("L1_Tree2", glm::vec3(0.f, 10.f, -0.5f));
+	setPiece = addSetPiece("L1_Tree2", glm::vec3(0.f, 20.f, -0.5f));
+	setPiece->raise();
 
 #pragma endregion 
 
 #pragma region ControllerBindings
+	
 	// Setup Controller Bindings
 	controller->lightSliderOne.bind([=](int _value){
 		lights[1]->setIntensities(glm::vec3(((float)_value + 0.0001f)/256));
 	});
-	
-	controller->setButtonOne.bind([=](int _value) {
-		if(controller->setButtonOne.justDown()) {
-			setPiece->toggle();
-		}
+
+	controller->lightSliderTwo.bind([=](int _value){
+		lights[2]->setIntensities(glm::vec3(((float)_value + 0.0001f)/256));
 	});
 
+	controller->lightSliderThree.bind([=](int _value){
+		lights[3]->setIntensities(glm::vec3(((float)_value + 0.0001f)/256));
+	});
+	
 	// Move this into stage scene
-	controller->lightSliderTwo.bind([=](int _value){
+	controller->specialCurtainPot.bind([=](int _value){
 		float increase = _value / 30.0f;
 		glm::vec3 leftTrans = stage->curtainLeft->firstParent()->getTranslationVector();
 		glm::vec3 rightTrans = stage->curtainRight->firstParent()->getTranslationVector();
@@ -118,6 +133,68 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 		rightTrans.x = (increase + 12);
 		stage->curtainLeft->firstParent()->translate(leftTrans, false);
 		stage->curtainRight->firstParent()->translate(rightTrans, false);
+	});
+
+	controller->setButtonOne.bind([=](int _value) {
+		if(controller->setButtonOne.justDown()) {
+			setPiece->toggle();
+		}
+	});
+
+	controller->setButtonTwo.bind([=](int _value) {
+		if(controller->setButtonTwo.justDown()) {
+			// Toggle second set piece
+		}
+	});
+
+	controller->setButtonThree.bind([=](int _value) {
+		if(controller->setButtonThree.justDown()) {
+			// Toggle third set piece
+		}
+	});
+
+	controller->setButtonFour.bind([=](int _value) {
+		if(controller->setButtonFour.justDown()) {
+			// Toggle fourth set piece
+		}
+	});
+
+	controller->soundButtonOne.bind([=](int _value) {
+		if(controller->soundButtonOne.justDown()) {
+			// Play sound effect
+		}
+	});
+
+	controller->soundButtonTwo.bind([=](int _value) {
+		if(controller->soundButtonTwo.justDown()) {
+			// Play sound effect
+		}
+	});
+
+	controller->soundButtonThree.bind([=](int _value) {
+		if(controller->soundButtonThree.justDown()) {
+			// Play sound effect
+		}
+	});
+
+	controller->specialFireButton.bind([=](int _value) {
+		if(controller->specialFireButton.justDown()) {
+			fireActive = !fireActive;
+		}
+	});
+
+	controller->specialFogSwitch.bind([=](int _value) {
+		if(controller->specialFireButton.justDown()) {
+			// Toggle fog
+		}
+	});
+
+	controller->soundMicSwitch.bind([=](int _value) {
+		if(_value == 1) {
+			dialoguePlayer->unmute();
+		}else {
+			dialoguePlayer->mute();
+		}
 	});
 	
 #pragma endregion 
@@ -429,6 +506,8 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 			kingArthur->say(3.0f, L"wwoowowowo", false);
 		}
 	);*/
+
+	addFog();
 }
 
 TTFB_MainScene::~TTFB_MainScene(){
@@ -442,6 +521,13 @@ void TTFB_MainScene::update(Step * _step){
 	if(!bgMusicStarted) {
 		bgMusicStarted = true;
 		backgroundMusic->play();
+	}
+
+	fireActive = true;
+	
+	if(fireActive){
+		b2Vec2 blackKnightPos = blackKnight->getBox2dPos();
+		Particle * p = fireSystem->addParticle(glm::vec3(blackKnightPos.x + 3, stage->getVisibleBounds().getBottomRight().y + 0.2f, 0), TTFB_ResourceManager::scenario->getTexture("blood")->texture);
 	}
 
 	eventQueue.update(_step);

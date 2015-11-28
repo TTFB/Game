@@ -52,6 +52,8 @@ public:
 	void swingRightArm();
 	void swingLeftArm();
 
+	b2Vec2 getBox2dPos();
+
 private:
 	Box2DSprite * torso;
 	Box2DSprite * head;

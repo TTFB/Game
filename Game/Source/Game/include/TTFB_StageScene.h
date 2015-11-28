@@ -37,6 +37,9 @@ class Font;
 class TTFB_Stage;
 class TTFB_Actor;
 
+class ParticleSystem;
+class Particle;
+
 class TTFB_StageScene : public Scene{
 public:
 
@@ -76,6 +79,13 @@ public:
 	TTFB_Controller * controller;
 	TTFB_Audience * audience;
 
+	ParticleSystem * fireSystem;
+	Particle * fireParticle;
+
+	Sprite * fog;
+
+	bool fireActive;
+
 	virtual void update(Step * _step) override;
 	virtual void render(sweet::MatrixStack * _matrixStack, RenderOptions * _renderOptions) override;
 	
@@ -86,6 +96,8 @@ public:
 	virtual void endScene(std::string _sceneKey);
 	virtual TTFB_Prop * addProp(std::string _samplerResourceId, glm::vec3 _pos);
 	virtual TTFB_SetPiece * addSetPiece(std::string _samplerResourceId, glm::vec3 _pos);
+
+	void addFog();
 
 	TTFB_StageScene(Game * _game, float _stageWidth, std::string _floorTex, std::string _sideTex, std::string _backTex, std::string _topTex, std::string _frontTex);
 	~TTFB_StageScene();

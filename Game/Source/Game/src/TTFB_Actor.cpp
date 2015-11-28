@@ -170,14 +170,16 @@ TTFB_Actor::~TTFB_Actor() {
 }
 
 TTFB_Subscription * TTFB_Actor::move(float _moveBy) {
-	if(_moveBy > 0) {
+	
+	b2Vec2 pos = torso->body->GetPosition();
+	if(_moveBy - pos.x > 0) {
 		moveDirection = 1;
-	}else if(_moveBy < 0) {
+	}else if(_moveBy - pos.x  < 0) {
 		moveDirection = -1;	
 	}else {
 		moveDirection = 0;
 	}
-	float target = firstParent()->getTranslationVector().x + _moveBy; 
+	float target = _moveBy; 
 	if(firstParent() != nullptr){
 		when([target, this](){
 			float curX = rootComponent->body->GetPosition().x;
@@ -276,6 +278,10 @@ void TTFB_Actor::swingRightArm() {
 void TTFB_Actor::swingLeftArm() {
 	b2Vec2 point= leftArm->body->GetWorldCenter();
 	leftArm->applyLinearImpulse(0.0f, 200.0f, point.x, point.y);
+}
+
+b2Vec2 TTFB_Actor::getBox2dPos() {
+	return torso->body->GetPosition();
 }
 
 void TTFB_Actor::pickupPropRight(TTFB_Prop* _prop) {

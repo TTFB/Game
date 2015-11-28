@@ -14,12 +14,14 @@ public:
 
 	TTFB_EventQueue eventQueue;
 
+	TTFB_Actor * kingArthur;
+	TTFB_Actor * blackKnight;
+
 	TTFB_SetPiece * setPiece;
 	TTFB_DialoguePlayer * dialoguePlayer;
 
 	OpenAL_Sound * backgroundMusic;
 	bool bgMusicStarted;
-
 	virtual void update(Step * _step) override;
 	virtual void render(sweet::MatrixStack * _matrixStack, RenderOptions * _renderOptions) override;
 	

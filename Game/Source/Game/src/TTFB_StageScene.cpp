@@ -59,6 +59,9 @@
 #include <TTFB_Prop.h>
 #include <TTFB_SetPiece.h>
 
+#include <ParticleSystem.h>
+#include <Particle.h>
+
 TTFB_StageScene::TTFB_StageScene(Game * _game, float _stageWidth, std::string _floorTex, std::string _sideTex, std::string _backTex, std::string _topTex, std::string _frontTex) :
 	Scene(_game),
 	screenSurfaceShader(new Shader("assets/engine basics/DefaultRenderSurface", false, true)),
@@ -73,7 +76,8 @@ TTFB_StageScene::TTFB_StageScene(Game * _game, float _stageWidth, std::string _f
 	box2dDebug(box2dWorld->createDebugDrawer()),
 	font(new Font("assets/engine basics/OpenSans-Regular.ttf", 100, true)),
 	controller(new TTFB_Controller()),
-	score(1)
+	score(1),
+	fireActive(false)
 {
 
 	baseShader->addComponent(new ShaderComponentMVP(baseShader)); 
@@ -143,6 +147,11 @@ TTFB_StageScene::TTFB_StageScene(Game * _game, float _stageWidth, std::string _f
 	camController = new MouseCameraController(debugCam);
 
 	box2dDebug->drawing = false;
+
+	fireSystem = new ParticleSystem(TTFB_ResourceManager::scenario->getTexture("blood")->texture, box2dWorld, 0);
+	stage->childTransform->addChild(fireSystem);
+
+	fireSystem->setShader(baseShader, true);
 }
 
 TTFB_StageScene::~TTFB_StageScene(){
@@ -196,7 +205,6 @@ void TTFB_StageScene::update(Step * _step){
 }
 
 void TTFB_StageScene::render(sweet::MatrixStack * _matrixStack, RenderOptions * _renderOptions){
-
 
 	glEnable(GL_DEPTH_TEST);
 
@@ -263,6 +271,15 @@ TTFB_Prop * TTFB_StageScene::addProp(std::string _samplerResourceId, glm::vec3 _
 TTFB_SetPiece * TTFB_StageScene::addSetPiece(std::string _samplerResourceId, glm::vec3 _pos) {
 	TTFB_SetPiece * set = new TTFB_SetPiece(box2dWorld, _samplerResourceId, baseShader, stage->getVisibleBounds());
 	childTransform->addChild(set);
+	_pos.y = stage->getVisibleBounds().getTopLeft().y;
 	set->setTranslationPhysical(_pos);
 	return set;
+}
+
+void TTFB_StageScene::addFog() {
+	fog = new Sprite(baseShader);
+	fog->setPrimaryTexture(TTFB_ResourceManager::scenario->getTextureSampler("fog")->textureSampler);
+	childTransform->addChild(fog);
+	fog->firstParent()->translate(0, 10, 2);
+	fog->firstParent()->scale(50, -10, 1);
 }
