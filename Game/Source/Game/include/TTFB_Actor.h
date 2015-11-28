@@ -24,6 +24,9 @@ enum Category {
 
 class TTFB_Actor : public Box2DSuperSprite, public TTFB_Whenable{
 public:
+
+	float speedMod;
+
 	TTFB_Actor(std::string _name, Box2DWorld * _world, BulletWorld * _bulletWorld, Font * _font, Shader * _textShader, Shader * _shader = nullptr);
 	~TTFB_Actor();
 

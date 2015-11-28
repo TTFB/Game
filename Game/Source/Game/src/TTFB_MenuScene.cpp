@@ -123,12 +123,6 @@ TTFB_MenuScene::TTFB_MenuScene(Game* _game)  :
 	childTransform->addChild(light2);
 	light2->firstParent()->translate(0, 0, -5);
 
-	auto cheeseMesh = Resource::loadMeshFromObj("assets/meshes/cheese.obj");
-	cheese = new MeshEntity(cheeseMesh[0], baseShader);
-	childTransform->addChild(cheese);
-	cheese->firstParent()->scale(20);
-
-
 	camController = new MouseCameraController(debugCam);
 }
 
