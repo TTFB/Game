@@ -14,8 +14,13 @@ public:
 	void lower();
 	void toggle();
 
+	bool isLowered();
+	bool isRaised();
+
 private:
 	int raiseDir;
 	bool forceFrame;
+	bool lowered;
+	bool raised;
 	sweet::Rectangle stageBounds;
 };
