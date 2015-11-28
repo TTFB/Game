@@ -7,6 +7,7 @@
 #include <TTFB_EventQueue.h>
 #include <TTFB_StageScene.h>
 #include <TTFB_DialoguePlayer.h>
+#include <OpenALSound.h>
 
 class TTFB_MainScene : public TTFB_StageScene{
 public:
@@ -15,6 +16,9 @@ public:
 
 	TTFB_SetPiece * setPiece;
 	TTFB_DialoguePlayer * dialoguePlayer;
+
+	OpenAL_Sound * backgroundMusic;
+	bool bgMusicStarted;
 
 	virtual void update(Step * _step) override;
 	virtual void render(sweet::MatrixStack * _matrixStack, RenderOptions * _renderOptions) override;

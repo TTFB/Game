@@ -187,6 +187,7 @@ void TTFB_StageScene::update(Step * _step){
 	}
 
 	debugCam->update(_step);
+
 	camController->update(_step);
 
 	controller->update(_step);
