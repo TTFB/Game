@@ -17,7 +17,11 @@ public:
 	TTFB_Actor * kingArthur;
 	TTFB_Actor * blackKnight;
 
-	TTFB_SetPiece * setPiece;
+	TTFB_SetPiece * setPieceTree1;//tree
+	TTFB_SetPiece * setPieceTree2;//tree2
+	TTFB_SetPiece * setPieceBush;//bush
+	TTFB_SetPiece * setPieceMatte;//matte
+
 	TTFB_DialoguePlayer * dialoguePlayer;
 
 	OpenAL_Sound * backgroundMusic;

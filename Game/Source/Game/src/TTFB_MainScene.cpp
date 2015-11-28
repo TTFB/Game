@@ -104,8 +104,14 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 
 #pragma region SetSetup
 
-	setPiece = addSetPiece("L1_Tree2", glm::vec3(0.f, 20.f, -0.5f));
-	setPiece->raise();
+	setPieceTree1 = addSetPiece("L1_Tree1", glm::vec3(10.f, 20.f, -0.5f));
+	setPieceTree1->raise();
+	setPieceTree2 = addSetPiece("L1_Tree2", glm::vec3(-10.f, 20.f, -0.5f));
+	setPieceTree2->raise();
+	setPieceBush = addSetPiece("L1_Bush", glm::vec3(0.f, 20.f, -0.5f));
+	setPieceBush->raise();
+	setPieceMatte = addSetPiece("L1_mattePainting", glm::vec3(0.f, 20.f, -0.5f));
+	setPieceMatte->raise();
 
 #pragma endregion 
 
@@ -137,7 +143,9 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 
 	controller->setButtonOne.bind([=](int _value) {
 		if(controller->setButtonOne.justDown()) {
-			setPiece->toggle();
+			setPieceTree1->toggle();
+			setPieceTree2->toggle();
+			setPieceBush->toggle();
 		}
 	});
 
@@ -161,19 +169,19 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 
 	controller->soundButtonOne.bind([=](int _value) {
 		if(controller->soundButtonOne.justDown()) {
-			// Play sound effect
+			TTFB_ResourceManager::scenario->getAudio("spamalot1" )->sound->play();
 		}
 	});
 
 	controller->soundButtonTwo.bind([=](int _value) {
 		if(controller->soundButtonTwo.justDown()) {
-			// Play sound effect
+			TTFB_ResourceManager::scenario->getAudio("spamalot1" )->sound->play();
 		}
 	});
 
 	controller->soundButtonThree.bind([=](int _value) {
 		if(controller->soundButtonThree.justDown()) {
-			// Play sound effect
+			TTFB_ResourceManager::scenario->getAudio("spamalot1" )->sound->play();
 		}
 	});
 
@@ -198,6 +206,11 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 	});
 	
 #pragma endregion 
+
+	eventQueue.expectAt(6.f, 2.f, 
+		[=](){return setPieceTree1->isLowered();},
+			[](){std::cout<<"Success";}, 
+			[](){std::cout<<"Failure";});
 
 #pragma region AudioSetup
 

@@ -64,9 +64,9 @@ bool TTFB_SetPiece::isRaised() {
 
 void TTFB_SetPiece::toggle() {
 	if(stageBounds.getTopLeft().y + 10 < body->GetPosition().y + getCorrectedHeight() * 0.5f || raiseDir == 1) {
-		raiseDir = -1;	
+		raiseDir = -4;	
 	}else {
-		raiseDir = 1;
+		raiseDir = 4;
 	}
 	forceFrame = true;
 }

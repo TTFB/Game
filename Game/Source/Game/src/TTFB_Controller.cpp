@@ -15,7 +15,7 @@ TTFB_Controller::TTFB_Controller() : Arduino(""),
 	for(unsigned long int i = 0; i < 255; i++) {
 		connect("COM" + std::to_string(i));
 		if(connected){
-			Sleep(1000);
+			Sleep(2000);
 			ClearCommError(this->hSerial, &this->errors, &this->status);
 			if(status.cbInQue > 0) {
 				break;
