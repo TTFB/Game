@@ -20,7 +20,8 @@ TTFB_Actor::TTFB_Actor(std::string _name, Box2DWorld * _world, BulletWorld * _bu
 	moveDirection(0),
 	saySubscription(new TTFB_Subscription()),
 	moveSubscription(new TTFB_Subscription()),
-	speechAreaScale(0.01f)
+	speechAreaScale(0.01f),
+	speedMod(1.0f)
 {
 	setShader(_shader, true);
 
@@ -170,14 +171,15 @@ TTFB_Actor::~TTFB_Actor() {
 }
 
 TTFB_Subscription * TTFB_Actor::move(float _moveBy) {
-	if(_moveBy > 0) {
+	b2Vec2 pos = torso->body->GetPosition();
+	if(_moveBy - pos.x > 0) {
 		moveDirection = 1;
-	}else if(_moveBy < 0) {
+	}else if(_moveBy - pos.x  < 0) {
 		moveDirection = -1;	
 	}else {
 		moveDirection = 0;
 	}
-	float target = firstParent()->getTranslationVector().x + _moveBy; 
+	float target = _moveBy; 
 	if(firstParent() != nullptr){
 		when([target, this](){
 			float curX = rootComponent->body->GetPosition().x;
@@ -316,7 +318,7 @@ void TTFB_Actor::update(Step* _step) {
 	TTFB_Whenable::update(_step);
 	float curX = rootComponent->body->GetPosition().x;
 	float curY = rootComponent->body->GetPosition().y;
-	float targX = curX + (1.0f * moveDirection * 0.05 * _step->deltaTimeCorrection);
+	float targX = curX + (1.0f * moveDirection *speedMod * 0.05 * _step->deltaTimeCorrection);
 	rootComponent->setTranslationPhysical(targX, curY, 0.f);
 	speechArea->firstParent()->translate(head->body->GetWorldCenter().x - speechArea->getWidth() * 0.5f * speechAreaScale,
 		head->body->GetWorldCenter().y + speechArea->getHeight() * 0.5f * speechAreaScale + 1.0f,

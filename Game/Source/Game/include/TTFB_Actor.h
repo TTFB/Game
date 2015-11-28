@@ -52,6 +52,8 @@ public:
 	void swingRightArm();
 	void swingLeftArm();
 
+	float speedMod;
+
 private:
 	Box2DSprite * torso;
 	Box2DSprite * head;
