@@ -59,30 +59,6 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 	bgMusicStarted(false)
 {
 
-#pragma region LightSetup
-	
-	SpotLight * light0 = new SpotLight(glm::vec3(0, 0, -1), glm::vec3(0,0,0), 45.f, 0.001f, 0.001f, -1.f);
-	lights.push_back(light0);
-	childTransform->addChild(light0);
-	light0->firstParent()->translate(0, 0, 30);
-	
-	SpotLight * light1 = new SpotLight(glm::vec3(0, 0, -1), glm::vec3(1,1,1), 45.f, 0.001f, 0.001f, -1.f);
-	lights.push_back(light1);
-	childTransform->addChild(light1);
-	light1->firstParent()->translate(-20, 10, 13);
-
-	SpotLight * light2 = new SpotLight(glm::vec3(0, 0, -1), glm::vec3(1,1,1), 45.f, 0.001f, 0.001f, -1.f);
-	lights.push_back(light2);
-	childTransform->addChild(light2);
-	light2->firstParent()->translate(0, 10, 13);
-
-	SpotLight * light3 = new SpotLight(glm::vec3(0, 0, -1), glm::vec3(1,1,1), 45.f, 0.001f, 0.001f, -1.f);
-	lights.push_back(light3);
-	childTransform->addChild(light3);
-	light3->firstParent()->translate(20, 10, 13);
-
-#pragma endregion 
-
 #pragma region ActorSetup
 
 	kingArthur = createActor("kingArthur");
@@ -215,6 +191,7 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 #pragma region AudioSetup
 
 	backgroundMusic = TTFB_ResourceManager::scenario->getAudio("spamalot_bg")->sound;
+	backgroundMusic->setGain(0.5f);
 	dialoguePlayer = new TTFB_DialoguePlayer("spamalot");
 
 #pragma endregion 
@@ -567,7 +544,9 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 		}
 	);*/
 
-	addFog();
+	//addFog();
+
+	endScene(SPAMALOT);
 }
 
 TTFB_MainScene::~TTFB_MainScene(){

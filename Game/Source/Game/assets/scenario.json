@@ -121,17 +121,17 @@
       "src": "Level1_Assets/Level1_SideWalls.png"
     },
     {
-      "id": "black_knight_one_star",
+      "id": "spamalot_one_star",
       "type": "texture",
       "src": "articleTemp.png"
     },
     {
-      "id": "black_knight_two_stars",
+      "id": "spamalot_two_stars",
       "type": "texture",
       "src": "articleTemp.png"
     },
     {
-      "id": "black_knight_three_stars",
+      "id": "spamalot_three_stars",
       "type": "texture",
       "src": "articleTemp.png"
     },
@@ -166,17 +166,17 @@
       "src": "articleTemp.png"
     },
     {
-      "id": "black_knight_one_star_sound",
+      "id": "spamalot_one_star_sound",
       "type": "audio",
       "src": "tempArticleSound.wav"
     },
     {
-      "id": "black_knight_two_stars_sound",
+      "id": "spamalot_two_stars_sound",
       "type": "audio",
       "src": "tempArticleSound.wav"
     },
     {
-      "id": "black_knight_three_stars_sound",
+      "id": "spamalot_three_stars_sound",
       "type": "audio",
       "src": "tempArticleSound.wav"
     },

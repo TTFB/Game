@@ -1,5 +1,5 @@
 #pragma once
 
-#define BLACK_KNIGHT "BlackKnight"
-#define GRINCH "Grinch"
-#define DRACULA "Dracula"
+#define SPAMALOT "spamalot"
+#define GRINCH "grinch"
+#define DRACULA "dracula"

@@ -40,8 +40,8 @@ TTFB_Actor::TTFB_Actor(std::string _name, Box2DWorld * _world, BulletWorld * _bu
 	head->scale     = 0.01f;
 	leftArm->scale  = 0.01f;
 	rightArm->scale = 0.01f;
-	leftLeg->scale     = 0.01f;
-	rightLeg->scale     = 0.01f;
+	leftLeg->scale  = 0.01f;
+	rightLeg->scale = 0.01f;
 
 	//head->body->SetGravityScale(-0.3f);
 	//leftArm->body->SetGravityScale(0.3f);
