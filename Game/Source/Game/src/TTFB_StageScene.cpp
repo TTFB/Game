@@ -154,7 +154,6 @@ TTFB_StageScene::TTFB_StageScene(Game * _game, float _stageWidth, std::string _f
 
 	fireSystem->setShader(baseShader, true);
 
-
 #pragma region LightSetup
 	
 	SpotLight * light0 = new SpotLight(glm::vec3(0, 0, -1), glm::vec3(0,0,0), 45.f, 0.001f, 0.001f, -1.f);

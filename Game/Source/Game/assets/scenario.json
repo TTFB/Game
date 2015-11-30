@@ -277,23 +277,23 @@
     },
 	{
       "id": "smoke",
-      "type": "textureSampler",
-      "src": "Particles/smoke.png.def"
+      "type": "texture",
+      "src": "Particles/smoke.png"
     },
 	{
       "id": "fireRed",
-      "type": "textureSampler",
-      "src": "Particles/fireRed.png.def"
+      "type": "texture",
+      "src": "Particles/fireRed.png"
     },
 	{
-      "id": "fireOrange",
-      "type": "textureSampler",
-      "src": "Particles/fireOrange.png.def"
+      "id":  "fireOrange",
+      "type": "texture",
+      "src":  "Particles/fireOrange.png"
     },
 	{
       "id": "fireYellow",
-      "type": "textureSampler",
-      "src": "Particles/fireYellow.png.def"
+      "type": "texture",
+      "src": "Particles/fireYellow.png"
     },
     {
       "id": "curtain",

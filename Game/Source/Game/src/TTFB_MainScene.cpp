@@ -604,7 +604,10 @@ void TTFB_MainScene::update(Step * _step){
 	
 	if(fireActive){
 		b2Vec2 blackKnightPos = blackKnight->getBox2dPos();
-		Particle * p = fireSystem->addParticle(glm::vec3(blackKnightPos.x + 3, stage->getVisibleBounds().getBottomRight().y + 0.2f, 0), TTFB_ResourceManager::scenario->getTexture("blood")->texture);
+		Particle * p = fireSystem->addParticle(glm::vec3(blackKnightPos.x + 3, stage->getVisibleBounds().getBottomRight().y + 0.2f, 0),  TTFB_ResourceManager::scenario->getTexture("fireRed")->texture);
+		Particle * p1 = fireSystem->addParticle(glm::vec3(blackKnightPos.x + 3, stage->getVisibleBounds().getBottomRight().y + 0.2f, 0), TTFB_ResourceManager::scenario->getTexture("fireOrange")->texture);
+		Particle * p2 = fireSystem->addParticle(glm::vec3(blackKnightPos.x + 3, stage->getVisibleBounds().getBottomRight().y + 0.2f, 0), TTFB_ResourceManager::scenario->getTexture("fireYellow")->texture);
+		Particle * p3 = fireSystem->addParticle(glm::vec3(blackKnightPos.x + 3, stage->getVisibleBounds().getBottomRight().y + 0.2f, 0), TTFB_ResourceManager::scenario->getTexture("smoke")->texture);
 	}
 
 	eventQueue.update(_step);
