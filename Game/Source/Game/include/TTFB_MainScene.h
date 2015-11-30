@@ -8,6 +8,8 @@
 #include <TTFB_StageScene.h>
 #include <TTFB_DialoguePlayer.h>
 #include <OpenALSound.h>
+#include <map>
+#include <string>
 
 class TTFB_MainScene : public TTFB_StageScene{
 public:
@@ -30,6 +32,9 @@ public:
 	TTFB_DialoguePlayer * dialoguePlayer;
 
 	OpenAL_Sound * backgroundMusic;
+
+	std::map<std::string, bool> conditions;
+
 	bool bgMusicStarted;
 	float startSceneDelay;
 

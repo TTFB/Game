@@ -273,7 +273,7 @@ void TTFB_Actor::pickupPropLeft(TTFB_Prop * _prop) {
 	joint.bodyA = leftArm->body;
 	joint.bodyB = _prop->body;
 	joint.localAnchorA.Set(-0.5f * leftArm->getCorrectedWidth(), 0);
-	joint.localAnchorB.Set(-0.5f * rightArm->getCorrectedWidth(), 0);
+	joint.localAnchorB.Set(0, -_prop->getCorrectedWidth() * 0.45f);
 	joint.collideConnected = false;
 	joint.enableLimit = true;
 	joint.enableMotor = true;
@@ -304,7 +304,7 @@ void TTFB_Actor::pickupPropRight(TTFB_Prop* _prop) {
 	joint.bodyA = rightArm->body;
 	joint.bodyB = _prop->body;
 	joint.localAnchorA.Set(0.5f * rightArm->getCorrectedWidth(), 0);
-	joint.localAnchorB.Set(-0.5f * rightArm->getCorrectedWidth(), 0);
+	joint.localAnchorB.Set(0, -_prop->getCorrectedWidth() * 0.45f);
 	joint.collideConnected = false;
 	joint.enableLimit = true;
 	joint.enableMotor = true;
