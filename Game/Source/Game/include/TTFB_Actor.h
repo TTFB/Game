@@ -70,6 +70,11 @@ private:
 	Box2DSprite* rightLeg;
 	Box2DSprite* leftLeg;
 
+	bool leftArmBroken;
+	bool rightArmBroken;
+	bool leftLegBroken;
+	bool rightLegBroken;
+
 	TextArea * speechArea; 
 	TTFB_Subscription * moveSubscription;
 	TTFB_Subscription * saySubscription;

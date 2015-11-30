@@ -122,32 +122,32 @@
     },
 	{
       "id": "L3_Top",
-      "type": "texture",
+      "type": "textureSampler",
       "src": "Level3_Assets/Level3_StageTop.png.def"
     },
 	{
       "id": "L3_Bottom",
-      "type": "texture",
+      "type": "textureSampler",
       "src": "Level3_Assets/Level3_StageBottom.png.def"
     },
 	{
       "id": "L3_Foreground",
-      "type": "texture",
+      "type": "textureSampler",
       "src": "Level3_Assets/Level3_StageForeground.png.def"
     },
 	{
       "id": "L3_RightWall",
-      "type": "texture",
+      "type": "textureSampler",
       "src": "Level3_Assets/Level3_RightWall.png.deg"
     },
 	{
       "id": "L3_LeftWall",
-      "type": "texture",
+      "type": "textureSampler",
       "src": "Level3_Assets/Level3_LeftWall.png.deg"
     },
 	{
       "id": "L3_CrowdNeutral",
-      "type": "texture",
+      "type": "textureSampler",
       "src": "Level3_Assets/Level3_Crowd_Neutral.png.deg"
     },
     {
@@ -277,22 +277,22 @@
     },
 	{
       "id": "smoke",
-      "type": "texture",
+      "type": "textureSampler",
       "src": "Particles/smoke.png.def"
     },
 	{
       "id": "fireRed",
-      "type": "texture",
+      "type": "textureSampler",
       "src": "Particles/fireRed.png.def"
     },
 	{
       "id": "fireOrange",
-      "type": "texture",
+      "type": "textureSampler",
       "src": "Particles/fireOrange.png.def"
     },
 	{
       "id": "fireYellow",
-      "type": "texture",
+      "type": "textureSampler",
       "src": "Particles/fireYellow.png.def"
     },
     {

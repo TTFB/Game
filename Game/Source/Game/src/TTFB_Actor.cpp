@@ -21,7 +21,11 @@ TTFB_Actor::TTFB_Actor(std::string _name, Box2DWorld * _world, BulletWorld * _bu
 	saySubscription(new TTFB_Subscription()),
 	moveSubscription(new TTFB_Subscription()),
 	speechAreaScale(0.01f),
-	speedMod(1.0f)
+	speedMod(1.0f),
+	leftArmBroken(false),
+	rightArmBroken(false),
+	leftLegBroken(false),
+	rightLegBroken(false)
 {
 	setShader(_shader, true);
 
@@ -232,19 +236,31 @@ void TTFB_Actor::flip() {
 }
 
 void TTFB_Actor::breakLeftArmJoint() {
-	breakJoint(leftArm);
+	if(!leftArmBroken){
+		breakJoint(leftArm);
+		leftArmBroken = true;
+	}
 }
 
-void TTFB_Actor::breakLeftLegJoint() {
-	breakJoint(leftLeg);
+void TTFB_Actor::breakLeftLegJoint(){
+	if(!leftLegBroken){
+		breakJoint(leftLeg);
+		leftLegBroken = true;
+	}
 }
 
-void TTFB_Actor::breakRightLegJoint() {
-	breakJoint(rightLeg);
+void TTFB_Actor::breakRightLegJoint(){
+	if(!rightLegBroken){
+		breakJoint(rightLeg);
+		rightLegBroken = true;
+	}
 }
 
-void TTFB_Actor::breakRightArmJoint() {
-	breakJoint(rightArm);
+void TTFB_Actor::breakRightArmJoint(){
+	if(!rightArmBroken){
+		breakJoint(rightArm);
+		rightArmBroken = true;
+	}
 }
 
 void TTFB_Actor::applyImpulseLeftArm(float _x, float _y) {
