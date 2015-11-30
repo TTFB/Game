@@ -139,6 +139,7 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 		rightTrans.x = (increase + 12);
 		stage->curtainLeft->firstParent()->translate(leftTrans, false);
 		stage->curtainRight->firstParent()->translate(rightTrans, false);
+		//-46 is open, -12 is closed for left curtain
 	});
 
 	controller->setButtonOne.bind([=](int _value) {
@@ -151,7 +152,7 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 
 	controller->setButtonTwo.bind([=](int _value) {
 		if(controller->setButtonTwo.justDown()) {
-			// Toggle second set piece
+			setPieceMatte->toggle();
 		}
 	});
 
@@ -206,74 +207,109 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 	});
 	
 #pragma endregion 
+	startSceneDelay = 10.0f;
 
-	eventQueue.expectAt(6.f, 2.f, 
+	//scene setup cues
+	eventQueue.expectAt(5.f, 5.f, 
+		[=](){return dialoguePlayer->muted;},
+			[](){std::cout<<"Success";}, 
+			[](){std::cout<<"Failure";});
+	eventQueue.expectAt(5.f, 5.f, 
 		[=](){return setPieceTree1->isLowered();},
 			[](){std::cout<<"Success";}, 
 			[](){std::cout<<"Failure";});
+	eventQueue.expectAt(5.f, 5.f,
+		[=](){return setPieceMatte->isLowered();},
+			[](){std::cout<<"Success";}, 
+			[](){std::cout<<"Failure";});
+	eventQueue.expectAt(5.f, 5.f, 
+		[=](){return lights[1]->getIntensities().r > 3.5;},
+			[](){std::cout<<"Success";}, 
+			[](){std::cout<<"Failure";});
+	eventQueue.expectAt(5.f, 5.f, 
+		[=](){return lights[2]->getIntensities().r > 3.5;},
+			[](){std::cout<<"Success";}, 
+			[](){std::cout<<"Failure";});
+	eventQueue.expectAt(5.f, 5.f, 
+		[=](){return stage->curtainLeft->firstParent()->getTranslationVector().x < -44.0f;},
+			[](){std::cout<<"SuccessCURTAINS";}, 
+			[](){std::cout<<"Failure";});
+
+	//light 0%
+	eventQueue.expectAt(1.5f, 2.f, 
+		[=](){return lights[1]->getIntensities().r < 0.2;},
+			[](){std::cout<<"Success";}, 
+			[](){std::cout<<"Failure";});
+	//fog ON
+	//fog OFF
+	//sound2 effect
+	
+	
 
 #pragma region AudioSetup
 
 	backgroundMusic = TTFB_ResourceManager::scenario->getAudio("spamalot_bg")->sound;
 	dialoguePlayer = new TTFB_DialoguePlayer("spamalot");
-
+	 
 #pragma endregion 
 
 #pragma region Events
 
-	eventQueue.at(0.0f, [=](){
+	
+
+	eventQueue.at(0.0f + startSceneDelay, [=](){
 		kingArthur->speedMod = 1.0f;
 		kingArthur->move(-7.0f);
 	});
 
-	eventQueue.at(1.5f, [=](){
+	eventQueue.at(1.5f + startSceneDelay, [=](){
 		dialoguePlayer->playNext();
 		blackKnight->say(2.0f, L"None shall pass", true);
 	});
 
-	eventQueue.at(3.5f, [=](){
+	eventQueue.at(3.5f + startSceneDelay, [=](){
 		dialoguePlayer->playNext();
 		kingArthur->say(1.5f, L"What?", true);
 	});
 
-	eventQueue.at(5.0f, [=](){
+	eventQueue.at(5.0f + startSceneDelay, [=](){
 		dialoguePlayer->playNext();
 		blackKnight->say(2.0f, L"None shall pass", true);
 		kingArthur->swingRightArm();
 	});
 	
-	eventQueue.at(7.5, [=](){
+	eventQueue.at(7.5 + startSceneDelay, [=](){
 		dialoguePlayer->playNext();
 		kingArthur->say(2.0f, L"I have no quarrel with you, good Sir knight", false);
 	});
 	
-	eventQueue.at(9.5f, [=](){
+	eventQueue.at(9.5f + startSceneDelay, [=](){
 		kingArthur->say(2.0f, L"but I must cross this bridge", true);
 	});
 
-	eventQueue.at(11.5f, [=](){
+	eventQueue.at(11.5f + startSceneDelay, [=](){
 		dialoguePlayer->playNext();
 		blackKnight->say(2.0f, L"Then you shall die", true);
 	});
 
-	eventQueue.at(12.5f, [=](){
+	eventQueue.at(12.5f + startSceneDelay, [=](){
 		dialoguePlayer->playNext();
 		kingArthur->say(2.5f, L"I command you as King of the Britons to stand aside!", true);
 		kingArthur->speedMod = 2.0f;
 		kingArthur->move(0.0f);
 	});
 
-	eventQueue.at(15.0f, [=](){
+	eventQueue.at(15.0f + startSceneDelay, [=](){
 		dialoguePlayer->playNext();
 		blackKnight->say(2.0f, L"I move for no man", true);
 	});
 
-	eventQueue.at(17.0f, [=](){
+	eventQueue.at(17.0f + startSceneDelay, [=](){
 		kingArthur->speedMod = 4.0f;
 		kingArthur->move(7.0f);
 	});
 
-	eventQueue.at(17.0f, [=](){
+	eventQueue.at(17.0f + startSceneDelay, [=](){
 		dialoguePlayer->playNext();
 		kingArthur->say(2.0f, L"So be it!", true)->subscribe(
 			[=](){
@@ -283,63 +319,63 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 		);
 	});
 
-	eventQueue.at(19.0f, [=](){
+	eventQueue.at(19.0f + startSceneDelay, [=](){
 		dialoguePlayer->playNext();
 		kingArthur->say(1.0f, L"Hah", true);
 	});
 
-	eventQueue.at(20.0f, [=](){
+	eventQueue.at(20.0f + startSceneDelay, [=](){
 		dialoguePlayer->playNext();
 		blackKnight->say(1.0f, L"Oii", true);
 	});
 
-	eventQueue.at(21.0f, [=](){
+	eventQueue.at(21.0f + startSceneDelay, [=](){
 		dialoguePlayer->playNext();
 		kingArthur->say(3.0f, L"Now stand aside, worthy adversary", true);
 		kingArthur->move(-1.5f);
 	});
 
-	eventQueue.at(24.0f, [=](){
+	eventQueue.at(24.0f + startSceneDelay, [=](){
 		dialoguePlayer->playNext();
 		blackKnight->say(2.0f, L"'Tis but a scratch", true);
 	});
 
-	eventQueue.at(26.0f, [=](){
+	eventQueue.at(26.0f + startSceneDelay, [=](){
 		dialoguePlayer->playNext();
 		kingArthur->say(2.0f, L"A scratch? Your arm's off", true);
 	});
 
-	eventQueue.at(28.0f, [=](){
+	eventQueue.at(28.0f + startSceneDelay, [=](){
 		dialoguePlayer->playNext();
 		blackKnight->say(2.0f, L"No it isn't", true);
 	});
 
-	eventQueue.at(30.0f, [=](){
+	eventQueue.at(30.0f + startSceneDelay, [=](){
 		dialoguePlayer->playNext();
 		kingArthur->say(2.0f, L"What's that then?", true);
 	});
 
-	eventQueue.at(32.0f, [=](){
+	eventQueue.at(32.0f + startSceneDelay, [=](){
 		dialoguePlayer->playNext();
 		blackKnight->say(1.0f, L"I've had worse", true);
 	});
 
-	eventQueue.at(33.0f, [=](){
+	eventQueue.at(33.0f + startSceneDelay, [=](){
 		dialoguePlayer->playNext();
 		kingArthur->say(1.5f, L"You liar!", true);
 	});
 
-	eventQueue.at(34.5f, [=](){
+	eventQueue.at(34.5f + startSceneDelay, [=](){
 		dialoguePlayer->playNext();
 		blackKnight->say(2.0f, L"Come on you pansy!", true);
 	});
 
-	eventQueue.at(36.5f, [=](){
+	eventQueue.at(36.5f + startSceneDelay, [=](){
 		kingArthur->speedMod = 4.0f;
 		kingArthur->move(5.0f);
 	});
 
-	eventQueue.at(36.5f, [=](){
+	eventQueue.at(36.5f + startSceneDelay, [=](){
 		dialoguePlayer->playNext();
 		kingArthur->say(1.0f, L"Hah", true)->subscribe(
 			[=](){
@@ -349,95 +385,95 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 		);
 	});
 
-	eventQueue.at(37.5f, [=](){
+	eventQueue.at(37.5f + startSceneDelay, [=](){
 		dialoguePlayer->playNext();
 		blackKnight->say(1.0f, L"Oii", true);
 	});
 
-	eventQueue.at(38.5f, [=](){
+	eventQueue.at(38.5f + startSceneDelay, [=](){
 		dialoguePlayer->playNext();
 		kingArthur->say(2.0f, L"Victory is mine!", true);
 	});
 
-	eventQueue.at(40.5f, [=](){
+	eventQueue.at(40.5f + startSceneDelay, [=](){
 		dialoguePlayer->playNext();
 		kingArthur->say(2.0f, L"We thank the Lord, that in thy merc-", true);
 	});
 
-	eventQueue.at(42.5f, [=](){
+	eventQueue.at(42.5f + startSceneDelay, [=](){
 		dialoguePlayer->playNext();
 		blackKnight->say(1.0f, L"Hah!", true);
 		blackKnight->speedMod = 2.0f;
 		blackKnight->move(6.0f);
 	});
 
-	eventQueue.at(43.5f, [=](){
+	eventQueue.at(43.5f + startSceneDelay, [=](){
 		dialoguePlayer->playNext();
 		blackKnight->say(1.0f, L"Come on then", true);
 		blackKnight->speedMod = 1.0f;
 		blackKnight->move(8.0f);
 	});
 
-	eventQueue.at(44.5f, [=](){
+	eventQueue.at(44.5f + startSceneDelay, [=](){
 		dialoguePlayer->playNext();
 		kingArthur->say(1.0f, L"What?", true);
 	});
 
-	eventQueue.at(45.5f, [=](){
+	eventQueue.at(45.5f + startSceneDelay, [=](){
 		dialoguePlayer->playNext();
 		blackKnight->say(1.5f, L"Have at you!", true);
 	});
 
-	eventQueue.at(47.0f, [=](){
+	eventQueue.at(47.0f + startSceneDelay, [=](){
 		dialoguePlayer->playNext();
 		kingArthur->say(2.0f, L"You are indeed brave, Sir Knight?", false);
 	});
 
-	eventQueue.at(49.0f, [=](){
+	eventQueue.at(49.0f + startSceneDelay, [=](){
 		kingArthur->say(1.5f, L"but this fight is mine", true);
 		kingArthur->move(2.0f);
 	});
 
-	eventQueue.at(51.0f, [=](){
+	eventQueue.at(51.0f + startSceneDelay, [=](){
 		dialoguePlayer->playNext();
 		blackKnight->say(2.0f, L"Oh, had enough, eh?", true);
 	});
 
-	eventQueue.at(53.0f, [=](){
+	eventQueue.at(53.0f + startSceneDelay, [=](){
 		dialoguePlayer->playNext();
 		kingArthur->say(2.0f, L"Look, you stupid bastard", false);
 	});
 
-	eventQueue.at(55.0f, [=](){
+	eventQueue.at(55.0f + startSceneDelay, [=](){
 		kingArthur->say(2.0f, L"you've got no arms left", true);
 	});
 
-	eventQueue.at(56.0f, [=](){
+	eventQueue.at(56.0f + startSceneDelay, [=](){
 		dialoguePlayer->playNext();
 		blackKnight->say(2.0f, L"Yes I have", true);
 	});
 
-	eventQueue.at(58.0f, [=](){
+	eventQueue.at(58.0f + startSceneDelay, [=](){
 		dialoguePlayer->playNext();
 		kingArthur->say(1.0f, L"Look!", true);
 	});
 
-	eventQueue.at(59.0f, [=](){
+	eventQueue.at(59.0f + startSceneDelay, [=](){
 		dialoguePlayer->playNext();
 		blackKnight->say(2.0f, L"Just a flesh wound", true);
 	});
 	
-	eventQueue.at(61.0f, [=](){
+	eventQueue.at(61.0f + startSceneDelay, [=](){
 		dialoguePlayer->playNext();
 		kingArthur->say(2.0f, L"Look, stop that", true);
 	});
 
-	eventQueue.at(63.0f, [=](){
+	eventQueue.at(63.0f + startSceneDelay, [=](){
 		dialoguePlayer->playNext();
 		blackKnight->say(2.0f, L"Chicken! Chicken!", true);
 	});
 
-	eventQueue.at(65.0f, [=](){
+	eventQueue.at(65.0f + startSceneDelay, [=](){
 		dialoguePlayer->playNext();
 		kingArthur->say(2.0f, L"I'll have your legs. Right!", true)->subscribe(
 			[=](){
@@ -448,57 +484,57 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 		);
 	});
 
-	eventQueue.at(67.0f, [=](){
+	eventQueue.at(67.0f + startSceneDelay, [=](){
 		dialoguePlayer->playNext();
 		kingArthur->say(1.0f, L"Whop", true);
 	});
 
-	eventQueue.at(68.0f, [=](){
+	eventQueue.at(68.0f + startSceneDelay, [=](){
 		dialoguePlayer->playNext();
 		blackKnight->say(2.0f, L"Right, I'll do you for that!", true);
 	});
 
-	eventQueue.at(70.0f, [=](){
+	eventQueue.at(70.0f + startSceneDelay, [=](){
 		dialoguePlayer->playNext();
 		kingArthur->say(2.0f, L"You'll what?", true);
 	});
 
-	eventQueue.at(72.0f, [=](){
+	eventQueue.at(72.0f + startSceneDelay, [=](){
 		dialoguePlayer->playNext();
 		blackKnight->say(2.0f, L"Come 'ere!", true);
 	});
 
-	eventQueue.at(74.0f, [=](){
+	eventQueue.at(74.0f + startSceneDelay, [=](){
 		dialoguePlayer->playNext();
 		kingArthur->say(2.0f, L"What are you going to do, bleed on me?", true);
 	});
 
-	eventQueue.at(76.0f, [=](){
+	eventQueue.at(76.0f + startSceneDelay, [=](){
 		dialoguePlayer->playNext();
 		blackKnight->say(2.0f, L"I'm invincible!", true);
 	});
 
-	eventQueue.at(78.0f, [=](){
+	eventQueue.at(78.0f + startSceneDelay, [=](){
 		dialoguePlayer->playNext();
 		kingArthur->say(2.0f, L"You're a loony", true);
 	});
 
-	eventQueue.at(80.0f, [=](){
+	eventQueue.at(80.0f + startSceneDelay, [=](){
 		dialoguePlayer->playNext();
 		blackKnight->say(2.0f, L"The Black Knight always triumphs!", true);
 	});
 
-	eventQueue.at(82.0f, [=](){
+	eventQueue.at(82.0f + startSceneDelay, [=](){
 		dialoguePlayer->playNext();
 		blackKnight->say(2.0f, L"Have at you! Come on then", true);
 	});
 
-	eventQueue.at(84.f, [=](){
+	eventQueue.at(84.f + startSceneDelay, [=](){
 		dialoguePlayer->playNext();
 		blackKnight->say(2.0f, L"All right; we'll call it a draw", true);
 	});
 
-	eventQueue.at(86.f, [=](){
+	eventQueue.at(86.f + startSceneDelay, [=](){
 		dialoguePlayer->playNext();
 		kingArthur->say(2.0f, L"Come, Pansy", true)->subscribe(
 			[=](){
@@ -507,22 +543,22 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 		);
 	});
 	
-	eventQueue.at(88.f, [=](){
+	eventQueue.at(88.f + startSceneDelay, [=](){
 		dialoguePlayer->playNext();
 		blackKnight->say(2.0f, L"Oh, oh, I see, running away then", false);
 	});
 	
-	eventQueue.at(90.f, [=](){
+	eventQueue.at(90.f + startSceneDelay, [=](){
 		dialoguePlayer->playNext();
 		blackKnight->say(2.0f, L"You yellow bastards!", false);
 	});
 
-	eventQueue.at(92.f, [=](){
+	eventQueue.at(92.f + startSceneDelay, [=](){
 		dialoguePlayer->playNext();
 		blackKnight->say(2.0f, L"Come back here and takes what's coming to you", false);
 	});
 
-	eventQueue.at(94.f, [=](){
+	eventQueue.at(94.f + startSceneDelay, [=](){
 		dialoguePlayer->playNext();
 		blackKnight->say(2.0f, L"I'll bite your legs off!", true);
 	});

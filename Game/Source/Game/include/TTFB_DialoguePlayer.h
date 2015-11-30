@@ -10,9 +10,9 @@ public:
 	void playNext();
 	void mute();
 	void unmute();
+	bool muted;
 private:
 	std::string src;
 	int current;
-	bool muted;
 	OpenAL_Sound * currentSound;
 };
