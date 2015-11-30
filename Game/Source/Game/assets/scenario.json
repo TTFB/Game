@@ -87,65 +87,65 @@
     },
     {
       "id": "L1_CrowdNeutral",
-      "type": "textureSampler",
+      "type": "texture",
       "src": "Level1_Assets/Level1_Crowd_Neutral.png"
     },
     {
       "id": "L1_Floor",
-      "type": "textureSampler",
+      "type": "texture",
       "src": "Level1_Assets/Level1_Floor.png"
     },
     {
       "id": "L1_Background",
-      "type": "textureSampler",
+      "type": "texture",
       "src": "Level1_Assets/Level1_StageBackground.png"
     },
     {
       "id": "L1_Bottom",
-      "type": "textureSampler",
+      "type": "texture",
       "src": "Level1_Assets/Level1_StageBottom.png"
     },
     {
       "id": "L1_Foreground",
-      "type": "textureSampler",
+      "type": "texture",
       "src": "Level1_Assets/Level1_StageForeground.png"
     },
     {
       "id": "L1_Top",
-      "type": "textureSampler",
+      "type": "texture",
       "src": "Level1_Assets/Level1_StageTop.png"
     },
     {
       "id": "L1_Side",
-      "type": "textureSampler",
+      "type": "texture",
       "src": "Level1_Assets/Level1_SideWalls.png"
     },
-	{
+    {
       "id": "L3_Top",
       "type": "textureSampler",
       "src": "Level3_Assets/Level3_StageTop.png.def"
     },
-	{
+    {
       "id": "L3_Bottom",
       "type": "textureSampler",
       "src": "Level3_Assets/Level3_StageBottom.png.def"
     },
-	{
+    {
       "id": "L3_Foreground",
       "type": "textureSampler",
       "src": "Level3_Assets/Level3_StageForeground.png.def"
     },
-	{
+    {
       "id": "L3_RightWall",
       "type": "textureSampler",
       "src": "Level3_Assets/Level3_RightWall.png.deg"
     },
-	{
+    {
       "id": "L3_LeftWall",
       "type": "textureSampler",
       "src": "Level3_Assets/Level3_LeftWall.png.deg"
     },
-	{
+    {
       "id": "L3_CrowdNeutral",
       "type": "textureSampler",
       "src": "Level3_Assets/Level3_Crowd_Neutral.png.deg"
@@ -266,31 +266,31 @@
       "src": "props/sword.png.def"
     },
     {
-		"id"   : "fog",
-    	"type" : "textureSampler",
-    	"src"  : "fog.png.def"
-	},
+      "id": "fog",
+      "type": "textureSampler",
+      "src": "fog.png.def"
+    },
     {
       "id": "blood",
       "type": "texture",
       "src": "Particles/blood.png"
     },
-	{
+    {
       "id": "smoke",
       "type": "texture",
       "src": "Particles/smoke.png"
     },
-	{
+    {
       "id": "fireRed",
       "type": "texture",
       "src": "Particles/fireRed.png"
     },
-	{
-      "id":  "fireOrange",
+    {
+      "id": "fireOrange",
       "type": "texture",
-      "src":  "Particles/fireOrange.png"
+      "src": "Particles/fireOrange.png"
     },
-	{
+    {
       "id": "fireYellow",
       "type": "texture",
       "src": "Particles/fireYellow.png"
@@ -300,242 +300,243 @@
       "type": "textureSampler",
       "src": "curtain.png.def"
     },
-	{
+    {
       "id": "cheer1",
       "type": "audio",
       "src": "General/cheer1.ogg"
     },
-	{
+    {
       "id": "cheer2",
       "type": "audio",
       "src": "General/cheer2.ogg"
     },
-	{
+    {
       "id": "childrenLaughing",
       "type": "audio",
       "src": "General/ChildrenLaughing.ogg"
     },
-	{
+    {
       "id": "clap1",
       "type": "audio",
       "src": "General/clap1.ogg"
     },
-	{
+    {
       "id": "clap2",
       "type": "audio",
       "src": "General/clap2.ogg"
     },
-	{
+    {
       "id": "clap3",
       "type": "audio",
       "src": "General/clap3.ogg"
     },
-	{
+    {
       "id": "clap4",
       "type": "audio",
       "src": "General/clap4.ogg"
     },
-	{
+    {
       "id": "clap5",
       "type": "audio",
       "src": "General/clap5.ogg"
     },
-	{
+    {
       "id": "clap6",
       "type": "audio",
       "src": "General/clap6.ogg"
     },
-	{
+    {
       "id": "clap7",
       "type": "audio",
       "src": "General/clap7.ogg"
     },
-	{
+    {
       "id": "clap8",
       "type": "audio",
       "src": "General/clap8.ogg"
     },
-	{
+    {
       "id": "clap9",
       "type": "audio",
       "src": "General/clap9.ogg"
     },
-	{
+    {
       "id": "clap10",
       "type": "audio",
       "src": "General/clap10.ogg"
     },
-	{
+    {
       "id": "clap11",
       "type": "audio",
       "src": "General/clap11.ogg"
     },
-	{
+    {
       "id": "clap12",
       "type": "audio",
       "src": "General/clap12.ogg"
     },
-	{
+    {
       "id": "clap13",
       "type": "audio",
       "src": "General/clap13.ogg"
     },
-	{
+    {
       "id": "clap14",
       "type": "audio",
       "src": "General/clap14.ogg"
     },
-	{
+    {
       "id": "clap15",
       "type": "audio",
       "src": "General/clap15.ogg"
     },
-	{
+    {
       "id": "clap16",
       "type": "audio",
       "src": "General/clap16.ogg"
     },
-	{
+    {
       "id": "clapping1",
       "type": "audio",
       "src": "General/clapping1.ogg"
     },
-	{
+    {
       "id": "snore2",
       "type": "audio",
       "src": "General/snore2.ogg"
     },
-	{
+    {
       "id": "snore3",
       "type": "audio",
       "src": "General/snore3.ogg"
     },
-	{
+    {
       "id": "snore4",
       "type": "audio",
       "src": "General/snore4.ogg"
     },
-	{
+    {
       "id": "snore5",
       "type": "audio",
       "src": "General/snore5.ogg"
     },
-	{
+    {
       "id": "snore6",
       "type": "audio",
       "src": "General/snore6.ogg"
     },
-	{
+    {
       "id": "snore7",
       "type": "audio",
       "src": "General/snore7.ogg"
     },
-	{
+    {
       "id": "snore8",
       "type": "audio",
       "src": "General/snore8.ogg"
     },
-	{
+    {
       "id": "speedUpClap1",
       "type": "audio",
       "src": "General/speedUpClap1.ogg"
     },
-	{
+    {
       "id": "speedUpClap2",
       "type": "audio",
       "src": "General/speedUpClap2.ogg"
     },
-	{
+    {
       "id": "speedUpClap3",
       "type": "audio",
       "src": "General/speedUpClap3.ogg"
     },
-	{
+    {
       "id": "speedUpClap4",
       "type": "audio",
       "src": "General/speedUpClap4.ogg"
     },
-	{
+    {
       "id": "speedUpClap5",
       "type": "audio",
       "src": "General/speedUpClap5.ogg"
     },
-	{
+    {
       "id": "speedUpClap6",
       "type": "audio",
       "src": "General/speedUpClap6.ogg"
     },
-	{
+    {
       "id": "speedUpClap7",
       "type": "audio",
       "src": "General/speedUpClap7.ogg"
     },
-	{
+    {
       "id": "snore1",
       "type": "audio",
       "src": "General/snore1.ogg"
     },
-	{
-		"id": "1star",
-		"type": "audio",
-		"src": "1star.ogg"
-	},
-	{
-		"id": "2stars",
-		"type": "audio",
-		"src": "2stars.ogg"
-	},
-	{
-		"id": "3stars",
-		"type": "audio",
-		"src": "3stars.ogg"
-	},
-	{
-		"id": "spamalot_BadReview",
-		"type": "audio",
-		"src": "level1_BadReview.ogg"
-	},
-	{
-		"id": "spamalot_NeutralReview",
-		"type": "audio",
-		"src": "level1_NeutralReview.ogg"
-	},
-	{
-		"id": "spamalot_GoodReview",
-		"type": "audio",
-		"src": "level1_GoodReview.ogg"
-	},
-		{
-		"id": "grinch_BadReview",
-		"type": "audio",
-		"src": "level2_BadReview.ogg"
-	},
-	{
-		"id": "grinch_NeutralReview",
-		"type": "audio",
-		"src": "level2_NeutralReview.ogg"
-	},
-	{
-		"id": "grinch_GoodReview",
-		"type": "audio",
-		"src": "level2_GoodReview.ogg"
-	},
-		{
-		"id": "dracula_BadReview",
-		"type": "audio",
-		"src": "level3_BadReview.ogg"
-	},
-	{
-		"id": "dracula_NeutralReview",
-		"type": "audio",
-		"src": "level3_NeutralReview.ogg"
-	},
-	{
-		"id": "dracula_GoodReview",
-		"type": "audio",
-		"src": "level3_GoodReview.ogg"
-	},
     {
+      "id": "1star",
+      "type": "audio",
+      "src": "1star.ogg"
+    },
+    {
+      "id": "2stars",
+      "type": "audio",
+      "src": "2stars.ogg"
+    },
+    {
+      "id": "3stars",
+      "type": "audio",
+      "src": "3stars.ogg"
+    },
+    {
+      "id": "spamalot_BadReview",
+      "type": "audio",
+      "src": "level1_BadReview.ogg"
+    },
+    {
+      "id": "spamalot_NeutralReview",
+      "type": "audio",
+      "src": "level1_NeutralReview.ogg"
+    },
+    {
+      "id": "spamalot_GoodReview",
+      "type": "audio",
+      "src": "level1_GoodReview.ogg"
+    },
+    {
+      "id": "grinch_BadReview",
+      "type": "audio",
+      "src": "level2_BadReview.ogg"
+    },
+    {
+      "id": "grinch_NeutralReview",
+      "type": "audio",
+      "src": "level2_NeutralReview.ogg"
+    },
+    {
+      "id": "grinch_GoodReview",
+      "type": "audio",
+      "src": "level2_GoodReview.ogg"
+    },
+    {
+      "id": "dracula_BadReview",
+      "type": "audio",
+      "src": "level3_BadReview.ogg"
+    },
+    {
+      "id": "dracula_NeutralReview",
+      "type": "audio",
+      "src": "level3_NeutralReview.ogg"
+    },
+    {
+      "id": "dracula_GoodReview",
+      "type": "audio",
+      "src": "level3_GoodReview.ogg"
+    },
+    {
+    	
       "id": "spamalot_bg",
       "type": "audio",
       "src": "level1_bgMusic.ogg"
@@ -775,67 +776,67 @@
       "type": "audio",
       "src": "SpamalotDialogue/46.ogg"
     },
-	{
-		"id": "bloodSpurt1",
-		"type": "audio",
-		"src": "bloodSpurt1.ogg"
-	},
-	{
-		"id": "bloodSpurt2",
-		"type": "audio",
-		"src": "bloodSpurt2.ogg"
-	},
-	{
-		"id": "bloodSpurt3",
-		"type": "audio",
-		"src": "bloodSpurt3.ogg"
-	},
-	{
-		"id": "chicken1",
-		"type": "audio",
-		"src": "chicken1.ogg"
-	},
-	{
-		"id": "chicken2",
-		"type": "audio",
-		"src": "chicken2.ogg"
-	},
-	{
-		"id": "swordHit1",
-		"type": "audio",
-		"src": "swordHit1.ogg"
-	},
-	{
-		"id": "swordHit2",
-		"type": "audio",
-		"src": "swordHit2.ogg"
-	},
-	{
-		"id": "swordHit3",
-		"type": "audio",
-		"src": "swordHit3.ogg"
-	},
-	{
-		"id": "swordMiss",
-		"type": "audio",
-		"src": "swordMiss.ogg"
-	},
-	{
-		"id": "rip1",
-		"type": "audio",
-		"src": "rip1.ogg"
-	},
-	{
-		"id": "rip2",
-		"type": "audio",
-		"src": "rip2.ogg"
-	},
-	{
+    {
+      "id": "bloodSpurt1",
+      "type": "audio",
+      "src": "bloodSpurt1.ogg"
+    },
+    {
+      "id": "bloodSpurt2",
+      "type": "audio",
+      "src": "bloodSpurt2.ogg"
+    },
+    {
+      "id": "bloodSpurt3",
+      "type": "audio",
+      "src": "bloodSpurt3.ogg"
+    },
+    {
+      "id": "chicken1",
+      "type": "audio",
+      "src": "chicken1.ogg"
+    },
+    {
+      "id": "chicken2",
+      "type": "audio",
+      "src": "chicken2.ogg"
+    },
+    {
+      "id": "swordHit1",
+      "type": "audio",
+      "src": "swordHit1.ogg"
+    },
+    {
+      "id": "swordHit2",
+      "type": "audio",
+      "src": "swordHit2.ogg"
+    },
+    {
+      "id": "swordHit3",
+      "type": "audio",
+      "src": "swordHit3.ogg"
+    },
+    {
+      "id": "swordMiss",
+      "type": "audio",
+      "src": "swordMiss.ogg"
+    },
+    {
+      "id": "rip1",
+      "type": "audio",
+      "src": "rip1.ogg"
+    },
+    {
+      "id": "rip2",
+      "type": "audio",
+      "src": "rip2.ogg"
+    },
+    {
       "id": "dracula_bg",
       "type": "audio",
       "src": "level3_bgMusic.ogg"
     },
-		{
+    {
       "id": "dracula1",
       "type": "audio",
       "src": "DraculaDialogue/1.ogg"
@@ -1020,25 +1021,25 @@
       "type": "audio",
       "src": "DraculaDialogue/36.ogg"
     },
-	{
-		"id": "bat1",
-		"type": "audio",
-		"src": "bat1.ogg"
-	},
-	{
-		"id": "HowlingWolf1",
-		"type": "audio",
-		"src": "HowlingWolf1.ogg"
-	},
-	{
-		"id": "HowlingWolf2",
-		"type": "audio",
-		"src": "HowlingWolf2.ogg"
-	},
-	{
-		"id": "HowlingWolf3",
-		"type": "audio",
-		"src": "HowlingWolf3.ogg"
-	}
+    {
+      "id": "bat1",
+      "type": "audio",
+      "src": "bat1.ogg"
+    },
+    {
+      "id": "HowlingWolf1",
+      "type": "audio",
+      "src": "HowlingWolf1.ogg"
+    },
+    {
+      "id": "HowlingWolf2",
+      "type": "audio",
+      "src": "HowlingWolf2.ogg"
+    },
+    {
+      "id": "HowlingWolf3",
+      "type": "audio",
+      "src": "HowlingWolf3.ogg"
+    }
   ]
 }

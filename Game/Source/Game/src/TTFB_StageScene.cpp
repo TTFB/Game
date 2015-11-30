@@ -317,13 +317,16 @@ TTFB_SetPiece * TTFB_StageScene::addSetPiece(std::string _samplerResourceId, glm
 }
 
 void TTFB_StageScene::addFog() {
+	
 	fog = new Sprite(baseShader);
 	fog->setPrimaryTexture(TTFB_ResourceManager::scenario->getTextureSampler("fog")->textureSampler);
 	childTransform->addChild(fog);
 	fog->firstParent()->translate(0, 10, 2);
 	fog->firstParent()->scale(50, -10, 1);
+	fog->setVisible(false);
 }
 
 void TTFB_StageScene::toggleFog() {
 	fog->setVisible(!fog->isVisible());
+	fogActive = fog->isVisible();
 }

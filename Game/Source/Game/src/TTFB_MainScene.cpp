@@ -76,6 +76,8 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 
 	kingArthur->pickupPropRight(addProp("sword", glm::vec3(-8, 10, 0.f)));
 
+	addFog();
+
 #pragma endregion 
 
 #pragma region SetSetup
@@ -156,7 +158,7 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 
 	controller->setButtonFour.bind([=](int _value) {
 		if(controller->setButtonFour.justDown()) {
-			toggleFog();
+			
 		}
 	});
 
@@ -185,8 +187,8 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 	});
 
 	controller->specialFogSwitch.bind([=](int _value) {
-		if(controller->specialFireButton.justDown()) {
-			// Toggle fog
+		if(controller->specialFireButton.justDown() || controller->specialFireButton.justUp()) {
+			toggleFog();
 		}
 	});
 
@@ -228,11 +230,15 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 			[](){std::cout<<"Failure";});
 
 	//light 0%
-	eventQueue.expectAt(1.5f, 2.f, 
+	eventQueue.expectAt(1.5f + startSceneDelay, 2.f, 
 		[=](){return lights[1]->getIntensities().r < 0.2;},
 			[](){std::cout<<"Success";}, 
 			[](){std::cout<<"Failure";});
 	//fog ON
+	eventQueue.expectAt(11.5f + startSceneDelay, 2.f, 
+		[=](){return fogActive == true;},
+			[](){std::cout<<"SuccessFOG";}, 
+			[](){std::cout<<"Failure";});
 	//fog OFF
 	//sound2 effect
 	//set3 - arm off
