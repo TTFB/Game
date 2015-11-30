@@ -120,7 +120,36 @@
       "type": "texture",
       "src": "Level1_Assets/Level1_SideWalls.png"
     },
-	
+	{
+      "id": "L3_Top",
+      "type": "texture",
+      "src": "Level3_Assets/Level3_StageTop.png.def"
+    },
+	{
+      "id": "L3_Bottom",
+      "type": "texture",
+      "src": "Level3_Assets/Level3_StageBottom.png.def"
+    },
+	{
+      "id": "L3_Foreground",
+      "type": "texture",
+      "src": "Level3_Assets/Level3_StageForeground.png.def"
+    },
+	{
+      "id": "L3_RightWall",
+      "type": "texture",
+      "src": "Level3_Assets/Level3_RightWall.png.deg"
+    },
+	{
+      "id": "L3_LeftWall",
+      "type": "texture",
+      "src": "Level3_Assets/Level3_LeftWall.png.deg"
+    },
+	{
+      "id": "L3_CrowdNeutral",
+      "type": "texture",
+      "src": "Level3_Assets/Level3_Crowd_Neutral.png.deg"
+    },
     {
       "id": "spamalot_one_star",
       "type": "texture",
@@ -237,7 +266,7 @@
       "src": "props/sword.png.def"
     },
     {
-    	"id"   : "fog",
+		"id"   : "fog",
     	"type" : "textureSampler",
     	"src"  : "fog.png.def"
 	},
@@ -245,6 +274,26 @@
       "id": "blood",
       "type": "texture",
       "src": "Particles/blood.png"
+    },
+	{
+      "id": "smoke",
+      "type": "texture",
+      "src": "Particles/smoke.png.def"
+    },
+	{
+      "id": "fireRed",
+      "type": "texture",
+      "src": "Particles/fireRed.png.def"
+    },
+	{
+      "id": "fireOrange",
+      "type": "texture",
+      "src": "Particles/fireOrange.png.def"
+    },
+	{
+      "id": "fireYellow",
+      "type": "texture",
+      "src": "Particles/fireYellow.png.def"
     },
     {
       "id": "curtain",
