@@ -159,7 +159,7 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 			TTFB_ResourceManager::scenario->getAudio("spamalot1" )->sound->play();
 		}
 	});
-
+	
 	controller->soundButtonThree.bind([=](int _value) {
 		if(controller->soundButtonThree.justDown()) {
 			TTFB_ResourceManager::scenario->getAudio("spamalot1" )->sound->play();
