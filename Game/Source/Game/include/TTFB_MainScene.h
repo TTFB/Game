@@ -26,7 +26,8 @@ public:
 
 	OpenAL_Sound * backgroundMusic;
 	bool bgMusicStarted;
-	float startSceneDelay = 10.0f;
+	float startSceneDelay;
+
 	virtual void update(Step * _step) override;
 	virtual void render(sweet::MatrixStack * _matrixStack, RenderOptions * _renderOptions) override;
 	

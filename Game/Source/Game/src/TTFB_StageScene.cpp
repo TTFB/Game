@@ -179,6 +179,9 @@ TTFB_StageScene::TTFB_StageScene(Game * _game, float _stageWidth, std::string _f
 
 #pragma endregion 
 
+	addFog();
+	fog->setVisible(false);
+
 }
 
 TTFB_StageScene::~TTFB_StageScene(){
@@ -323,4 +326,8 @@ void TTFB_StageScene::addFog() {
 	childTransform->addChild(fog);
 	fog->firstParent()->translate(0, 10, 2);
 	fog->firstParent()->scale(50, -10, 1);
+}
+
+void TTFB_StageScene::toggleFog() {
+	fog->setVisible(!fog->isVisible());
 }

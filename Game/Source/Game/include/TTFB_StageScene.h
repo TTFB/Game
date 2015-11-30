@@ -98,6 +98,7 @@ public:
 	virtual TTFB_SetPiece * addSetPiece(std::string _samplerResourceId, glm::vec3 _pos);
 
 	void addFog();
+	void toggleFog();
 
 	TTFB_StageScene(Game * _game, float _stageWidth, std::string _floorTex, std::string _sideTex, std::string _backTex, std::string _topTex, std::string _frontTex);
 	~TTFB_StageScene();
