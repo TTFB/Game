@@ -62,6 +62,11 @@ public:
 
 	b2Vec2 getBox2dPos();
 
+	bool leftArmBroken;
+	bool rightArmBroken;
+	bool leftLegBroken;
+	bool rightLegBroken;
+
 private:
 	Box2DSprite * torso;
 	Box2DSprite * head;
@@ -69,11 +74,6 @@ private:
 	Box2DSprite * rightArm;
 	Box2DSprite* rightLeg;
 	Box2DSprite* leftLeg;
-
-	bool leftArmBroken;
-	bool rightArmBroken;
-	bool leftLegBroken;
-	bool rightLegBroken;
 
 	TextArea * speechArea; 
 	TTFB_Subscription * moveSubscription;

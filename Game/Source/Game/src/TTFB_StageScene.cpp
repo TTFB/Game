@@ -155,6 +155,8 @@ TTFB_StageScene::TTFB_StageScene(Game * _game, float _stageWidth, std::string _f
 	fireSystem->setShader(baseShader, true);
 
 
+
+
 #pragma region LightSetup
 	
 	SpotLight * light0 = new SpotLight(glm::vec3(0, 0, -1), glm::vec3(0,0,0), 45.f, 0.001f, 0.001f, -1.f);
@@ -178,10 +180,6 @@ TTFB_StageScene::TTFB_StageScene(Game * _game, float _stageWidth, std::string _f
 	light3->firstParent()->translate(20, 10, 13);
 
 #pragma endregion 
-
-	addFog();
-	fog->setVisible(false);
-
 }
 
 TTFB_StageScene::~TTFB_StageScene(){
@@ -321,13 +319,16 @@ TTFB_SetPiece * TTFB_StageScene::addSetPiece(std::string _samplerResourceId, glm
 }
 
 void TTFB_StageScene::addFog() {
+	
 	fog = new Sprite(baseShader);
 	fog->setPrimaryTexture(TTFB_ResourceManager::scenario->getTextureSampler("fog")->textureSampler);
 	childTransform->addChild(fog);
 	fog->firstParent()->translate(0, 10, 2);
 	fog->firstParent()->scale(50, -10, 1);
+	fog->setVisible(false);
 }
 
 void TTFB_StageScene::toggleFog() {
 	fog->setVisible(!fog->isVisible());
+	fogActive = fog->isVisible();
 }

@@ -85,6 +85,7 @@ public:
 	Sprite * fog;
 
 	bool fireActive;
+	bool fogActive;
 	bool fadeOutLights;
 	virtual void update(Step * _step) override;
 	virtual void render(sweet::MatrixStack * _matrixStack, RenderOptions * _renderOptions) override;
