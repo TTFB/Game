@@ -87,37 +87,37 @@
     },
     {
       "id": "L1_CrowdNeutral",
-      "type": "texture",
+      "type": "textureSampler",
       "src": "Level1_Assets/Level1_Crowd_Neutral.png"
     },
     {
       "id": "L1_Floor",
-      "type": "texture",
+      "type": "textureSampler",
       "src": "Level1_Assets/Level1_Floor.png"
     },
     {
       "id": "L1_Background",
-      "type": "texture",
+      "type": "textureSampler",
       "src": "Level1_Assets/Level1_StageBackground.png"
     },
     {
       "id": "L1_Bottom",
-      "type": "texture",
+      "type": "textureSampler",
       "src": "Level1_Assets/Level1_StageBottom.png"
     },
     {
       "id": "L1_Foreground",
-      "type": "texture",
+      "type": "textureSampler",
       "src": "Level1_Assets/Level1_StageForeground.png"
     },
     {
       "id": "L1_Top",
-      "type": "texture",
+      "type": "textureSampler",
       "src": "Level1_Assets/Level1_StageTop.png"
     },
     {
       "id": "L1_Side",
-      "type": "texture",
+      "type": "textureSampler",
       "src": "Level1_Assets/Level1_SideWalls.png"
     },
 	{
@@ -152,48 +152,48 @@
     },
     {
       "id": "spamalot_one_star",
-      "type": "texture",
-      "src": "articleTemp.png"
+      "type": "textureSampler",
+      "src": "Newspapers/grail_1star.png.def"
     },
     {
       "id": "spamalot_two_stars",
-      "type": "texture",
-      "src": "articleTemp.png"
+      "type": "textureSampler",
+      "src": "Newspapers/grail_2star.png.def"
     },
     {
       "id": "spamalot_three_stars",
-      "type": "texture",
-      "src": "articleTemp.png"
+      "type": "textureSampler",
+      "src": "Newspapers/grail_3star.png.def"
     },
     {
       "id": "grinch_one_star",
-      "type": "texture",
-      "src": "articleTemp.png"
+      "type": "textureSampler",
+      "src": "Newspapers/grinch_1star.png.def"
     },
     {
       "id": "grinch_two_stars",
-      "type": "texture",
-      "src": "articleTemp.png"
+      "type": "textureSampler",
+      "src": "Newspapers/grinch_2star.png.def"
     },
     {
       "id": "grinch_three_stars",
-      "type": "texture",
-      "src": "articleTemp.png"
+      "type": "textureSampler",
+      "src": "Newspapers/grinch_3star.png.def"
     },
     {
       "id": "dracula_one_star",
-      "type": "texture",
-      "src": "articleTemp.png"
+      "type": "textureSampler",
+      "src": "Newspapers/dracula_1star.png.def"
     },
     {
       "id": "dracula_two_stars",
-      "type": "texture",
-      "src": "articleTemp.png"
+      "type": "textureSampler",
+      "src": "Newspapers/dracula_2star.png.def"
     },
     {
       "id": "dracula_three_stars",
-      "type": "texture",
-      "src": "articleTemp.png"
+      "type": "textureSampler",
+      "src": "Newspapers/dracula_3star.png.def"
     },
     {
       "id": "spamalot_one_star_sound",
@@ -257,7 +257,7 @@
     },
     {
       "id": "L1_mattePainting",
-      "type": "texture",
+      "type": "textureSampler",
       "src": "Level1_Assets/Level1_mattePainting.png"
     },
     {
