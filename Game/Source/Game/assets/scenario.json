@@ -168,47 +168,47 @@
     {
       "id": "black_knight_one_star_sound",
       "type": "audio",
-      "src": "tempArticleSound.wav"
+      "src": "level1_BadReview.ogg"
     },
     {
       "id": "black_knight_two_stars_sound",
       "type": "audio",
-      "src": "tempArticleSound.wav"
+      "src": "level1_NeutralReview.ogg"
     },
     {
       "id": "black_knight_three_stars_sound",
       "type": "audio",
-      "src": "tempArticleSound.wav"
+      "src": "level1_GoodReview.ogg"
     },
     {
       "id": "grinch_one_star_sound",
       "type": "audio",
-      "src": "tempArticleSound.wav"
+      "src": "level2_BadReview.ogg"
     },
     {
       "id": "grinch_two_stars_sound",
       "type": "audio",
-      "src": "tempArticleSound.wav"
+      "src": "level2_NeutralReview.ogg"
     },
     {
       "id": "grinch_three_stars_sound",
       "type": "audio",
-      "src": "tempArticleSound.wav"
+      "src": "level2_GoodReview.ogg"
     },
     {
       "id": "dracula_one_star_sound",
       "type": "audio",
-      "src": "tempArticleSound.wav"
+      "src": "level3_BadReview.ogg"
     },
     {
       "id": "dracula_two_stars_sound",
       "type": "audio",
-      "src": "tempArticleSound.wav"
+      "src": "level3_NeutralReview.ogg"
     },
     {
       "id": "dracula_three_stars_sound",
       "type": "audio",
-      "src": "tempArticleSound.wav"
+      "src": "level3_GoodReview.ogg"
     },
     {
       "id": "L1_Tree1",
