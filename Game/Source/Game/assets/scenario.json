@@ -120,6 +120,7 @@
       "type": "texture",
       "src": "Level1_Assets/Level1_SideWalls.png"
     },
+	
     {
       "id": "spamalot_one_star",
       "type": "texture",
@@ -250,6 +251,241 @@
       "type": "textureSampler",
       "src": "curtain.png.def"
     },
+	{
+      "id": "cheer1",
+      "type": "audio",
+      "src": "General/cheer1.ogg"
+    },
+	{
+      "id": "cheer2",
+      "type": "audio",
+      "src": "General/cheer2.ogg"
+    },
+	{
+      "id": "childrenLaughing",
+      "type": "audio",
+      "src": "General/ChildrenLaughing.ogg"
+    },
+	{
+      "id": "clap1",
+      "type": "audio",
+      "src": "General/clap1.ogg"
+    },
+	{
+      "id": "clap2",
+      "type": "audio",
+      "src": "General/clap2.ogg"
+    },
+	{
+      "id": "clap3",
+      "type": "audio",
+      "src": "General/clap3.ogg"
+    },
+	{
+      "id": "clap4",
+      "type": "audio",
+      "src": "General/clap4.ogg"
+    },
+	{
+      "id": "clap5",
+      "type": "audio",
+      "src": "General/clap5.ogg"
+    },
+	{
+      "id": "clap6",
+      "type": "audio",
+      "src": "General/clap6.ogg"
+    },
+	{
+      "id": "clap7",
+      "type": "audio",
+      "src": "General/clap7.ogg"
+    },
+	{
+      "id": "clap8",
+      "type": "audio",
+      "src": "General/clap8.ogg"
+    },
+	{
+      "id": "clap9",
+      "type": "audio",
+      "src": "General/clap9.ogg"
+    },
+	{
+      "id": "clap10",
+      "type": "audio",
+      "src": "General/clap10.ogg"
+    },
+	{
+      "id": "clap11",
+      "type": "audio",
+      "src": "General/clap11.ogg"
+    },
+	{
+      "id": "clap12",
+      "type": "audio",
+      "src": "General/clap12.ogg"
+    },
+	{
+      "id": "clap13",
+      "type": "audio",
+      "src": "General/clap13.ogg"
+    },
+	{
+      "id": "clap14",
+      "type": "audio",
+      "src": "General/clap14.ogg"
+    },
+	{
+      "id": "clap15",
+      "type": "audio",
+      "src": "General/clap15.ogg"
+    },
+	{
+      "id": "clap16",
+      "type": "audio",
+      "src": "General/clap16.ogg"
+    },
+	{
+      "id": "clapping",
+      "type": "audio",
+      "src": "General/clapping.ogg"
+    },
+	{
+      "id": "snore2",
+      "type": "audio",
+      "src": "General/snore2.ogg"
+    },
+	{
+      "id": "snore3",
+      "type": "audio",
+      "src": "General/snore3.ogg"
+    },
+	{
+      "id": "snore4",
+      "type": "audio",
+      "src": "General/snore4.ogg"
+    },
+	{
+      "id": "snore5",
+      "type": "audio",
+      "src": "General/snore5.ogg"
+    },
+	{
+      "id": "snore6",
+      "type": "audio",
+      "src": "General/snore6.ogg"
+    },
+	{
+      "id": "snore7",
+      "type": "audio",
+      "src": "General/snore7.ogg"
+    },
+	{
+      "id": "snore8",
+      "type": "audio",
+      "src": "General/snore8.ogg"
+    },
+	{
+      "id": "speedUpClap1",
+      "type": "audio",
+      "src": "General/speedUpClap1.ogg"
+    },
+	{
+      "id": "speedUpClap2",
+      "type": "audio",
+      "src": "General/speedUpClap2.ogg"
+    },
+	{
+      "id": "speedUpClap3",
+      "type": "audio",
+      "src": "General/speedUpClap3.ogg"
+    },
+	{
+      "id": "speedUpClap4",
+      "type": "audio",
+      "src": "General/speedUpClap4.ogg"
+    },
+	{
+      "id": "speedUpClap5",
+      "type": "audio",
+      "src": "General/speedUpClap5.ogg"
+    },
+	{
+      "id": "speedUpClap6",
+      "type": "audio",
+      "src": "General/speedUpClap6.ogg"
+    },
+	{
+      "id": "speedUpClap7",
+      "type": "audio",
+      "src": "General/speedUpClap7.ogg"
+    },
+	{
+      "id": "snore1",
+      "type": "audio",
+      "src": "General/snore1.ogg"
+    },
+	{
+		"id": "1star",
+		"type": "audio",
+		"src": "1star.ogg"
+	},
+	{
+		"id": "2stars",
+		"type": "audio",
+		"src": "2stars.ogg"
+	},
+	{
+		"id": "3stars",
+		"type": "audio",
+		"src": "3stars.ogg"
+	},
+	{
+		"id": "spamalot_BadReview",
+		"type": "audio",
+		"src": "level1_BadReview.ogg"
+	},
+	{
+		"id": "spamalot_NeutralReview",
+		"type": "audio",
+		"src": "level1_NeutralReview.ogg"
+	},
+	{
+		"id": "spamalot_GoodReview",
+		"type": "audio",
+		"src": "level1_GoodReview.ogg"
+	},
+		{
+		"id": "grinch_BadReview",
+		"type": "audio",
+		"src": "level2_BadReview.ogg"
+	},
+	{
+		"id": "grinch_NeutralReview",
+		"type": "audio",
+		"src": "level2_NeutralReview.ogg"
+	},
+	{
+		"id": "grinch_GoodReview",
+		"type": "audio",
+		"src": "level2_GoodReview.ogg"
+	},
+		{
+		"id": "dracula_BadReview",
+		"type": "audio",
+		"src": "level3_BadReview.ogg"
+	},
+	{
+		"id": "dracula_NeutralReview",
+		"type": "audio",
+		"src": "level3_NeutralReview.ogg"
+	},
+	{
+		"id": "dracula_GoodReview",
+		"type": "audio",
+		"src": "level3_GoodReview.ogg"
+	},
     {
       "id": "spamalot_bg",
       "type": "audio",
@@ -489,6 +725,271 @@
       "id": "spamalot46",
       "type": "audio",
       "src": "SpamalotDialogue/46.ogg"
-    }
+    },
+	{
+		"id": "bloodSpurt1",
+		"type": "audio",
+		"src": "bloodSpurt1.ogg"
+	},
+	{
+		"id": "bloodSpurt2",
+		"type": "audio",
+		"src": "bloodSpurt2.ogg"
+	},
+	{
+		"id": "bloodSpurt3",
+		"type": "audio",
+		"src": "bloodSpurt3.ogg"
+	},
+	{
+		"id": "chicken1",
+		"type": "audio",
+		"src": "chicken1.ogg"
+	},
+	{
+		"id": "chicken2",
+		"type": "audio",
+		"src": "chicken2.ogg"
+	},
+	{
+		"id": "swordHit1",
+		"type": "audio",
+		"src": "swordHit1.ogg"
+	},
+	{
+		"id": "swordHit2",
+		"type": "audio",
+		"src": "swordHit2.ogg"
+	},
+	{
+		"id": "swordHit3",
+		"type": "audio",
+		"src": "swordHit3.ogg"
+	},
+	{
+		"id": "swordMiss",
+		"type": "audio",
+		"src": "swordMiss.ogg"
+	},
+	{
+		"id": "rip1",
+		"type": "audio",
+		"src": "rip1.ogg"
+	},
+	{
+		"id": "rip2",
+		"type": "audio",
+		"src": "rip2.ogg"
+	},
+	{
+      "id": "dracula_bg",
+      "type": "audio",
+      "src": "level3_bgMusic.ogg"
+    },
+		{
+      "id": "dracula1",
+      "type": "audio",
+      "src": "DraculaDialogue/1.ogg"
+    },
+    {
+      "id": "dracula2",
+      "type": "audio",
+      "src": "DraculaDialogue/2.ogg"
+    },
+    {
+      "id": "dracula3",
+      "type": "audio",
+      "src": "DraculaDialogue/3.ogg"
+    },
+    {
+      "id": "dracula3",
+      "type": "audio",
+      "src": "DraculaDialogue/3.ogg"
+    },
+    {
+      "id": "dracula4",
+      "type": "audio",
+      "src": "DraculaDialogue/4.ogg"
+    },
+    {
+      "id": "dracula5",
+      "type": "audio",
+      "src": "DraculaDialogue/5.ogg"
+    },
+    {
+      "id": "dracula6",
+      "type": "audio",
+      "src": "DraculaDialogue/6.ogg"
+    },
+    {
+      "id": "dracula7",
+      "type": "audio",
+      "src": "DraculaDialogue/7.ogg"
+    },
+    {
+      "id": "dracula8",
+      "type": "audio",
+      "src": "DraculaDialogue/8.ogg"
+    },
+    {
+      "id": "dracula9",
+      "type": "audio",
+      "src": "DraculaDialogue/9.ogg"
+    },
+    {
+      "id": "dracula10",
+      "type": "audio",
+      "src": "DraculaDialogue/10.ogg"
+    },
+    {
+      "id": "dracula11",
+      "type": "audio",
+      "src": "DraculaDialogue/11.ogg"
+    },
+    {
+      "id": "dracula12",
+      "type": "audio",
+      "src": "DraculaDialogue/12.ogg"
+    },
+    {
+      "id": "dracula13",
+      "type": "audio",
+      "src": "DraculaDialogue/13.ogg"
+    },
+    {
+      "id": "dracula14",
+      "type": "audio",
+      "src": "DraculaDialogue/14.ogg"
+    },
+    {
+      "id": "dracula15",
+      "type": "audio",
+      "src": "DraculaDialogue/15.ogg"
+    },
+    {
+      "id": "dracula16",
+      "type": "audio",
+      "src": "DraculaDialogue/16.ogg"
+    },
+    {
+      "id": "dracula17",
+      "type": "audio",
+      "src": "DraculaDialogue/17.ogg"
+    },
+    {
+      "id": "dracula18",
+      "type": "audio",
+      "src": "DraculaDialogue/18.ogg"
+    },
+    {
+      "id": "dracula19",
+      "type": "audio",
+      "src": "DraculaDialogue/19.ogg"
+    },
+    {
+      "id": "dracula20",
+      "type": "audio",
+      "src": "DraculaDialogue/20.ogg"
+    },
+    {
+      "id": "dracula21",
+      "type": "audio",
+      "src": "DraculaDialogue/21.ogg"
+    },
+    {
+      "id": "dracula22",
+      "type": "audio",
+      "src": "DraculaDialogue/22.ogg"
+    },
+    {
+      "id": "dracula23",
+      "type": "audio",
+      "src": "DraculaDialogue/23.ogg"
+    },
+    {
+      "id": "dracula24",
+      "type": "audio",
+      "src": "DraculaDialogue/24.ogg"
+    },
+    {
+      "id": "dracula25",
+      "type": "audio",
+      "src": "DraculaDialogue/25.ogg"
+    },
+    {
+      "id": "dracula26",
+      "type": "audio",
+      "src": "DraculaDialogue/26.ogg"
+    },
+    {
+      "id": "dracula27",
+      "type": "audio",
+      "src": "DraculaDialogue/27.ogg"
+    },
+    {
+      "id": "dracula28",
+      "type": "audio",
+      "src": "DraculaDialogue/28.ogg"
+    },
+    {
+      "id": "dracula29",
+      "type": "audio",
+      "src": "DraculaDialogue/29.ogg"
+    },
+    {
+      "id": "dracula30",
+      "type": "audio",
+      "src": "DraculaDialogue/30.ogg"
+    },
+    {
+      "id": "dracula31",
+      "type": "audio",
+      "src": "DraculaDialogue/31.ogg"
+    },
+    {
+      "id": "dracula32",
+      "type": "audio",
+      "src": "DraculaDialogue/32.ogg"
+    },
+    {
+      "id": "dracula33",
+      "type": "audio",
+      "src": "DraculaDialogue/33.ogg"
+    },
+    {
+      "id": "dracula34",
+      "type": "audio",
+      "src": "DraculaDialogue/34.ogg"
+    },
+    {
+      "id": "dracula35",
+      "type": "audio",
+      "src": "DraculaDialogue/35.ogg"
+    },
+    {
+      "id": "dracula36",
+      "type": "audio",
+      "src": "DraculaDialogue/36.ogg"
+    },
+	{
+		"id": "bat1",
+		"type": "audio",
+		"src": "bat1.ogg"
+	},
+	{
+		"id": "HowlingWolf1",
+		"type": "audio",
+		"src": "HowlingWolf1.ogg"
+	},
+	{
+		"id": "HowlingWolf2",
+		"type": "audio",
+		"src": "HowlingWolf2.ogg"
+	},
+	{
+		"id": "HowlingWolf3",
+		"type": "audio",
+		"src": "HowlingWolf3.ogg"
+	}
   ]
 }
