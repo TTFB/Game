@@ -27,6 +27,11 @@ public:
 
 	float speedMod;
 
+	Transform * leftArmJointTransform;
+	Transform * rightArmJointTransform;
+	Transform * leftLegJointTransform;
+	Transform * rightLegJointTransform;
+
 	TTFB_Actor(std::string _name, Box2DWorld * _world, BulletWorld * _bulletWorld, Font * _font, Shader * _textShader, Shader * _shader = nullptr);
 	~TTFB_Actor();
 

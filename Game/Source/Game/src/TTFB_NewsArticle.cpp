@@ -58,6 +58,7 @@ TTFB_NewsArticle::TTFB_NewsArticle(Shader * _shader, std::string _play, int _sco
 				article = TTFB_ResourceManager::scenario->getTexture("dracula_three_stars")->texture;
 				sound   = TTFB_ResourceManager::scenario->getAudio("dracula_two_stars_sound")->sound;
 				break;
+			
 			default:
 				throw "Bad score";
 		}

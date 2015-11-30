@@ -165,6 +165,21 @@ TTFB_Actor::TTFB_Actor(std::string _name, Box2DWorld * _world, BulletWorld * _bu
 	jr.upperAngle = glm::radians(15.f);
 	world->b2world->CreateJoint(&jr);
 	
+	leftArmJointTransform = new Transform();
+	torso->childTransform->addChild(leftArmJointTransform);
+	leftArmJointTransform->firstParent()->translate(-0.4 * torso->getCorrectedWidth(), 0.4 * torso->getCorrectedHeight(), 0.0f);
+
+	rightArmJointTransform = new Transform();
+	torso->childTransform->addChild(rightArmJointTransform);
+	rightArmJointTransform->firstParent()->translate(-0.4 * torso->getCorrectedWidth(), 0.4 * torso->getCorrectedHeight(), 0.0f);
+
+	leftLegJointTransform = new Transform();
+	torso->childTransform->addChild(leftLegJointTransform);
+	leftLegJointTransform->firstParent()->translate(-0.3 * torso->getCorrectedWidth(), -0.4 * torso->getCorrectedHeight(), 0.0f);
+
+	rightLegJointTransform = new Transform();
+	torso->childTransform->addChild(rightLegJointTransform);
+	rightLegJointTransform->firstParent()->translate(0.3 * torso->getCorrectedWidth(), -0.4 * torso->getCorrectedHeight(), 0.0f);
 }
 
 TTFB_Actor::~TTFB_Actor() {
@@ -330,8 +345,6 @@ void TTFB_Actor::update(Step* _step) {
 	Box2DSuperSprite::update(_step);
 }
 
-void TTFB_Actor::render(sweet::MatrixStack* _matrixStack, RenderOptions* _renderOptions) {
-	//glDisable(GL_DEPTH_TEST);
+void TTFB_Actor::render(sweet::MatrixStack* _matrixStack, RenderOptions* _renderOptions) {\
 	Entity::render(_matrixStack, _renderOptions);
-	//glEnable(GL_DEPTH_TEST);
 }

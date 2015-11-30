@@ -31,6 +31,11 @@ public:
 	
 	virtual void load() override;
 	virtual void unload() override;
+	
+	void leftArmBleed();
+	void rightArmBleed();
+	void leftLegBleed();
+	void rightLegBleed();
 
 	TTFB_MainScene(Game * _game);
 	~TTFB_MainScene();

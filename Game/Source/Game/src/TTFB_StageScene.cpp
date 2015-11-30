@@ -77,7 +77,8 @@ TTFB_StageScene::TTFB_StageScene(Game * _game, float _stageWidth, std::string _f
 	font(new Font("assets/engine basics/OpenSans-Regular.ttf", 100, true)),
 	controller(new TTFB_Controller()),
 	score(1),
-	fireActive(false)
+	fireActive(false),
+	fadeOutLights(false)
 {
 
 	baseShader->addComponent(new ShaderComponentMVP(baseShader)); 
