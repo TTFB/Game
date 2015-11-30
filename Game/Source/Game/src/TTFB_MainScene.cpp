@@ -619,7 +619,7 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 
 	//endScene(SPAMALOT);
 
-	leftArmBleed();
+	//endScene(SPAMALOT);
 }
 
 TTFB_MainScene::~TTFB_MainScene(){

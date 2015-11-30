@@ -13,15 +13,15 @@ TTFB_NewsArticle::TTFB_NewsArticle(Shader * _shader, std::string _play, int _sco
 	if(_play == SPAMALOT) {
 		switch(_score) {
 			case 1: 
-				article = TTFB_ResourceManager::scenario->getTexture("spamalot_one_star")->texture;
+				article = TTFB_ResourceManager::scenario->getTextureSampler("spamalot_one_star")->textureSampler->texture;
 				sound   = TTFB_ResourceManager::scenario->getAudio("spamalot_one_star_sound")->sound;
 				break;
 			case 2:
-				article = TTFB_ResourceManager::scenario->getTexture("spamalot_two_stars")->texture;
+				article = TTFB_ResourceManager::scenario->getTextureSampler("spamalot_two_stars")->textureSampler->texture;
 				sound   = TTFB_ResourceManager::scenario->getAudio("spamalot_two_stars_sound")->sound;
 				break;
 			case 3:
-				article = TTFB_ResourceManager::scenario->getTexture("spamalot_three_stars")->texture;
+				article = TTFB_ResourceManager::scenario->getTextureSampler("spamalot_three_stars")->textureSampler->texture;
 				sound   = TTFB_ResourceManager::scenario->getAudio("spamalot_two_stars_sound")->sound;
 				break;
 			default:
@@ -30,15 +30,15 @@ TTFB_NewsArticle::TTFB_NewsArticle(Shader * _shader, std::string _play, int _sco
 	}else if(_play == GRINCH) {
 		switch(_score) {
 			case 1: 
-				article = TTFB_ResourceManager::scenario->getTexture("grinch_one_star")->texture;
+				article = TTFB_ResourceManager::scenario->getTextureSampler("grinch_one_star")->textureSampler->texture;
 				sound   = TTFB_ResourceManager::scenario->getAudio("grinch_one_star_sound")->sound;
 				break;
 			case 2:
-				article = TTFB_ResourceManager::scenario->getTexture("grinch_two_stars")->texture;
+				article = TTFB_ResourceManager::scenario->getTextureSampler("grinch_two_stars")->textureSampler->texture;
 				sound   = TTFB_ResourceManager::scenario->getAudio("grinch_two_stars_sound")->sound;
 				break;
 			case 3:
-				article = TTFB_ResourceManager::scenario->getTexture("grinch_three_stars")->texture;
+				article = TTFB_ResourceManager::scenario->getTextureSampler("grinch_three_stars")->textureSampler->texture;
 				sound   = TTFB_ResourceManager::scenario->getAudio("grinch_two_stars_sound")->sound;
 				break;
 			default:
@@ -47,15 +47,15 @@ TTFB_NewsArticle::TTFB_NewsArticle(Shader * _shader, std::string _play, int _sco
 	}else if(_play == DRACULA) {
 		switch(_score) {
 			case 1: 
-				article = TTFB_ResourceManager::scenario->getTexture("dracula_one_star")->texture;
+				article = TTFB_ResourceManager::scenario->getTextureSampler("dracula_one_star")->textureSampler->texture;
 				sound   = TTFB_ResourceManager::scenario->getAudio("dracula_one_star_sound")->sound;
 				break;
 			case 2:
-				article = TTFB_ResourceManager::scenario->getTexture("dracula_two_stars")->texture;
+				article = TTFB_ResourceManager::scenario->getTextureSampler("dracula_two_stars")->textureSampler->texture;
 				sound   = TTFB_ResourceManager::scenario->getAudio("dracula_two_stars_sound")->sound;
 				break;
 			case 3:
-				article = TTFB_ResourceManager::scenario->getTexture("dracula_three_stars")->texture;
+				article = TTFB_ResourceManager::scenario->getTextureSampler("dracula_three_stars")->textureSampler->texture;
 				sound   = TTFB_ResourceManager::scenario->getAudio("dracula_two_stars_sound")->sound;
 				break;
 			
@@ -73,7 +73,8 @@ TTFB_NewsArticle::TTFB_NewsArticle(Shader * _shader, std::string _play, int _sco
 	background->mesh->pushTexture2D(article);
 	setPixelWidth(800);
 	setPixelHeight(1000);
-	firstParent()->translate(-400, -500, 0.f);
+	firstParent()->translate(-350, -650, 0.f);
+
 }
 
 void TTFB_NewsArticle::update(Step* _step) {
@@ -82,9 +83,9 @@ void TTFB_NewsArticle::update(Step* _step) {
 		soundPlayed = true;
 	}
 
-	if(scale < 1.8f) {
+	if(scale < 2.f) {
 		scale += 0.05f;
-		container->rotate(1.9f, 0.f, 0.f, 1.f, kWORLD);
+		container->rotate(18.f, 0.f, 0.f, 1.f, kWORLD);
 		container->scale(scale, false);
 	}
 
