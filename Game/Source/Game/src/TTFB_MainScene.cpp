@@ -156,7 +156,7 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 
 	controller->setButtonFour.bind([=](int _value) {
 		if(controller->setButtonFour.justDown()) {
-			// Toggle fourth set piece
+			toggleFog();
 		}
 	});
 
