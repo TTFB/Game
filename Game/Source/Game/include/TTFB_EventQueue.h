@@ -19,6 +19,7 @@ public:
 	TTFB_Subscription * at(float _seconds, std::function<void()> _do);
 	void expectAt(float _seconds, float _leeway, std::function<bool()> _expecation, std::function<void()> _success, std::function<void()> _failure);
 
+	float getRelativeTime();
 private:
 	std::vector<TTFB_Event * >  events;
 	std::vector<TTFB_Expectation> expectations;

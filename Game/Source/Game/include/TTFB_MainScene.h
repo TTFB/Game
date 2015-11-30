@@ -22,6 +22,11 @@ public:
 	TTFB_SetPiece * setPieceBush;//bush
 	TTFB_SetPiece * setPieceMatte;//matte
 
+	ParticleSystem * leftArmBlood;
+	ParticleSystem * rightArmBlood;
+	ParticleSystem * leftLegBlood;
+	ParticleSystem * rightLegBlood;
+
 	TTFB_DialoguePlayer * dialoguePlayer;
 
 	OpenAL_Sound * backgroundMusic;
@@ -38,6 +43,11 @@ public:
 	void rightArmBleed();
 	void leftLegBleed();
 	void rightLegBleed();
+
+	void stopLeftArmBleeding();
+	void stopRightArmBleeding();
+	void stopLeftLegBleeding();
+	void stopRightLegBleeding();
 
 	TTFB_MainScene(Game * _game);
 	~TTFB_MainScene();

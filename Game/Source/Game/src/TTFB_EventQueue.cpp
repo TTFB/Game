@@ -52,3 +52,7 @@ TTFB_Subscription * TTFB_EventQueue::at(float _seconds, std::function<void()> _d
 void TTFB_EventQueue::expectAt(float _seconds, float _leeway, std::function<bool()> _expecation, std::function<void()> _success, std::function<void()> _failure) {
 	expectations.push_back(TTFB_Expectation(_seconds, _leeway, _expecation, _success, _failure));
 }
+
+float TTFB_EventQueue::getRelativeTime() {
+	return sweet::step.time - timeOffset;
+}

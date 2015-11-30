@@ -53,11 +53,15 @@
 #include <VerticalLinearLayout.h>
 #include <TTFB_SetPiece.h>
 #include <ParticleSystem.h>
+#include <Timeout.h>
 
 TTFB_MainScene::TTFB_MainScene(Game * _game) :
 	TTFB_StageScene(_game, 100.0f, "L1_Floor", "L1_Side", "L1_Background", "L1_Top", "L1_Bottom"),
-	bgMusicStarted(false)
-{
+	bgMusicStarted(false),
+	leftArmBlood(nullptr),
+	rightArmBlood(nullptr),
+	leftLegBlood(nullptr),
+	rightLegBlood(nullptr){
 
 #pragma region ActorSetup
 
@@ -231,8 +235,6 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 #pragma endregion 
 
 #pragma region Events
-
-	
 
 	eventQueue.at(0.0f + startSceneDelay, [=](){
 		kingArthur->speedMod = 1.0f;
@@ -583,8 +585,6 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 	//addFog();
 
 	//endScene(SPAMALOT);
-
-	leftArmBleed();
 }
 
 TTFB_MainScene::~TTFB_MainScene(){
@@ -620,43 +620,75 @@ void TTFB_MainScene::load(){
 }
 
 void TTFB_MainScene::leftArmBleed() {
-	ParticleSystem * bloodSystem = new ParticleSystem(TTFB_ResourceManager::scenario->getTexture("blood")->texture, box2dWorld, 0);
-	bloodSystem->setShader(baseShader, true);
-	bloodSystem->emissionAmount = 5;
-	bloodSystem->emissionRate   = 0.1f;
-	bloodSystem->emissionTimer  = 0.1f;
+	leftArmBlood = new ParticleSystem(TTFB_ResourceManager::scenario->getTexture("blood")->texture, box2dWorld, 0);
+	leftArmBlood->setShader(baseShader, true);
+	leftArmBlood->emissionAmount = 5;
+	leftArmBlood->emissionRate   = 0.1f;
+	leftArmBlood->emissionTimer  = 0.1f;
 
-	blackKnight->leftArmJointTransform->addChild(bloodSystem);
+	blackKnight->leftArmJointTransform->addChild(leftArmBlood);
 }
 
 void TTFB_MainScene::rightArmBleed() {
-	ParticleSystem * bloodSystem = new ParticleSystem(TTFB_ResourceManager::scenario->getTexture("blood")->texture, box2dWorld, 0);
-	bloodSystem->setShader(baseShader, true);
-	bloodSystem->emissionAmount = 5;
-	bloodSystem->emissionRate   = 0.1f;
-	bloodSystem->emissionTimer  = 0.1f;
+	rightArmBlood = new ParticleSystem(TTFB_ResourceManager::scenario->getTexture("blood")->texture, box2dWorld, 0);
+	rightArmBlood->setShader(baseShader, true);
+	rightArmBlood->emissionAmount = 5;
+	rightArmBlood->emissionRate   = 0.1f;
+	rightArmBlood->emissionTimer  = 0.1f;
 	
-	blackKnight->rightArmJointTransform->addChild(bloodSystem);
+	blackKnight->rightArmJointTransform->addChild(rightArmBlood);
 }
 
 void TTFB_MainScene::leftLegBleed() {
-	ParticleSystem * bloodSystem = new ParticleSystem(TTFB_ResourceManager::scenario->getTexture("blood")->texture, box2dWorld, 0);
-	bloodSystem->setShader(baseShader, true);
-	bloodSystem->emissionAmount = 5;
-	bloodSystem->emissionRate   = 0.1f;
-	bloodSystem->emissionTimer  = 0.1f;
+	leftLegBlood = new ParticleSystem(TTFB_ResourceManager::scenario->getTexture("blood")->texture, box2dWorld, 0);
+	leftLegBlood->setShader(baseShader, true);
+	leftLegBlood->emissionAmount = 5;
+	leftLegBlood->emissionRate   = 0.1f;
+	leftLegBlood->emissionTimer  = 0.1f;
 	
-	blackKnight->leftLegJointTransform->addChild(bloodSystem);
+	blackKnight->leftLegJointTransform->addChild(leftLegBlood);
+}
+
+void TTFB_MainScene::stopLeftArmBleeding() {
+	if(leftArmBlood != nullptr) {
+		blackKnight->leftArmJointTransform->removeChild(leftArmBlood->firstParent());
+		delete leftArmBlood;
+		leftArmBlood = nullptr;
+	}
+}
+
+void TTFB_MainScene::stopRightArmBleeding() {
+	if(rightArmBlood != nullptr) {
+		blackKnight->rightArmJointTransform->removeChild(rightArmBlood->firstParent());
+		delete rightArmBlood;
+		rightArmBlood = nullptr;
+	}
+}
+
+void TTFB_MainScene::stopLeftLegBleeding() {
+	if(leftLegBlood != nullptr) {
+		blackKnight->leftLegJointTransform->removeChild(leftLegBlood->firstParent());
+		delete leftLegBlood;
+		leftLegBlood = nullptr;
+	}
+}
+
+void TTFB_MainScene::stopRightLegBleeding() {
+	if(rightLegBlood != nullptr) {
+		blackKnight->rightArmJointTransform->removeChild(rightLegBlood->firstParent());
+		delete rightLegBlood;
+		rightLegBlood = nullptr;
+	}
 }
 
 void TTFB_MainScene::rightLegBleed() {
-	ParticleSystem * bloodSystem = new ParticleSystem(TTFB_ResourceManager::scenario->getTexture("blood")->texture, box2dWorld, 0);
-	bloodSystem->setShader(baseShader, true);
-	bloodSystem->emissionAmount = 5;
-	bloodSystem->emissionRate   = 0.1f;
-	bloodSystem->emissionTimer  = 0.1f;
+	rightLegBlood = new ParticleSystem(TTFB_ResourceManager::scenario->getTexture("blood")->texture, box2dWorld, 0);
+	rightLegBlood->setShader(baseShader, true);
+	rightLegBlood->emissionAmount = 5;
+	rightLegBlood->emissionRate   = 0.1f;
+	rightLegBlood->emissionTimer  = 0.1f;
 	
-	blackKnight->rightLegJointTransform->addChild(bloodSystem);
+	blackKnight->rightLegJointTransform->addChild(rightLegBlood);
 }
 
 void TTFB_MainScene::unload(){
