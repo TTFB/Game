@@ -152,6 +152,32 @@ TTFB_StageScene::TTFB_StageScene(Game * _game, float _stageWidth, std::string _f
 	stage->childTransform->addChild(fireSystem);
 
 	fireSystem->setShader(baseShader, true);
+
+
+#pragma region LightSetup
+	
+	SpotLight * light0 = new SpotLight(glm::vec3(0, 0, -1), glm::vec3(0,0,0), 45.f, 0.001f, 0.001f, -1.f);
+	lights.push_back(light0);
+	childTransform->addChild(light0);
+	light0->firstParent()->translate(0, 0, 30);
+	
+	SpotLight * light1 = new SpotLight(glm::vec3(0, 0, -1), glm::vec3(1,1,1), 45.f, 0.001f, 0.001f, -1.f);
+	lights.push_back(light1);
+	childTransform->addChild(light1);
+	light1->firstParent()->translate(-20, 10, 13);
+
+	SpotLight * light2 = new SpotLight(glm::vec3(0, 0, -1), glm::vec3(1,1,1), 45.f, 0.001f, 0.001f, -1.f);
+	lights.push_back(light2);
+	childTransform->addChild(light2);
+	light2->firstParent()->translate(0, 10, 13);
+
+	SpotLight * light3 = new SpotLight(glm::vec3(0, 0, -1), glm::vec3(1,1,1), 45.f, 0.001f, 0.001f, -1.f);
+	lights.push_back(light3);
+	childTransform->addChild(light3);
+	light3->firstParent()->translate(20, 10, 13);
+
+#pragma endregion 
+
 }
 
 TTFB_StageScene::~TTFB_StageScene(){
@@ -168,6 +194,17 @@ TTFB_StageScene::~TTFB_StageScene(){
 
 
 void TTFB_StageScene::update(Step * _step){
+
+	if(fadeOutLights) {
+
+		lights[1]->setIntensities(lights[1]->getIntensities() - 0.05f);
+		lights[2]->setIntensities(lights[2]->getIntensities() - 0.05f);
+		lights[3]->setIntensities(lights[3]->getIntensities() - 0.05f);
+
+		if(lights[1]->getIntensities().x <= 0 && lights[2]->getIntensities().x <= 0 && lights[3]->getIntensities().x <= 0) {
+			fadeOutLights = false;
+		}
+	}
 
 	// Toggle debug drawer
 	if(keyboard->keyJustUp(GLFW_KEY_2)){
@@ -251,14 +288,17 @@ void TTFB_StageScene::endScene(std::string _sceneKey) {
 	
 	VerticalLinearLayout * articleContainer = new VerticalLinearLayout(bulletWorld);
 	articleContainer->horizontalAlignment = kCENTER;
-	articleContainer->verticalAlignment = kMIDDLE;
+	articleContainer->verticalAlignment   = kMIDDLE;
 	articleContainer->setRationalWidth(1, &uiLayer);
 	articleContainer->setRationalHeight(1, &uiLayer);
 
-	articleContainer->addChild(testArticle);
-	testArticle->firstParent()->translate(testArticle->getWidth()/2, testArticle->getHeight()/2, 0);
+	articleContainer->childTransform->addChild(testArticle->container);
 
 	uiLayer.addChild(articleContainer);
+
+	articleContainer->firstParent()->translate(uiLayer.getWidth()/2, uiLayer.getHeight()/2, 0, true);
+
+	fadeOutLights = true;
 }
 
 TTFB_Prop * TTFB_StageScene::addProp(std::string _samplerResourceId, glm::vec3 _pos) {
