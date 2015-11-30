@@ -62,6 +62,11 @@ public:
 
 	b2Vec2 getBox2dPos();
 
+	bool leftArmBroken;
+	bool rightArmBroken;
+	bool leftLegBroken;
+	bool rightLegBroken;
+
 private:
 	Box2DSprite * torso;
 	Box2DSprite * head;

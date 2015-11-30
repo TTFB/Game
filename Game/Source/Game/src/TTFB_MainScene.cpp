@@ -53,15 +53,11 @@
 #include <VerticalLinearLayout.h>
 #include <TTFB_SetPiece.h>
 #include <ParticleSystem.h>
-#include <Timeout.h>
 
 TTFB_MainScene::TTFB_MainScene(Game * _game) :
 	TTFB_StageScene(_game, 100.0f, "L1_Floor", "L1_Side", "L1_Background", "L1_Top", "L1_Bottom"),
-	bgMusicStarted(false),
-	leftArmBlood(nullptr),
-	rightArmBlood(nullptr),
-	leftLegBlood(nullptr),
-	rightLegBlood(nullptr){
+	bgMusicStarted(false)
+{
 
 #pragma region ActorSetup
 
@@ -122,11 +118,13 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 		//-46 is open, -12 is closed for left curtain
 	});
 
-	controller->setButtonOne.bind([=](int _value) {
+	controller->setButtonOne.bind([this](int _value) {
 		if(controller->setButtonOne.justDown()) {
-			setPieceTree1->toggle();
-			setPieceTree2->toggle();
-			setPieceBush->toggle();
+			if( eventQueue.getRelativeTime() < startSceneDelay){
+				setPieceTree1->toggle();
+				setPieceTree2->toggle();
+				setPieceBush->toggle();
+			}
 		}
 	});
 
@@ -135,10 +133,24 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 			setPieceMatte->toggle();
 		}
 	});
-
-	controller->setButtonThree.bind([=](int _value) {
+	/*kingArthur->say(1.0f, L"Hah", true)->subscribe(
+			[=](){
+				blackKnight->breakRightArmJoint();
+				blackKnight->applyImpulseRighttArm(0.0f, 5.0f);
+			}
+		);*/
+	controller->setButtonThree.bind([this](int _value) {
 		if(controller->setButtonThree.justDown()) {
-			// Toggle third set piece
+			std::cout<<eventQueue.getRelativeTime();
+			if( eventQueue.getRelativeTime() > (15.0 + startSceneDelay) && eventQueue.getRelativeTime() < (19.0 + startSceneDelay)){
+				std::cout<<"IN TRIGGER";
+				blackKnight->breakLeftArmJoint();
+				blackKnight->applyImpulseRighttArm(0.0f, 5.0f);
+			}
+			if( eventQueue.getRelativeTime() > (34.5 + startSceneDelay) && eventQueue.getRelativeTime() < (38.5 + startSceneDelay)){
+				blackKnight->breakRightArmJoint();
+				blackKnight->applyImpulseRighttArm(0.0f, 5.0f);
+			}
 		}
 	});
 
@@ -223,7 +235,17 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 	//fog ON
 	//fog OFF
 	//sound2 effect
-	
+	//set3 - arm off
+	eventQueue.expectAt(17.0f + startSceneDelay, 2.f, 
+		[=](){return blackKnight->rightArmBroken;},
+			[](){std::cout<<"SuccessARM";}, 
+			[](){std::cout<<"Failure";});
+	//sound2 effect
+	//set3 - arm off
+	eventQueue.expectAt(36.5f + startSceneDelay, 2.f, 
+		[=](){return blackKnight->leftArmBroken;},
+			[](){std::cout<<"SuccessARM2";}, 
+			[](){std::cout<<"Failure";});
 	
 
 #pragma region AudioSetup
@@ -235,6 +257,8 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 #pragma endregion 
 
 #pragma region Events
+
+	
 
 	eventQueue.at(0.0f + startSceneDelay, [=](){
 		kingArthur->speedMod = 1.0f;
@@ -290,13 +314,18 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 
 	eventQueue.at(17.0f + startSceneDelay, [=](){
 		dialoguePlayer->playNext();
+		kingArthur->say(2.0f, L"So be it!", true);
+	});
+
+	/*eventQueue.at(17.0f + startSceneDelay, [=](){
+		dialoguePlayer->playNext();
 		kingArthur->say(2.0f, L"So be it!", true)->subscribe(
 			[=](){
 				blackKnight->breakLeftArmJoint();		
 				blackKnight->applyImpulseLeftArm(0.0f, 5.0f);
 			}
 		);
-	});
+	});*/
 
 	eventQueue.at(19.0f + startSceneDelay, [=](){
 		dialoguePlayer->playNext();
@@ -356,13 +385,17 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 
 	eventQueue.at(36.5f + startSceneDelay, [=](){
 		dialoguePlayer->playNext();
+		kingArthur->say(1.0f, L"Hah", true);
+	});
+	/*eventQueue.at(36.5f + startSceneDelay, [=](){
+		dialoguePlayer->playNext();
 		kingArthur->say(1.0f, L"Hah", true)->subscribe(
 			[=](){
 				blackKnight->breakRightArmJoint();
 				blackKnight->applyImpulseRighttArm(0.0f, 5.0f);
 			}
 		);
-	});
+	});*/
 
 	eventQueue.at(37.5f + startSceneDelay, [=](){
 		dialoguePlayer->playNext();
@@ -585,6 +618,8 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 	//addFog();
 
 	//endScene(SPAMALOT);
+
+	leftArmBleed();
 }
 
 TTFB_MainScene::~TTFB_MainScene(){
@@ -620,75 +655,43 @@ void TTFB_MainScene::load(){
 }
 
 void TTFB_MainScene::leftArmBleed() {
-	leftArmBlood = new ParticleSystem(TTFB_ResourceManager::scenario->getTexture("blood")->texture, box2dWorld, 0);
-	leftArmBlood->setShader(baseShader, true);
-	leftArmBlood->emissionAmount = 5;
-	leftArmBlood->emissionRate   = 0.1f;
-	leftArmBlood->emissionTimer  = 0.1f;
+	ParticleSystem * bloodSystem = new ParticleSystem(TTFB_ResourceManager::scenario->getTexture("blood")->texture, box2dWorld, 0);
+	bloodSystem->setShader(baseShader, true);
+	bloodSystem->emissionAmount = 5;
+	bloodSystem->emissionRate   = 0.1f;
+	bloodSystem->emissionTimer  = 0.1f;
 
-	blackKnight->leftArmJointTransform->addChild(leftArmBlood);
+	blackKnight->leftArmJointTransform->addChild(bloodSystem);
 }
 
 void TTFB_MainScene::rightArmBleed() {
-	rightArmBlood = new ParticleSystem(TTFB_ResourceManager::scenario->getTexture("blood")->texture, box2dWorld, 0);
-	rightArmBlood->setShader(baseShader, true);
-	rightArmBlood->emissionAmount = 5;
-	rightArmBlood->emissionRate   = 0.1f;
-	rightArmBlood->emissionTimer  = 0.1f;
+	ParticleSystem * bloodSystem = new ParticleSystem(TTFB_ResourceManager::scenario->getTexture("blood")->texture, box2dWorld, 0);
+	bloodSystem->setShader(baseShader, true);
+	bloodSystem->emissionAmount = 5;
+	bloodSystem->emissionRate   = 0.1f;
+	bloodSystem->emissionTimer  = 0.1f;
 	
-	blackKnight->rightArmJointTransform->addChild(rightArmBlood);
+	blackKnight->rightArmJointTransform->addChild(bloodSystem);
 }
 
 void TTFB_MainScene::leftLegBleed() {
-	leftLegBlood = new ParticleSystem(TTFB_ResourceManager::scenario->getTexture("blood")->texture, box2dWorld, 0);
-	leftLegBlood->setShader(baseShader, true);
-	leftLegBlood->emissionAmount = 5;
-	leftLegBlood->emissionRate   = 0.1f;
-	leftLegBlood->emissionTimer  = 0.1f;
+	ParticleSystem * bloodSystem = new ParticleSystem(TTFB_ResourceManager::scenario->getTexture("blood")->texture, box2dWorld, 0);
+	bloodSystem->setShader(baseShader, true);
+	bloodSystem->emissionAmount = 5;
+	bloodSystem->emissionRate   = 0.1f;
+	bloodSystem->emissionTimer  = 0.1f;
 	
-	blackKnight->leftLegJointTransform->addChild(leftLegBlood);
-}
-
-void TTFB_MainScene::stopLeftArmBleeding() {
-	if(leftArmBlood != nullptr) {
-		blackKnight->leftArmJointTransform->removeChild(leftArmBlood->firstParent());
-		delete leftArmBlood;
-		leftArmBlood = nullptr;
-	}
-}
-
-void TTFB_MainScene::stopRightArmBleeding() {
-	if(rightArmBlood != nullptr) {
-		blackKnight->rightArmJointTransform->removeChild(rightArmBlood->firstParent());
-		delete rightArmBlood;
-		rightArmBlood = nullptr;
-	}
-}
-
-void TTFB_MainScene::stopLeftLegBleeding() {
-	if(leftLegBlood != nullptr) {
-		blackKnight->leftLegJointTransform->removeChild(leftLegBlood->firstParent());
-		delete leftLegBlood;
-		leftLegBlood = nullptr;
-	}
-}
-
-void TTFB_MainScene::stopRightLegBleeding() {
-	if(rightLegBlood != nullptr) {
-		blackKnight->rightArmJointTransform->removeChild(rightLegBlood->firstParent());
-		delete rightLegBlood;
-		rightLegBlood = nullptr;
-	}
+	blackKnight->leftLegJointTransform->addChild(bloodSystem);
 }
 
 void TTFB_MainScene::rightLegBleed() {
-	rightLegBlood = new ParticleSystem(TTFB_ResourceManager::scenario->getTexture("blood")->texture, box2dWorld, 0);
-	rightLegBlood->setShader(baseShader, true);
-	rightLegBlood->emissionAmount = 5;
-	rightLegBlood->emissionRate   = 0.1f;
-	rightLegBlood->emissionTimer  = 0.1f;
+	ParticleSystem * bloodSystem = new ParticleSystem(TTFB_ResourceManager::scenario->getTexture("blood")->texture, box2dWorld, 0);
+	bloodSystem->setShader(baseShader, true);
+	bloodSystem->emissionAmount = 5;
+	bloodSystem->emissionRate   = 0.1f;
+	bloodSystem->emissionTimer  = 0.1f;
 	
-	blackKnight->rightLegJointTransform->addChild(rightLegBlood);
+	blackKnight->rightLegJointTransform->addChild(bloodSystem);
 }
 
 void TTFB_MainScene::unload(){
