@@ -58,7 +58,12 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 	TTFB_StageScene(_game, 100.0f, "L1_Floor", "L1_Side", "L1_Background", "L1_Top", "L1_Bottom"),
 	bgMusicStarted(false)
 {
-	conditions["blood1Played"] = false; //holds audio like a bool
+	conditions["blood1Played"] = false; //holds like a bool
+	conditions["blood2Played"] = false; 
+	conditions["blood3Played"] = false; 
+	conditions["blood4Played"] = false; 
+	conditions["whoosh1Played"] = false; 
+	conditions["chickenPlayed"] = false; 
 
 #pragma region ActorSetup
 
@@ -136,23 +141,28 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 			setPieceMatte->toggle();
 		}
 	});
-	/*kingArthur->say(1.0f, L"Hah", true)->subscribe(
-			[this](){
-				blackKnight->breakRightArmJoint();
-				blackKnight->applyImpulseRighttArm(0.0f, 5.0f);
-			}
-		);*/
+
 	controller->setButtonThree.bind([this](int _value) {
 		if(controller->setButtonThree.justDown()) {
 			std::cout<<eventQueue.getRelativeTime();
 			if( eventQueue.getRelativeTime() > (15.0 + startSceneDelay) && eventQueue.getRelativeTime() < (19.0 + startSceneDelay)){
 				std::cout<<"IN TRIGGER";
 				blackKnight->breakLeftArmJoint();
-				blackKnight->applyImpulseRighttArm(0.0f, 5.0f);
+				blackKnight->applyImpulseLeftArm(0.0f, 5.0f);
 			}
 			if( eventQueue.getRelativeTime() > (34.5 + startSceneDelay) && eventQueue.getRelativeTime() < (38.5 + startSceneDelay)){
 				blackKnight->breakRightArmJoint();
 				blackKnight->applyImpulseRighttArm(0.0f, 5.0f);
+			}
+			if( eventQueue.getRelativeTime() > (63.0 + startSceneDelay) && eventQueue.getRelativeTime() < (67.0 + startSceneDelay)){
+				blackKnight->breakLeftLegJoint();
+				blackKnight->applyImpulseLegs(0.3f, 5.0f);
+				blackKnight->rootComponent->body->SetType(b2_dynamicBody);
+			}
+			if( eventQueue.getRelativeTime() > (81.0 + startSceneDelay) && eventQueue.getRelativeTime() < (85.0 + startSceneDelay)){
+				blackKnight->breakRightLegJoint();
+				blackKnight->applyImpulseLegs(0.3f, 5.0f);
+				//blackKnight->rootComponent->body->SetType(b2_dynamicBody);
 			}
 		}
 	});
@@ -165,30 +175,46 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 
 	controller->soundButtonOne.bind([this](int _value) {
 		if(controller->soundButtonOne.justDown()) {
-			TTFB_ResourceManager::scenario->getAudio("spamalot1" )->sound->play();
+			if( eventQueue.getRelativeTime() > (15.0 + startSceneDelay) && eventQueue.getRelativeTime() < (19.0 + startSceneDelay)){
+				TTFB_ResourceManager::scenario->getAudio("bloodSpurt3" )->sound->play();
+				conditions["blood1Played"] = true;
+			}
+			else if( eventQueue.getRelativeTime() > (34.5 + startSceneDelay) && eventQueue.getRelativeTime() < (38.5 + startSceneDelay)){
+				TTFB_ResourceManager::scenario->getAudio("bloodSpurt1" )->sound->play();
+				conditions["blood2Played"] = true;
+			}
+			else if( eventQueue.getRelativeTime() > (63.0 + startSceneDelay) && eventQueue.getRelativeTime() < (67.0 + startSceneDelay)){
+				TTFB_ResourceManager::scenario->getAudio("bloodSpurt3" )->sound->play();
+				conditions["blood3Played"] = true;
+			}
+			else if( eventQueue.getRelativeTime() > (81.0 + startSceneDelay) && eventQueue.getRelativeTime() < (85.0 + startSceneDelay)){
+				TTFB_ResourceManager::scenario->getAudio("bloodSpurt1" )->sound->play();
+				conditions["blood4Played"] = true;
+			}
 			
 		}
 	});
 
 	controller->soundButtonTwo.bind([this](int _value) {
 		if(controller->soundButtonTwo.justDown()) {
-			
-			if( eventQueue.getRelativeTime() > (15.0 + startSceneDelay) && eventQueue.getRelativeTime() < (19.0 + startSceneDelay)){
-				//TTFB_ResourceManager::scenario->getAudio("bloodSpurt3" )->sound->play();
-				//conditions["blood1Played"] = true;
+			if( eventQueue.getRelativeTime() > (57.0 + startSceneDelay) && eventQueue.getRelativeTime() < (61.0 + startSceneDelay)){
+				TTFB_ResourceManager::scenario->getAudio("bloodSpurt3" )->sound->play();
+				conditions["swordMiss"] = true;
 			}
+			
 		}
 	});
 	
 	controller->soundButtonThree.bind([this](int _value) {
 		if(controller->soundButtonThree.justDown()) {
-			TTFB_ResourceManager::scenario->getAudio("spamalot1" )->sound->play();
+			TTFB_ResourceManager::scenario->getAudio("chicken1" )->sound->play();
 		}
 	});
 
 	controller->specialFireButton.bind([this](int _value) {
 		if(controller->specialFireButton.justDown()) {
 			fireActive = !fireActive;
+			std::cout<<"FIREE BUTTON PRESSED";
 		}
 	});
 
@@ -211,7 +237,7 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 
 	//scene setup cues
 	eventQueue.expectAt(5.f, 5.f, 
-		[this](){return dialoguePlayer->muted;},
+		[this](){return !dialoguePlayer->muted;},
 			[](){std::cout<<"Success";}, 
 			[](){std::cout<<"Failure";});
 	eventQueue.expectAt(5.f, 5.f, 
@@ -232,7 +258,7 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 			[](){std::cout<<"Failure";});
 	eventQueue.expectAt(5.f, 5.f, 
 		[this](){return stage->curtainLeft->firstParent()->getTranslationVector().x < -44.0f;},
-			[](){std::cout<<"SuccessCURTAINS";}, 
+			[](){std::cout<<"Success";}, 
 			[](){std::cout<<"Failure";});
 
 	//light 0%
@@ -243,26 +269,112 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 	//fog ON
 	eventQueue.expectAt(11.5f + startSceneDelay, 2.f, 
 		[this](){return fogActive == true;},
-			[](){std::cout<<"SuccessFOG";}, 
+			[](){std::cout<<"Success";}, 
 			[](){std::cout<<"Failure";});
 	//fog OFF
+	eventQueue.expectAt(15.0f + startSceneDelay, 2.f, 
+		[this](){return fogActive == false;},
+			[](){std::cout<<"Success";}, 
+			[](){std::cout<<"Failure";});
 	//sound2 effect
 	eventQueue.expectAt(17.0f + startSceneDelay, 2.f, 
-		[this](){return conditions["blood1Played"] == true;},
-			[](){std::cout<<"SuccessBLOOODD";}, 
+		[this](){return conditions["blood1Played"];},
+			[](){std::cout<<"Success";}, 
 			[](){std::cout<<"Failure";});
 	//set3 - arm off
 	eventQueue.expectAt(17.0f + startSceneDelay, 2.f, 
 		[this](){return blackKnight->rightArmBroken;},
-			[](){std::cout<<"SuccessARM";}, 
+			[](){std::cout<<"Success";}, 
 			[](){std::cout<<"Failure";});
 	//sound2 effect
+	eventQueue.expectAt(36.5f + startSceneDelay, 2.f, 
+		[this](){return conditions["blood2Played"];},
+			[](){std::cout<<"Success";}, 
+			[](){std::cout<<"Failure";});
 	//set3 - arm off
 	eventQueue.expectAt(36.5f + startSceneDelay, 2.f, 
 		[this](){return blackKnight->leftArmBroken;},
-			[](){std::cout<<"SuccessARM2";}, 
+			[](){std::cout<<"Success";}, 
 			[](){std::cout<<"Failure";});
-	
+	//fire
+	eventQueue.expectAt(42.5f + startSceneDelay, 2.f,
+		[this](){return fireActive;},
+			[](){std::cout<<"Success";}, 
+			[](){std::cout<<"Failure";});
+	//lights(1&3) 50%
+	eventQueue.expectAt(51.f + startSceneDelay, 3.0f, 
+		[this](){return lights[1]->getIntensities().r > 1 && lights[1]->getIntensities().r < 3;},
+			[](){std::cout<<"SuccessL1";}, 
+			[](){std::cout<<"FailureL1";});
+	eventQueue.expectAt(51.f + startSceneDelay, 3.0f, 
+		[this](){return lights[3]->getIntensities().r > 1 && lights[3]->getIntensities().r < 3;},
+			[](){std::cout<<"SuccessL3";}, 
+			[](){std::cout<<"FailureL3";});
+	//sound - whoosh
+	eventQueue.expectAt(59.f + startSceneDelay, 2.f, 
+		[this](){return conditions["whoosh1Played"];},
+			[](){std::cout<<"Success";}, 
+			[](){std::cout<<"Failure";});
+	//fire
+	eventQueue.expectAt(59.f + startSceneDelay, 2.f,
+		[this](){return fireActive;},
+			[](){std::cout<<"Success";}, 
+			[](){std::cout<<"Failure";});
+	//sound3 - chicken
+	eventQueue.expectAt(63.f + startSceneDelay, 2.f, 
+		[this](){return conditions["chickenPlayed"];},
+			[](){std::cout<<"Success";}, 
+			[](){std::cout<<"Failure";});
+	//sound2 - blood
+	eventQueue.expectAt(65.0f + startSceneDelay, 2.f, 
+		[this](){return conditions["blood3Played"];},
+			[](){std::cout<<"Success";}, 
+			[](){std::cout<<"Failure";});
+	//set3 - leg off
+	eventQueue.expectAt(65.0f + startSceneDelay, 2.f, 
+		[this](){return blackKnight->leftLegBroken;},
+			[](){std::cout<<"Success";}, 
+			[](){std::cout<<"Failure";});
+	//lights(1&3) 100%
+	eventQueue.expectAt(76.f + startSceneDelay, 3.0f, 
+		[this](){return lights[1]->getIntensities().r > 3.5;},
+			[](){std::cout<<"SuccessL1";}, 
+			[](){std::cout<<"FailureL1";});
+	eventQueue.expectAt(76.f + startSceneDelay, 3.0f, 
+		[this](){return lights[3]->getIntensities().r > 3.5;},
+			[](){std::cout<<"SuccessL3";}, 
+			[](){std::cout<<"FailureL3";});
+	//sound2 - blood
+	eventQueue.expectAt(83.0f + startSceneDelay, 2.f, 
+		[this](){return conditions["blood4Played"];},
+			[](){std::cout<<"Success";}, 
+			[](){std::cout<<"Failure";});
+	//set3 - leg off
+	eventQueue.expectAt(83.0f + startSceneDelay, 2.f, 
+		[this](){return blackKnight->rightLegBroken;},
+			[](){std::cout<<"Success";}, 
+			[](){std::cout<<"Failure";});
+	//////end scene
+	eventQueue.expectAt(101.f + startSceneDelay, 5.f, 
+		[this](){return dialoguePlayer->muted;},
+			[](){std::cout<<"Success";}, 
+			[](){std::cout<<"Failure";});
+	eventQueue.expectAt(101.f + startSceneDelay, 5.f, 
+		[this](){return lights[1]->getIntensities().r < 0.2;},
+			[](){std::cout<<"SuccessL1";}, 
+			[](){std::cout<<"FailureL1";});
+	eventQueue.expectAt(101.f + startSceneDelay, 5.f, 
+		[this](){return lights[2]->getIntensities().r < 0.2;},
+			[](){std::cout<<"SuccessL2";}, 
+			[](){std::cout<<"FailureL2";});
+	eventQueue.expectAt(101.f + startSceneDelay, 5.f, 
+		[this](){return lights[3]->getIntensities().r < 0.2;},
+			[](){std::cout<<"SuccessL3";}, 
+			[](){std::cout<<"FailureL3";});
+	eventQueue.expectAt(101.f + startSceneDelay, 5.f, 
+		[this](){return stage->curtainLeft->firstParent()->getTranslationVector().x > -10.0f;},
+			[](){std::cout<<"Success";}, 
+			[](){std::cout<<"Failure";});
 
 #pragma region AudioSetup
 
@@ -403,15 +515,6 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 		dialoguePlayer->playNext();
 		kingArthur->say(1.0f, L"Hah", true);
 	});
-	/*eventQueue.at(36.5f + startSceneDelay, [this](){
-		dialoguePlayer->playNext();
-		kingArthur->say(1.0f, L"Hah", true)->subscribe(
-			[this](){
-				blackKnight->breakRightArmJoint();
-				blackKnight->applyImpulseRighttArm(0.0f, 5.0f);
-			}
-		);
-	});*/
 
 	eventQueue.at(37.5f + startSceneDelay, [this](){
 		dialoguePlayer->playNext();
@@ -503,13 +606,7 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 
 	eventQueue.at(65.0f + startSceneDelay, [this](){
 		dialoguePlayer->playNext();
-		kingArthur->say(2.0f, L"I'll have your legs. Right!", true)->subscribe(
-			[this](){
-				blackKnight->breakLeftLegJoint();
-				blackKnight->applyImpulseLegs(0.3f, 5.0f);
-				blackKnight->rootComponent->body->SetType(b2_dynamicBody);
-			}
-		);
+		kingArthur->say(2.0f, L"I'll have your legs. Right!", true);
 	});
 
 	eventQueue.at(67.0f + startSceneDelay, [this](){
@@ -651,7 +748,7 @@ void TTFB_MainScene::update(Step * _step){
 		backgroundMusic->play();
 	}
 
-	fireActive = true;
+	//fireActive = true;
 	
 	if(fireActive){
 		b2Vec2 blackKnightPos = blackKnight->getBox2dPos();
