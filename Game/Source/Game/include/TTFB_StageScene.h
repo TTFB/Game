@@ -7,6 +7,7 @@
 #include <TTFB_EventQueue.h>
 #include <TTFB_Scene.h>
 #include "TTFB_Fog.h"
+#include <TextArea.h>
 
 class TTFB_SetPiece;
 class TTFB_Prop;
@@ -46,6 +47,7 @@ class TTFB_StageScene : public TTFB_Scene{
 public:
 
 	int score;
+	int lastScore;
 
 	TTFB_EventQueue eventQueue;
 	
@@ -73,6 +75,7 @@ public:
 	Box2DDebugDrawer * box2dDebug;
 	
 	Font * font;
+	Font * scoreFont;
 
 	UILayer uiLayer;
 
@@ -85,10 +88,13 @@ public:
 
 	TTFB_Fog * fog;
 
+	TextArea * scoreText;
+
 	bool fireActive;
 	bool fogActive;
 	bool fadeOutLights;
 	bool dimmingLights;
+	ComponentShaderText* scoreTextShader;
 	virtual void update(Step * _step) override;
 	virtual void render(sweet::MatrixStack * _matrixStack, RenderOptions * _renderOptions) override;
 	

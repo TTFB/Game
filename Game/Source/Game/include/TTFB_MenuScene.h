@@ -7,6 +7,7 @@
 #include <BulletDebugDrawer.h>
 #include <BulletWorld.h>
 #include <TTFB_EventQueue.h>
+#include "TTFB_Scene.h"
 
 class TTFB_Controller;
 class PerspectiveCamera;
@@ -37,7 +38,7 @@ class TTFB_Stage;
 class TTFB_Actor;
 
 
-class TTFB_MenuScene : public Scene {
+class TTFB_MenuScene : public TTFB_Scene {
 public:
 
 	Shader * screenSurfaceShader;
@@ -57,13 +58,13 @@ public:
 
 	MeshEntity * cheese;
 	
+	NodeUI * introScreen;
+
 	Font * font;
 
 	UILayer uiLayer;
 
 	TTFB_Stage * stage;
-
-	TTFB_Controller * controller;
 
 	Sprite * mouseIndicator;
 

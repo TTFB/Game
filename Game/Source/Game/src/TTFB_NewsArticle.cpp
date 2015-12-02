@@ -10,6 +10,15 @@ TTFB_NewsArticle::TTFB_NewsArticle(Shader * _shader, std::string _play, int _sco
 	soundPlayed(false),
 	scale(1.0f)
 {
+
+	if(_score <= -1500) {
+		_score = 1;
+	}else if(_score > -1500 && _score < 1500){
+		_score = 2;
+	}else {
+		_score = 3;
+	}
+
 	if(_play == SPAMALOT) {
 		switch(_score) {
 			case 1: 

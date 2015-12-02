@@ -62,6 +62,7 @@
 #include <ParticleSystem.h>
 #include <Particle.h>
 #include <TTFB_Game.h>
+#include <TextArea.h>
 
 TTFB_StageScene::TTFB_StageScene(Game * _game, float _stageWidth, std::string _floorTex, std::string _sideTex, std::string _backTex, std::string _topTex, std::string _frontTex) :
 	TTFB_Scene(_game),
@@ -71,12 +72,14 @@ TTFB_StageScene::TTFB_StageScene(Game * _game, float _stageWidth, std::string _f
 	baseShader(new ComponentShaderBase(true)),
 	characterShader(new ComponentShaderBase(true)),
 	textShader(new ComponentShaderText(true)),
+	scoreTextShader(new ComponentShaderText(true)),
 	debugDrawer(nullptr),
 	uiLayer(0,0,0,0),
 	box2dWorld(new Box2DWorld(b2Vec2(0.f, -10.0f))),
 	box2dDebug(box2dWorld->createDebugDrawer()),
 	font(new Font("assets/engine basics/OpenSans-Regular.ttf", 100, true)),
-	score(1),
+	scoreFont(new Font("assets/engine basics/OpenSans-Regular.ttf", 40, true)),
+	score(0),
 	fireActive(false),
 	fadeOutLights(false),
 	dimmingLights(false)
@@ -91,6 +94,10 @@ TTFB_StageScene::TTFB_StageScene(Game * _game, float _stageWidth, std::string _f
 	baseShader->compileShader();
 
 	textShader->textComponent->setColor(glm::vec3(0.0f, 0.0f, 0.0f));
+
+	scoreTextShader->setColor(1.f, 1.f, 1.f);
+	scoreText = new TextArea(bulletWorld, scoreFont, scoreTextShader, 300);
+	uiLayer.addChild(scoreText);
 
 	//Set up debug camera
 	debugCam = new MousePerspectiveCamera();
@@ -195,6 +202,11 @@ TTFB_StageScene::~TTFB_StageScene(){
 
 
 void TTFB_StageScene::update(Step * _step){
+
+	if(score != lastScore) {
+		scoreText->setText(L"Score " + std::to_wstring(score));
+		lastScore = score;
+	}
 
 	if(fadeOutLights) {
 

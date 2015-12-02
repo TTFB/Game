@@ -235,147 +235,146 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 	
 #pragma endregion 
 	startSceneDelay = 5.0f;
-
 	//scene setup cues
 	eventQueue.expectAt(5.f, 5.f, 
 		[this](){return !dialoguePlayer->muted;},
-			[](){std::cout<<"Success";}, 
-			[](){std::cout<<"Failure";});
+			[this](){score += 100;}, 
+			[this](){score -= 100;});
 	eventQueue.expectAt(5.f, 5.f, 
 		[this](){return setPieceTree1->isLowered();},
-			[](){std::cout<<"Success";}, 
-			[](){std::cout<<"Failure";});
+		[this](){score += 100;}, 
+		[this](){score -= 100;});
 	eventQueue.expectAt(5.f, 5.f,
 		[this](){return setPieceMatte->isLowered();},
-			[](){std::cout<<"Success";}, 
-			[](){std::cout<<"Failure";});
+			[this](){score += 100;}, 
+			[this](){score -= 100;});
 	eventQueue.expectAt(5.f, 5.f, 
 		[this](){return lights[1]->getIntensities().r > 3.5;},
-			[](){std::cout<<"Success";}, 
-			[](){std::cout<<"Failure";});
+			[this](){score += 100;}, 
+			[this](){score -= 100;});
 	eventQueue.expectAt(5.f, 5.f, 
 		[this](){return lights[2]->getIntensities().r > 3.5;},
-			[](){std::cout<<"Success";}, 
-			[](){std::cout<<"Failure";});
+			[this](){score += 100;}, 
+			[this](){score -= 100;});
 	eventQueue.expectAt(5.f, 5.f, 
 		[this](){return stage->curtainLeft->firstParent()->getTranslationVector().x < -44.0f;},
-			[](){std::cout<<"Success";}, 
-			[](){std::cout<<"Failure";});
+			[this](){score += 100;}, 
+			[this](){score -= 100;});
 
 	//light 0%
 	eventQueue.expectAt(1.5f + startSceneDelay, 2.f, 
 		[this](){return lights[1]->getIntensities().r < 0.2;},
-			[](){std::cout<<"Success";}, 
-			[](){std::cout<<"Failure";});
+			[this](){score += 100;}, 
+			[this](){score -= 100;});
 	//fog ON
 	eventQueue.expectAt(11.5f + startSceneDelay, 2.f, 
 		[this](){return fogActive == true;},
-			[](){std::cout<<"Success";}, 
-			[](){std::cout<<"Failure";});
+			[this](){score += 100;}, 
+			[this](){score -= 100;});
 	//fog OFF
 	eventQueue.expectAt(15.0f + startSceneDelay, 2.f, 
 		[this](){return fogActive == false;},
-			[](){std::cout<<"Success";}, 
-			[](){std::cout<<"Failure";});
+			[this](){score += 100;}, 
+			[this](){score -= 100;});
 	//sound2 effect
 	eventQueue.expectAt(17.0f + startSceneDelay, 2.f, 
 		[this](){return conditions["blood1Played"];},
-			[](){std::cout<<"Success";}, 
-			[](){std::cout<<"Failure";});
+			[this](){score += 100;}, 
+			[this](){score -= 100;});
 	//set3 - arm off
 	eventQueue.expectAt(17.0f + startSceneDelay, 2.f, 
 		[this](){return blackKnight->rightArmBroken;},
-			[](){std::cout<<"Success";}, 
-			[](){std::cout<<"Failure";});
+			[this](){score += 100;}, 
+			[this](){score -= 100;});
 	//sound2 effect
 	eventQueue.expectAt(36.5f + startSceneDelay, 2.f, 
 		[this](){return conditions["blood2Played"];},
-			[](){std::cout<<"Success";}, 
-			[](){std::cout<<"Failure";});
+			[this](){score += 100;}, 
+			[this](){score -= 100;});
 	//set3 - arm off
 	eventQueue.expectAt(36.5f + startSceneDelay, 2.f, 
 		[this](){return blackKnight->leftArmBroken;},
-			[](){std::cout<<"Success";}, 
-			[](){std::cout<<"Failure";});
+			[this](){score += 100;}, 
+			[this](){score -= 100;});
 	//fire
 	eventQueue.expectAt(42.5f + startSceneDelay, 2.f,
 		[this](){return fireActive;},
-			[](){std::cout<<"Success";}, 
-			[](){std::cout<<"Failure";});
+			[this](){score += 100;}, 
+			[this](){score -= 100;});
 	//lights(1&3) 50%
 	eventQueue.expectAt(51.f + startSceneDelay, 3.0f, 
 		[this](){return lights[1]->getIntensities().r > 1 && lights[1]->getIntensities().r < 3;},
-			[](){std::cout<<"SuccessL1";}, 
-			[](){std::cout<<"FailureL1";});
+			[this](){std::cout<<"SuccessL1";}, 
+			[this](){std::cout<<"FailureL1";});
 	eventQueue.expectAt(51.f + startSceneDelay, 3.0f, 
 		[this](){return lights[3]->getIntensities().r > 1 && lights[3]->getIntensities().r < 3;},
-			[](){std::cout<<"SuccessL3";}, 
-			[](){std::cout<<"FailureL3";});
+			[this](){std::cout<<"SuccessL3";}, 
+			[this](){std::cout<<"FailureL3";});
 	//sound - whoosh
 	eventQueue.expectAt(59.f + startSceneDelay, 2.f, 
 		[this](){return conditions["whoosh1Played"];},
-			[](){std::cout<<"Success";}, 
-			[](){std::cout<<"Failure";});
+			[this](){score += 100;}, 
+			[this](){score -= 100;});
 	//fire
 	eventQueue.expectAt(59.f + startSceneDelay, 2.f,
 		[this](){return fireActive;},
-			[](){std::cout<<"Success";}, 
-			[](){std::cout<<"Failure";});
+			[this](){score += 100;}, 
+			[this](){score -= 100;});
 	//sound3 - chicken
 	eventQueue.expectAt(63.f + startSceneDelay, 2.f, 
 		[this](){return conditions["chickenPlayed"];},
-			[](){std::cout<<"Success";}, 
-			[](){std::cout<<"Failure";});
+			[this](){score += 100;}, 
+			[this](){score -= 100;});
 	//sound2 - blood
 	eventQueue.expectAt(65.0f + startSceneDelay, 2.f, 
 		[this](){return conditions["blood3Played"];},
-			[](){std::cout<<"Success";}, 
-			[](){std::cout<<"Failure";});
+			[this](){score += 100;}, 
+			[this](){score -= 100;});
 	//set3 - leg off
 	eventQueue.expectAt(65.0f + startSceneDelay, 2.f, 
 		[this](){return blackKnight->leftLegBroken;},
-			[](){std::cout<<"Success";}, 
-			[](){std::cout<<"Failure";});
+			[this](){score += 100;}, 
+			[this](){score -= 100;});
 	//lights(1&3) 100%
 	eventQueue.expectAt(76.f + startSceneDelay, 3.0f, 
 		[this](){return lights[1]->getIntensities().r > 3.5;},
-			[](){std::cout<<"SuccessL1";}, 
-			[](){std::cout<<"FailureL1";});
+			[this](){std::cout<<"SuccessL1";}, 
+			[this](){std::cout<<"FailureL1";});
 	eventQueue.expectAt(76.f + startSceneDelay, 3.0f, 
 		[this](){return lights[3]->getIntensities().r > 3.5;},
-			[](){std::cout<<"SuccessL3";}, 
-			[](){std::cout<<"FailureL3";});
+			[this](){std::cout<<"SuccessL3";}, 
+			[this](){std::cout<<"FailureL3";});
 	//sound2 - blood
 	eventQueue.expectAt(83.0f + startSceneDelay, 2.f, 
 		[this](){return conditions["blood4Played"];},
-			[](){std::cout<<"Success";}, 
-			[](){std::cout<<"Failure";});
+			[this](){score += 100;}, 
+			[this](){score -= 100;});
 	//set3 - leg off
 	eventQueue.expectAt(83.0f + startSceneDelay, 2.f, 
 		[this](){return blackKnight->rightLegBroken;},
-			[](){std::cout<<"Success";}, 
-			[](){std::cout<<"Failure";});
+			[this](){score += 100;}, 
+			[this](){score -= 100;});
 	//////end scene
 	eventQueue.expectAt(101.f + startSceneDelay, 5.f, 
 		[this](){return dialoguePlayer->muted;},
-			[](){std::cout<<"Success";}, 
-			[](){std::cout<<"Failure";});
+			[this](){score += 100;}, 
+			[this](){score -= 100;});
 	eventQueue.expectAt(101.f + startSceneDelay, 5.f, 
 		[this](){return lights[1]->getIntensities().r < 0.2;},
-			[](){std::cout<<"SuccessL1";}, 
-			[](){std::cout<<"FailureL1";});
+			[this](){std::cout<<"SuccessL1";}, 
+			[this](){std::cout<<"FailureL1";});
 	eventQueue.expectAt(101.f + startSceneDelay, 5.f, 
 		[this](){return lights[2]->getIntensities().r < 0.2;},
-			[](){std::cout<<"SuccessL2";}, 
-			[](){std::cout<<"FailureL2";});
+			[this](){std::cout<<"SuccessL2";}, 
+			[this](){std::cout<<"FailureL2";});
 	eventQueue.expectAt(101.f + startSceneDelay, 5.f, 
 		[this](){return lights[3]->getIntensities().r < 0.2;},
-			[](){std::cout<<"SuccessL3";}, 
-			[](){std::cout<<"FailureL3";});
+			[this](){std::cout<<"SuccessL3";}, 
+			[this](){std::cout<<"FailureL3";});
 	eventQueue.expectAt(101.f + startSceneDelay, 5.f, 
 		[this](){return stage->curtainLeft->firstParent()->getTranslationVector().x > -10.0f;},
-			[](){std::cout<<"Success";}, 
-			[](){std::cout<<"Failure";});
+			[this](){score += 100;}, 
+			[this](){score -= 100;});
 
 #pragma region AudioSetup
 
@@ -730,8 +729,6 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 	);*/
 
 	toggleFog();
-	
-	score = 3000;
 }
 
 TTFB_MainScene::~TTFB_MainScene(){

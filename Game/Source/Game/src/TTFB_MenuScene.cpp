@@ -19,10 +19,11 @@
 #include <Resource.h>
 #include <PointLight.h>
 #include <MouseCameraController.h>
+#include <TTFB_Controller.h>
 
 
 TTFB_MenuScene::TTFB_MenuScene(Game* _game)  :
-	Scene(_game),
+	TTFB_Scene(_game),
 	screenSurfaceShader(new Shader("assets/engine basics/DefaultRenderSurface", false, true)),
 	screenSurface(new RenderSurface(screenSurfaceShader)),
 	screenFBO(new StandardFrameBuffer(true)),
@@ -94,8 +95,15 @@ TTFB_MenuScene::TTFB_MenuScene(Game* _game)  :
 
 	TextArea * playButton = new TextArea(bulletWorld, font, textShader, 200);
 
+	introScreen = new NodeUI(bulletWorld);
+	introScreen->setRationalWidth(1);
+	introScreen->setRationalHeight(1);
+	introScreen->background->mesh->pushTexture2D(TTFB_ResourceManager::scenario->getTexture("introScreen")->texture);
+	uiLayer.addChild(introScreen);
+	introScreen->setVisible(false);
+
 	playButton->eventManager.addEventListener("click", [=](sweet::Event * _event){
-		game->switchScene("stageScene", false);
+		introScreen->setVisible(true);
 	});
 
 	playButton->eventManager.addEventListener("mousein", [=](sweet::Event * _event){
@@ -159,6 +167,10 @@ void TTFB_MenuScene::update(Step* _step) {
 	debugCam->update(_step);
 
 	camController->update(_step);
+
+	if(introScreen->isVisible() && controller->IsConnected() && controller->specialFireButton.justDown()) {
+		game->switchScene("stageScene", false);
+	}
 
 	Scene::update(_step);
 }

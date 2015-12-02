@@ -8,9 +8,12 @@
 TTFB_Controller * TTFB_Game::controller = new TTFB_Controller();
 
 TTFB_Game::TTFB_Game() :
-	Game(true, std::pair<std::string, Scene *>("test", new TTFB_MenuScene(this)), false)
+	Game(true, std::pair<std::string, Scene *>("test", nullptr), false)
 {
+	scenes["menuScene"] = new TTFB_MenuScene(this);
 	scenes["stageScene"] = new TTFB_MainScene(this);
+
+	switchScene("menuScene", false);
 }
 
 TTFB_Game::~TTFB_Game(){

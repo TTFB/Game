@@ -86,6 +86,11 @@
       "src": "logo.png"
     },
     {
+      "id": "introScreen",
+      "type": "texture",
+      "src": "introScreen.png"
+    },
+    {
       "id": "L1_CrowdNeutral",
       "type": "texture",
       "src": "Level1_Assets/Level1_Crowd_Neutral.png"
