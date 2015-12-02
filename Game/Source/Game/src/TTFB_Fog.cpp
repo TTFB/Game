@@ -5,7 +5,8 @@
 #include <TTFB_ResourceManager.h>
 
 TTFB_Fog::TTFB_Fog(Shader* _shader) :
-	Entity()
+	Entity(), 
+	flipDir(true)
 {
 	fog1 = new Sprite(_shader);
 	fog1->setPrimaryTexture(TTFB_ResourceManager::scenario->getTextureSampler("fog1")->textureSampler);
@@ -25,5 +26,19 @@ TTFB_Fog::TTFB_Fog(Shader* _shader) :
 }
 
 void TTFB_Fog::update(Step* _step) {
+	
+	if(fog1->firstParent()->getTranslationVector().x >= 0.1f) {
+		flipDir = true;
+	}else if(fog1->firstParent()->getTranslationVector().x <= -0.1f) {
+		flipDir = false;
+	}
+
+	int s = flipDir ? -1 : 1;
+
+	fog1->firstParent()->translate(s * 0.0001f, 0.f ,0.f);
+	fog2->firstParent()->translate(s * -0.0001f, 0.f ,0.f);
+	fog3->firstParent()->translate(s * 0.0001f, 0.f ,0.f);
+	fog4->firstParent()->translate(s * -0.0001f, 0.f ,0.f);
+
 	Entity::update(_step);
 }

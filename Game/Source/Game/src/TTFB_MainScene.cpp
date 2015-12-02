@@ -729,13 +729,9 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 		}
 	);*/
 
-	addFog();
-
 	toggleFog();
-	//endScene(SPAMALOT);
-
-	//endScene(SPAMALOT);
-	audience->setBored(4);
+	
+	score = 3000;
 }
 
 TTFB_MainScene::~TTFB_MainScene(){

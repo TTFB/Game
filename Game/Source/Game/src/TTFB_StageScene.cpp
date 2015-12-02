@@ -347,7 +347,7 @@ TTFB_SetPiece * TTFB_StageScene::addSetPiece(std::string _samplerResourceId, glm
 void TTFB_StageScene::addFog() {
 	fog = new TTFB_Fog(baseShader);
 	childTransform->addChild(fog);
-	fog->firstParent()->translate(0, 6, 2);
+	fog->firstParent()->translate(0, 6.5, 2);
 	fog->firstParent()->scale(50, -3, 1);
 	fog->setVisible(false);
 }

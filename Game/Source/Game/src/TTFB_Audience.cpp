@@ -3,11 +3,13 @@
 #include <TTFB_Audience.h>
 #include <MeshInterface.h>
 #include <TTFB_ResourceManager.h>
+#include <NumberUtils.h>
 
 
 TTFB_Audience::TTFB_Audience(Shader * _shader) :
 	Sprite(_shader),
-	currentState(0)
+	currentState(0),
+	lastSoundPlayed(0.0)
 {
 	mesh->pushTexture2D(TTFB_ResourceManager::scenario->getTexture("L1_CrowdNeutral")->texture);
 }
@@ -48,5 +50,29 @@ void TTFB_Audience::setBored(int _level) {
 }
 
 void TTFB_Audience::update(Step* _step) {
+
+	if(lastSoundPlayed > 8.0){
+		if(currentState > 0) {
+			int i = sweet::NumberUtils::randomInt(0, 600 - currentState);
+			if(i < 30) {
+				OpenAL_Sound * sound =  TTFB_ResourceManager::scenario->getAudio("clapping1")->sound;
+				sound->setGain(0.5f);
+				sound->play();
+				lastSoundPlayed = 0;
+			}
+		
+		}else if(currentState < 0) {
+			int i = sweet::NumberUtils::randomInt(0, 600 + currentState);
+			if(i < 30) {
+				OpenAL_Sound * sound =  TTFB_ResourceManager::scenario->getAudio("snore4")->sound;
+				sound->setGain(0.5f);
+				sound->play();
+				lastSoundPlayed = 0;
+			}
+		}
+	}
+
+	lastSoundPlayed += _step->deltaTime;
+
 	Sprite::update(_step);
 }

@@ -17,4 +17,6 @@ private:
 	Sprite * fog2;
 	Sprite * fog3;
 	Sprite * fog4;
+
+	bool flipDir;
 };
