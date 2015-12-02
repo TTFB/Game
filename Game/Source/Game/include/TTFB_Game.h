@@ -2,10 +2,17 @@
 
 #include <Game.h>
 
+class TTFB_Controller;
+
 class TTFB_Game : public Game{
 public:
+
+	static TTFB_Controller * controller;
+
 	TTFB_Game();
 	~TTFB_Game();
+
+	void update(Step * _step) override;
 
 	enum BOX2D_CATEGORY{
 		kBOUNDARY = 0x0001,

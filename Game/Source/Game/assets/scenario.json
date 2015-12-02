@@ -91,6 +91,41 @@
       "src": "Level1_Assets/Level1_Crowd_Neutral.png"
     },
     {
+      "id": "L1_CrowdBored1",
+      "type": "texture",
+      "src": "Level1_Assets/Level1_Crowd_Bored1.png"
+    },
+    {
+      "id": "L1_CrowdBored2",
+      "type": "texture",
+      "src": "Level1_Assets/Level1_Crowd_Bored2.png"
+    },
+    {
+      "id": "L1_CrowdBored3",
+      "type": "texture",
+      "src": "Level1_Assets/Level1_Crowd_Bored3.png"
+    },
+    {
+      "id": "L1_CrowdBored4",
+      "type": "texture",
+      "src": "Level1_Assets/Level1_Crowd_Bored4.png"
+    },
+    {
+      "id": "L1_CrowdHappy1",
+      "type": "texture",
+      "src": "Level1_Assets/Level1_Crowd_Happy1.png"
+    },
+    {
+      "id": "L1_CrowdHappy2",
+      "type": "texture",
+      "src": "Level1_Assets/Level1_Crowd_Happy2.png"
+    },
+    {
+      "id": "L1_CrowdHappy3",
+      "type": "texture",
+      "src": "Level1_Assets/Level1_Crowd_Happy3.png"
+    },
+    {
       "id": "L1_Floor",
       "type": "texture",
       "src": "Level1_Assets/Level1_Floor.png"
@@ -258,7 +293,7 @@
     {
       "id": "L1_mattePainting",
       "type": "textureSampler",
-      "src": "Level1_Assets/Level1_mattePainting.png"
+      "src": "Level1_Assets/Level1_mattePainting.png.def"
     },
     {
       "id": "sword",
@@ -270,22 +305,22 @@
       "type": "textureSampler",
       "src": "fog.png.def"
     },
-	{
+    {
       "id": "fog1",
       "type": "textureSampler",
       "src": "fog1.png.def"
     },
-	{
+    {
       "id": "fog2",
       "type": "textureSampler",
       "src": "fog2.png.def"
     },
-	{
+    {
       "id": "fog3",
       "type": "textureSampler",
       "src": "fog3.png.def"
     },
-	{
+    {
       "id": "fog4",
       "type": "textureSampler",
       "src": "fog4.png.def"
@@ -320,7 +355,7 @@
       "type": "textureSampler",
       "src": "curtain.png.def"
     },
-	{
+    {
       "id": "L1_Curtain",
       "type": "textureSampler",
       "src": "Level1_Assets/Level1_Curtain.png.def"
@@ -561,7 +596,6 @@
       "src": "level3_GoodReview.ogg"
     },
     {
-    	
       "id": "spamalot_bg",
       "type": "audio",
       "src": "level1_bgMusic.ogg"

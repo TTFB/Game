@@ -9,4 +9,13 @@ public:
 	~TTFB_Audience();
 
 	void update(Step * _step) override;
+
+	void setNeutral();
+
+	void setHappy(int _level);
+
+	void setBored(int _level);
+
+private:
+	int currentState;
 };

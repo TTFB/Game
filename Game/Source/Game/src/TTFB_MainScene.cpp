@@ -53,6 +53,7 @@
 #include <VerticalLinearLayout.h>
 #include <TTFB_SetPiece.h>
 #include <ParticleSystem.h>
+#include <TTFB_Audience.h>
 
 TTFB_MainScene::TTFB_MainScene(Game * _game) :
 	TTFB_StageScene(_game, 100.0f, "L1_Floor", "L1_Side", "L1_Background", "L1_Top", "L1_Bottom"),
@@ -233,7 +234,7 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 	});
 	
 #pragma endregion 
-	startSceneDelay = 10.0f;
+	startSceneDelay = 5.0f;
 
 	//scene setup cues
 	eventQueue.expectAt(5.f, 5.f, 
@@ -386,7 +387,7 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 
 #pragma region Events
 
-	
+	eventQueue.at(startSceneDelay - 2.0f, [this](){dimHouseLights();});
 
 	eventQueue.at(0.0f + startSceneDelay, [this](){
 		kingArthur->speedMod = 1.0f;
@@ -728,11 +729,13 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 		}
 	);*/
 
-	//addFog();
+	addFog();
 
+	toggleFog();
 	//endScene(SPAMALOT);
 
 	//endScene(SPAMALOT);
+	audience->setBored(4);
 }
 
 TTFB_MainScene::~TTFB_MainScene(){

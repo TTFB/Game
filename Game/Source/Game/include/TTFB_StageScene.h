@@ -5,6 +5,8 @@
 #include <BulletDebugDrawer.h>
 #include <BulletWorld.h>
 #include <TTFB_EventQueue.h>
+#include <TTFB_Scene.h>
+#include "TTFB_Fog.h"
 
 class TTFB_SetPiece;
 class TTFB_Prop;
@@ -40,7 +42,7 @@ class TTFB_Actor;
 class ParticleSystem;
 class Particle;
 
-class TTFB_StageScene : public Scene{
+class TTFB_StageScene : public TTFB_Scene{
 public:
 
 	int score;
@@ -76,17 +78,17 @@ public:
 
 	TTFB_Stage * stage;
 
-	TTFB_Controller * controller;
 	TTFB_Audience * audience;
 
 	ParticleSystem * fireSystem;
 	Particle * fireParticle;
 
-	Sprite * fog;
+	TTFB_Fog * fog;
 
 	bool fireActive;
 	bool fogActive;
 	bool fadeOutLights;
+	bool dimmingLights;
 	virtual void update(Step * _step) override;
 	virtual void render(sweet::MatrixStack * _matrixStack, RenderOptions * _renderOptions) override;
 	
@@ -100,6 +102,8 @@ public:
 
 	void addFog();
 	void toggleFog();
+
+	void dimHouseLights();
 
 	TTFB_StageScene(Game * _game, float _stageWidth, std::string _floorTex, std::string _sideTex, std::string _backTex, std::string _topTex, std::string _frontTex);
 	~TTFB_StageScene();

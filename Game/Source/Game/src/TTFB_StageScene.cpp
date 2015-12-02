@@ -61,9 +61,10 @@
 
 #include <ParticleSystem.h>
 #include <Particle.h>
+#include <TTFB_Game.h>
 
 TTFB_StageScene::TTFB_StageScene(Game * _game, float _stageWidth, std::string _floorTex, std::string _sideTex, std::string _backTex, std::string _topTex, std::string _frontTex) :
-	Scene(_game),
+	TTFB_Scene(_game),
 	screenSurfaceShader(new Shader("assets/engine basics/DefaultRenderSurface", false, true)),
 	screenSurface(new RenderSurface(screenSurfaceShader)),
 	screenFBO(new StandardFrameBuffer(true)),
@@ -75,10 +76,10 @@ TTFB_StageScene::TTFB_StageScene(Game * _game, float _stageWidth, std::string _f
 	box2dWorld(new Box2DWorld(b2Vec2(0.f, -10.0f))),
 	box2dDebug(box2dWorld->createDebugDrawer()),
 	font(new Font("assets/engine basics/OpenSans-Regular.ttf", 100, true)),
-	controller(new TTFB_Controller()),
 	score(1),
 	fireActive(false),
-	fadeOutLights(false)
+	fadeOutLights(false),
+	dimmingLights(false)
 {
 
 	baseShader->addComponent(new ShaderComponentMVP(baseShader)); 
@@ -156,22 +157,22 @@ TTFB_StageScene::TTFB_StageScene(Game * _game, float _stageWidth, std::string _f
 
 #pragma region LightSetup
 	
-	SpotLight * light0 = new SpotLight(glm::vec3(0, 0, -1), glm::vec3(0,0,0), 45.f, 0.001f, 0.001f, -1.f);
+	SpotLight * light0 = new SpotLight(glm::vec3(0, 0, -1), glm::vec3(0,0,0), 45.f, 0.1f, 0.001f, -1.f);
 	lights.push_back(light0);
 	childTransform->addChild(light0);
 	light0->firstParent()->translate(0, 0, 30);
 	
-	SpotLight * light1 = new SpotLight(glm::vec3(0, 0, -1), glm::vec3(1,1,1), 45.f, 0.001f, 0.001f, -1.f);
+	SpotLight * light1 = new SpotLight(glm::vec3(0, 0, -1), glm::vec3(1,1,1), 45.f, 0.1f, 0.001f, -1.f);
 	lights.push_back(light1);
 	childTransform->addChild(light1);
 	light1->firstParent()->translate(-20, 10, 13);
 
-	SpotLight * light2 = new SpotLight(glm::vec3(0, 0, -1), glm::vec3(1,1,1), 45.f, 0.001f, 0.001f, -1.f);
+	SpotLight * light2 = new SpotLight(glm::vec3(0, 0, -1), glm::vec3(1,1,1), 45.f, 0.1f, 0.001f, -1.f);
 	lights.push_back(light2);
 	childTransform->addChild(light2);
 	light2->firstParent()->translate(0, 10, 13);
 
-	SpotLight * light3 = new SpotLight(glm::vec3(0, 0, -1), glm::vec3(1,1,1), 45.f, 0.001f, 0.001f, -1.f);
+	SpotLight * light3 = new SpotLight(glm::vec3(0, 0, -1), glm::vec3(1,1,1), 45.f, 0.1f, 0.001f, -1.f);
 	lights.push_back(light3);
 	childTransform->addChild(light3);
 	light3->firstParent()->translate(20, 10, 13);
@@ -204,6 +205,33 @@ void TTFB_StageScene::update(Step * _step){
 		if(lights[1]->getIntensities().x <= 0 && lights[2]->getIntensities().x <= 0 && lights[3]->getIntensities().x <= 0) {
 			fadeOutLights = false;
 		}
+	}
+
+	if(dimmingLights) {
+		
+		if(lights[1]->getAmbientCoefficient() <= 0.001) {
+			dimmingLights = false;
+		}else {
+			lights[1]->setAmbientCoefficient(lights[1]->getAmbientCoefficient() - 0.0005);
+			lights[2]->setAmbientCoefficient(lights[1]->getAmbientCoefficient() - 0.0005);
+			lights[3]->setAmbientCoefficient(lights[1]->getAmbientCoefficient() - 0.0005);
+		}
+	}
+
+	if(score <= -2000) {
+		audience->setBored(3);
+	}else if(score <= -1000) {
+		audience->setBored(2);
+	}else if(score <= -500) {
+		audience->setBored(1);
+	}else if(score > -500 && score < 500) {
+		audience->setNeutral();
+	}else if(score >= 500) {
+		audience->setHappy(1);
+	}else if(score >= 1000) {
+		audience->setHappy(2);
+	}else if(score >= 2000) {
+		audience->setHappy(3);
 	}
 
 	// Toggle debug drawer
@@ -317,16 +345,18 @@ TTFB_SetPiece * TTFB_StageScene::addSetPiece(std::string _samplerResourceId, glm
 }
 
 void TTFB_StageScene::addFog() {
-	
-	fog = new Sprite(baseShader);
-	fog->setPrimaryTexture(TTFB_ResourceManager::scenario->getTextureSampler("fog")->textureSampler);
+	fog = new TTFB_Fog(baseShader);
 	childTransform->addChild(fog);
-	fog->firstParent()->translate(0, 10, 2);
-	fog->firstParent()->scale(50, -10, 1);
+	fog->firstParent()->translate(0, 6, 2);
+	fog->firstParent()->scale(50, -3, 1);
 	fog->setVisible(false);
 }
 
 void TTFB_StageScene::toggleFog() {
 	fog->setVisible(!fog->isVisible());
 	fogActive = fog->isVisible();
+}
+
+void TTFB_StageScene::dimHouseLights() {
+	dimmingLights = true;
 }
