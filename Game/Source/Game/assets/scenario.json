@@ -270,6 +270,26 @@
       "type": "textureSampler",
       "src": "fog.png.def"
     },
+	{
+      "id": "fog1",
+      "type": "textureSampler",
+      "src": "fog1.png.def"
+    },
+	{
+      "id": "fog2",
+      "type": "textureSampler",
+      "src": "fog2.png.def"
+    },
+	{
+      "id": "fog3",
+      "type": "textureSampler",
+      "src": "fog3.png.def"
+    },
+	{
+      "id": "fog4",
+      "type": "textureSampler",
+      "src": "fog4.png.def"
+    },
     {
       "id": "blood",
       "type": "texture",
