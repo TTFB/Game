@@ -300,6 +300,11 @@
       "type": "textureSampler",
       "src": "curtain.png.def"
     },
+	{
+      "id": "L1_Curtain",
+      "type": "textureSampler",
+      "src": "Level1_Assets/Level1_Curtain.png.def"
+    },
     {
       "id": "cheer1",
       "type": "audio",
