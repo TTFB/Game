@@ -82,7 +82,8 @@ TTFB_StageScene::TTFB_StageScene(Game * _game, float _stageWidth, std::string _f
 	score(0),
 	fireActive(false),
 	fadeOutLights(false),
-	dimmingLights(false)
+	dimmingLights(false),
+	fireTimer(0)
 {
 
 	baseShader->addComponent(new ShaderComponentMVP(baseShader)); 
@@ -167,7 +168,7 @@ TTFB_StageScene::TTFB_StageScene(Game * _game, float _stageWidth, std::string _f
 	SpotLight * light0 = new SpotLight(glm::vec3(0, 0, -1), glm::vec3(0,0,0), 45.f, 0.1f, 0.001f, -1.f);
 	lights.push_back(light0);
 	childTransform->addChild(light0);
-	light0->firstParent()->translate(0, 0, 30);
+	light0->firstParent()->translate(20, 10, 13);
 	
 	SpotLight * light1 = new SpotLight(glm::vec3(0, 0, -1), glm::vec3(1,1,1), 45.f, 0.1f, 0.001f, -1.f);
 	lights.push_back(light1);
