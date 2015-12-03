@@ -104,15 +104,15 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 	
 	// Setup Controller Bindings
 	controller->lightSliderOne.bind([this](int _value){
-		lights[1]->setIntensities(glm::vec3(((float)_value + 0.0001f)/256));
+		lights[1]->setIntensities(glm::vec3(((float)_value + 0.0001f)/1024));
 	});
 
 	controller->lightSliderTwo.bind([this](int _value){
-		lights[2]->setIntensities(glm::vec3(((float)_value + 0.0001f)/256));
+		lights[2]->setIntensities(glm::vec3(((float)_value + 0.0001f)/1024));
 	});
 
 	controller->lightSliderThree.bind([this](int _value){
-		lights[3]->setIntensities(glm::vec3(((float)_value + 0.0001f)/256));
+		lights[3]->setIntensities(glm::vec3(((float)_value + 0.0001f)/1024));
 	});
 	
 	// Move this into stage scene
