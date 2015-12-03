@@ -161,7 +161,7 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 				blackKnight->breakRightArmJoint();
 				blackKnight->applyImpulseRighttArm(0.0f, 5.0f);
 			}
-			if( eventQueue.getRelativeTime() > (63.0 + startSceneDelay) && eventQueue.getRelativeTime() < (67.0 + startSceneDelay)){
+			if( eventQueue.getRelativeTime() > (63.0 + startSceneDelay) && eventQueue.getRelativeTime() < (71.0 + startSceneDelay)){
 				std::cout<<"IN TRIGGER LEFTLEG";
 				blackKnight->breakLeftLegJoint();
 				blackKnight->applyImpulseLegs(0.3f, 5.0f);
@@ -171,7 +171,7 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 				std::cout<<"IN TRIGGER LEFTRIGHT";
 				blackKnight->breakRightLegJoint();
 				blackKnight->applyImpulseLegs(0.3f, 5.0f);
-				//blackKnight->rootComponent->body->SetType(b2_dynamicBody);
+				blackKnight->rootComponent->body->SetType(b2_dynamicBody);
 			}
 		}
 	});
@@ -217,7 +217,6 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 	controller->specialFireButton.bind([this](int _value) {
 		if(controller->specialFireButton.justDown()) {
 			fireActive = !fireActive;
-			std::cout<<"FIREE BUTTON PRESSED";
 		}
 	});
 
@@ -333,7 +332,7 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 			[this](){score += 100;}, 
 			[this](){score -= 100;});
 	//set3 - leg off
-	eventQueue.expectAt(65.0f + startSceneDelay, 4.f, 
+	eventQueue.expectAt(67.0f + startSceneDelay, 4.f, 
 		[this](){return blackKnight->leftLegBroken;},
 			[this](){score += 100;}, 
 			[this](){score -= 100;});
