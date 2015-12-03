@@ -362,6 +362,9 @@ void TTFB_StageScene::addFog() {
 	fog->firstParent()->translate(0, 6.5, 2);
 	fog->firstParent()->scale(50, -3, 1);
 	fog->setVisible(false);
+	if(controller->IsConnected()) {
+		fog->setVisible((bool)controller->specialFogSwitch.currentState);
+	}
 }
 
 void TTFB_StageScene::toggleFog() {

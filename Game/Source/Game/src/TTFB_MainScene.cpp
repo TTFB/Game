@@ -220,7 +220,7 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 	});
 
 	controller->specialFogSwitch.bind([this](int _value) {
-		if(controller->specialFireButton.justDown() || controller->specialFireButton.justUp()) {
+		if(controller->specialFogSwitch.justDown() || controller->specialFogSwitch.justUp()) {
 			toggleFog();
 		}
 	});
