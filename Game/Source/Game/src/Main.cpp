@@ -25,6 +25,7 @@ int main(void){
 
 	Log::THROW_ON_ERROR = false;
 
+	sweet::fullscreen = true;
 	sweet::initialize("Game");
 	TTFB_ResourceManager::init();
 	TTFB_ResourceManager::load();

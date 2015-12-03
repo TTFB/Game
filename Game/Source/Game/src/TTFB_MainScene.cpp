@@ -362,18 +362,18 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 			[this](){score -= 100;});
 	eventQueue.expectAt(101.f + startSceneDelay, 5.f, 
 		[this](){return lights[1]->getIntensities().r < 0.2;},
-			[this](){std::cout<<"SuccessL1";}, 
-			[this](){std::cout<<"FailureL1";});
+			[this](){score+= 100;}, 
+			[this](){score-= 100;});
 	eventQueue.expectAt(101.f + startSceneDelay, 5.f, 
 		[this](){return lights[2]->getIntensities().r < 0.2;},
-			[this](){std::cout<<"SuccessL2";}, 
-			[this](){std::cout<<"FailureL2";});
+			[this](){score+= 100;}, 
+			[this](){score-= 100;});
 	eventQueue.expectAt(101.f + startSceneDelay, 5.f, 
 		[this](){return lights[3]->getIntensities().r < 0.2;},
-			[this](){std::cout<<"SuccessL3";}, 
-			[this](){std::cout<<"FailureL3";});
+			[this](){score += 100;}, 
+			[this](){score -= 100;;});
 	eventQueue.expectAt(101.f + startSceneDelay, 5.f, 
-		[this](){return stage->curtainLeft->firstParent()->getTranslationVector().x > -10.0f;},
+		[this](){return stage->curtainLeft->firstParent()->getTranslationVector().x < -5.0f;},
 			[this](){score += 100;}, 
 			[this](){score -= 100;});
 

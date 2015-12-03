@@ -841,6 +841,11 @@
       "src": "SpamalotDialogue/46.ogg"
     },
     {
+      "id": "spamalot47",
+      "type": "audio",
+      "src": "SpamalotDialogue/47.ogg"
+    },
+    {
       "id": "bloodSpurt1",
       "type": "audio",
       "src": "bloodSpurt1.ogg"

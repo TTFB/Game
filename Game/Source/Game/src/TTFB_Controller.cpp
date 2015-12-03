@@ -61,7 +61,7 @@ void TTFB_Controller::update(Step* _step) {
 				}
 			}
 			buffer += buf;
-			if(posLeft != -1 && posRight != -1) {
+			if(posLeft != -1 && posRight > posLeft) {
 				current = buffer.substr(posLeft + 1, posRight - posLeft - 1);
 				buffer = "";
 				auto split = StringUtils::split(current, ',');
