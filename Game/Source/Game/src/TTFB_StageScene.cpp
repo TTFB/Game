@@ -170,17 +170,17 @@ TTFB_StageScene::TTFB_StageScene(Game * _game, float _stageWidth, std::string _f
 	childTransform->addChild(light0);
 	light0->firstParent()->translate(20, 10, 13);
 	
-	SpotLight * light1 = new SpotLight(glm::vec3(0, 0, -1), glm::vec3(1,1,1), 45.f, 0.1f, 0.001f, -1.f);
+	SpotLight * light1 = new SpotLight(glm::vec3(0, 0, -1), glm::vec3(1,1,1), 45.f, 0.01f, 0.001f, -1.f);
 	lights.push_back(light1);
 	childTransform->addChild(light1);
 	light1->firstParent()->translate(-20, 10, 13);
 
-	SpotLight * light2 = new SpotLight(glm::vec3(0, 0, -1), glm::vec3(1,1,1), 45.f, 0.1f, 0.001f, -1.f);
+	SpotLight * light2 = new SpotLight(glm::vec3(0, 0, -1), glm::vec3(1,1,1), 45.f, 0.01f, 0.001f, -1.f);
 	lights.push_back(light2);
 	childTransform->addChild(light2);
 	light2->firstParent()->translate(0, 10, 13);
 
-	SpotLight * light3 = new SpotLight(glm::vec3(0, 0, -1), glm::vec3(1,1,1), 45.f, 0.1f, 0.001f, -1.f);
+	SpotLight * light3 = new SpotLight(glm::vec3(0, 0, -1), glm::vec3(1,1,1), 45.f, 0.01f, 0.001f, -1.f);
 	lights.push_back(light3);
 	childTransform->addChild(light3);
 	light3->firstParent()->translate(20, 10, 13);
@@ -234,12 +234,12 @@ void TTFB_StageScene::update(Step * _step){
 
 	if(dimmingLights) {
 		
-		if(lights[1]->getAmbientCoefficient() <= 0.001) {
+		if(lights[1]->getAmbientCoefficient() <= 0.0006) {
 			dimmingLights = false;
 		}else {
-			lights[1]->setAmbientCoefficient(lights[1]->getAmbientCoefficient() - 0.0005);
-			lights[2]->setAmbientCoefficient(lights[1]->getAmbientCoefficient() - 0.0005);
-			lights[3]->setAmbientCoefficient(lights[1]->getAmbientCoefficient() - 0.0005);
+			lights[1]->setAmbientCoefficient(lights[1]->getAmbientCoefficient() - 0.0002);
+			lights[2]->setAmbientCoefficient(lights[1]->getAmbientCoefficient() - 0.0002);
+			lights[3]->setAmbientCoefficient(lights[1]->getAmbientCoefficient() - 0.0002);
 		}
 	}
 

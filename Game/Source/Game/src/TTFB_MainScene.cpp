@@ -387,7 +387,7 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 
 #pragma region Events
 
-	eventQueue.at(startSceneDelay - 2.0f, [this](){dimHouseLights();});
+	eventQueue.at(startSceneDelay - 5.0f, [this](){dimHouseLights();});
 
 	eventQueue.at(0.0f + startSceneDelay, [this](){
 		kingArthur->speedMod = 1.0f;
