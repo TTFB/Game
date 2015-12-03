@@ -91,10 +91,13 @@ public:
 	TextArea * scoreText;
 
 	bool fireActive;
+	bool lastFireActive;
+
 	bool fogActive;
 	bool fadeOutLights;
 	bool dimmingLights;
 	ComponentShaderText* scoreTextShader;
+	double fireTimer;
 	virtual void update(Step * _step) override;
 	virtual void render(sweet::MatrixStack * _matrixStack, RenderOptions * _renderOptions) override;
 	

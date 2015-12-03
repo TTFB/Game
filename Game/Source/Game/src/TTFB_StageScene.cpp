@@ -208,6 +208,18 @@ void TTFB_StageScene::update(Step * _step){
 		lastScore = score;
 	}
 
+	if(lastFireActive == false && fireActive == true) {
+		fireTimer = 0;
+		lastFireActive = true;
+	}
+
+	fireTimer += _step->deltaTime;
+
+	if(fireTimer > 1.0) {
+		fireActive = false;
+		lastFireActive = false;
+	}
+
 	if(fadeOutLights) {
 
 		lights[1]->setIntensities(lights[1]->getIntensities() - 0.05f);

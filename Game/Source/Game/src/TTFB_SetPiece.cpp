@@ -25,7 +25,7 @@ TTFB_SetPiece::TTFB_SetPiece(Box2DWorld* _world, std::string _samplerResourceId,
 void TTFB_SetPiece::update(Step* _step) {
 	setTranslationPhysical(0.0f, 0.1f * raiseDir, 0.0f, true);
 	if(!forceFrame){
-		if(stageBounds.getTopLeft().y + 10 < body->GetPosition().y + getCorrectedHeight() * 0.5f) {
+		if(stageBounds.getTopLeft().y + 20 < body->GetPosition().y + getCorrectedHeight()) {
 			raiseDir = 0;
 			raised = true;
 			lowered = false;

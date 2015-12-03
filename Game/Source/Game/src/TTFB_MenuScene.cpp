@@ -168,7 +168,7 @@ void TTFB_MenuScene::update(Step* _step) {
 
 	camController->update(_step);
 
-	if(introScreen->isVisible() && controller->IsConnected() && controller->specialFireButton.justDown()) {
+	if(introScreen->isVisible() && (controller->IsConnected() && controller->specialFireButton.justDown()) || keyboard->keyDown(GLFW_KEY_P)) {
 		game->switchScene("stageScene", false);
 	}
 
