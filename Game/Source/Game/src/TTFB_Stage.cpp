@@ -61,13 +61,13 @@ TTFB_Stage::TTFB_Stage(float _width, Box2DWorld * _world, std::string _floorTex,
 	}
 
 	curtainLeft = new Sprite(_shader);
-	curtainLeft->setPrimaryTexture(TTFB_ResourceManager::scenario->getTextureSampler("curtain")->textureSampler);
+	curtainLeft->setPrimaryTexture(TTFB_ResourceManager::scenario->getTextureSampler("L1_Curtain")->textureSampler);
 	childTransform->addChild(curtainLeft);
 	curtainLeft->firstParent()->scale(35 , 30, 30);
 	curtainLeft->firstParent()->translate(-_width * 0.5f, 15.f, 1.5);
 
 	curtainRight = new Sprite(_shader);
-	curtainRight->setPrimaryTexture(TTFB_ResourceManager::scenario->getTextureSampler("curtain")->textureSampler);
+	curtainRight->setPrimaryTexture(TTFB_ResourceManager::scenario->getTextureSampler("L1_Curtain")->textureSampler);
 	childTransform->addChild(curtainRight);
 	curtainRight->firstParent()->scale(-35 , 30, 30);
 	curtainRight->firstParent()->translate(_width * 0.5f, 15.f, 1.5f);

@@ -57,7 +57,8 @@
 
 TTFB_MainScene::TTFB_MainScene(Game * _game) :
 	TTFB_StageScene(_game, 100.0f, "L1_Floor", "L1_Side", "L1_Background", "L1_Top", "L1_Bottom"),
-	bgMusicStarted(false)
+	bgMusicStarted(false),
+	lastFireEmission(0.0)
 {
 	conditions["blood1Played"] = false; //holds like a bool
 	conditions["blood2Played"] = false; 
@@ -66,6 +67,20 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 	conditions["whoosh1Played"] = false; 
 	conditions["chickenPlayed"] = false; 
 
+
+#pragma region SetSetup
+
+	setPieceTree1 = addSetPiece("L1_Tree1", glm::vec3(10.f, 20.f, -0.5f));
+	setPieceTree1->raise();
+	setPieceTree2 = addSetPiece("L1_Tree2", glm::vec3(-10.f, 20.f, -0.5f));
+	setPieceTree2->raise();
+	setPieceBush = addSetPiece("L1_Bush", glm::vec3(0.f, 20.f, -0.5f));
+	setPieceBush->raise();
+	setPieceMatte = addSetPiece("L1_mattePainting", glm::vec3(0.f, 60.f, -2.0f));
+	setPieceMatte->raise();
+
+#pragma endregion 
+	
 #pragma region ActorSetup
 
 	kingArthur = createActor("kingArthur");
@@ -82,21 +97,6 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 	blackKnight->flip();
 
 	kingArthur->pickupPropRight(addProp("sword", glm::vec3(-8, 10, 0.f)));
-
-	addFog();
-
-#pragma endregion 
-
-#pragma region SetSetup
-
-	setPieceTree1 = addSetPiece("L1_Tree1", glm::vec3(10.f, 20.f, -0.5f));
-	setPieceTree1->raise();
-	setPieceTree2 = addSetPiece("L1_Tree2", glm::vec3(-10.f, 20.f, -0.5f));
-	setPieceTree2->raise();
-	setPieceBush = addSetPiece("L1_Bush", glm::vec3(0.f, 20.f, -0.5f));
-	setPieceBush->raise();
-	setPieceMatte = addSetPiece("L1_mattePainting", glm::vec3(0.f, 20.f, -0.5f));
-	setPieceMatte->raise();
 
 #pragma endregion 
 
@@ -129,11 +129,9 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 
 	controller->setButtonOne.bind([this](int _value) {
 		if(controller->setButtonOne.justDown()) {
-			if( eventQueue.getRelativeTime() < startSceneDelay){
-				setPieceTree1->toggle();
-				setPieceTree2->toggle();
-				setPieceBush->toggle();
-			}
+			setPieceTree1->toggle();
+			setPieceTree2->toggle();
+			setPieceBush->toggle();	
 		}
 	});
 
@@ -739,7 +737,8 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 		}
 	);*/
 
-	toggleFog();
+	addFog();
+
 }
 
 TTFB_MainScene::~TTFB_MainScene(){
@@ -757,12 +756,13 @@ void TTFB_MainScene::update(Step * _step){
 
 	//fireActive = true;
 	
-	if(fireActive){
+	if(fireTimer < 1.0 && fireActive && _step->time - lastFireEmission > 0.1f){
 		b2Vec2 blackKnightPos = blackKnight->getBox2dPos();
-		Particle * p = fireSystem->addParticle(glm::vec3(blackKnightPos.x + 3, stage->getVisibleBounds().getBottomRight().y + 0.2f, 0),  TTFB_ResourceManager::scenario->getTexture("fireRed")->texture);
+		Particle * p = fireSystem->addParticle(glm::vec3(blackKnightPos.x + 3,  stage->getVisibleBounds().getBottomRight().y + 0.2f, 0),  TTFB_ResourceManager::scenario->getTexture("fireRed")->texture);
 		Particle * p1 = fireSystem->addParticle(glm::vec3(blackKnightPos.x + 3, stage->getVisibleBounds().getBottomRight().y + 0.2f, 0), TTFB_ResourceManager::scenario->getTexture("fireOrange")->texture);
 		Particle * p2 = fireSystem->addParticle(glm::vec3(blackKnightPos.x + 3, stage->getVisibleBounds().getBottomRight().y + 0.2f, 0), TTFB_ResourceManager::scenario->getTexture("fireYellow")->texture);
 		Particle * p3 = fireSystem->addParticle(glm::vec3(blackKnightPos.x + 3, stage->getVisibleBounds().getBottomRight().y + 0.2f, 0), TTFB_ResourceManager::scenario->getTexture("smoke")->texture);
+		lastFireEmission = _step->time;
 	}
 
 	eventQueue.update(_step);

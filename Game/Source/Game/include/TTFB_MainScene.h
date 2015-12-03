@@ -35,6 +35,8 @@ public:
 
 	std::map<std::string, bool> conditions;
 
+	double lastFireEmission;
+
 	bool bgMusicStarted;
 	float startSceneDelay;
 
