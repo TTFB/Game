@@ -234,7 +234,7 @@ void TTFB_StageScene::update(Step * _step){
 
 	if(dimmingLights) {
 		
-		if(lights[1]->getAmbientCoefficient() <= 0.0006) {
+		if(lights[1]->getAmbientCoefficient() <= 0.0004) {
 			dimmingLights = false;
 		}else {
 			lights[1]->setAmbientCoefficient(lights[1]->getAmbientCoefficient() - 0.0002);
