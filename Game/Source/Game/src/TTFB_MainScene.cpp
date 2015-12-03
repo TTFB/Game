@@ -688,6 +688,13 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 		blackKnight->say(2.0f, L"I'll bite your legs off!", true);
 	});
 
+	eventQueue.at(110.f + startSceneDelay, [this](){
+		endScene(SPAMALOT);
+		OpenAL_Sound * sound =  TTFB_ResourceManager::scenario->getAudio("clapping1")->sound;
+		sound->setGain(0.8f);
+		sound->play();
+	});
+
 #pragma endregion 
 
 	//eventQueue.at(6.0f, [this](){

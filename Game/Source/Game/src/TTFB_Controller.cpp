@@ -69,6 +69,7 @@ void TTFB_Controller::update(Step* _step) {
 			}
 		}
 		lastQue = inQ;
+		
 		delete buf;
 	}
 }

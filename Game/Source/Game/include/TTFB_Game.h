@@ -7,7 +7,7 @@ class TTFB_Controller;
 class TTFB_Game : public Game{
 public:
 
-	static TTFB_Controller * controller;
+	TTFB_Controller * controller;
 
 	TTFB_Game();
 	~TTFB_Game();

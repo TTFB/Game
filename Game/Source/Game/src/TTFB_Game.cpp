@@ -5,12 +5,14 @@
 #include <TTFB_MenuScene.h>
 #include <TTFB_Controller.h>
 
-TTFB_Controller * TTFB_Game::controller = new TTFB_Controller();
-
 TTFB_Game::TTFB_Game() :
-	Game(true, std::pair<std::string, Scene *>("test", nullptr), false)
+	Game(true, std::pair<std::string, Scene *>("test", nullptr), false),
+	controller(nullptr)
 {
-	scenes["menuScene"] = new TTFB_MenuScene(this);
+	controller = new TTFB_Controller();
+	controller->update(&sweet::step);
+
+	scenes["menuScene"]  = new TTFB_MenuScene(this);
 	scenes["stageScene"] = new TTFB_MainScene(this);
 
 	switchScene("menuScene", false);

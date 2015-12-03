@@ -6,8 +6,8 @@
 #define SET_BUTTON_TWO      7
 #define SET_BUTTON_THREE    8
 #define SET_BUTTON_FOUR     9
-#define SPECIAL_FOG_SWITCH  10
-#define SPECIAL_FIRE_BUTTON 11
+#define SPECIAL_FOG_SWITCH  11
+#define SPECIAL_FIRE_BUTTON 10
 
 #define SPECIAL_CURTAIN_POT        A0
 #define SPECIAL_LIGHT_SLIDER_ONE   A1
@@ -15,12 +15,12 @@
 #define SPECIAL_LIGHT_SLIDER_THREE A3
 
 void setup() {
-  analogReference(EXTERNAL); 
+  analogReference(EXTERNAL);
   Serial.begin(115200);
 }
 
 void loop() {
-  
+
   int soundButtonOne          = digitalRead(SOUND_BUTTON_ONE);
   int soundButtonTwo          = digitalRead(SOUND_BUTTON_TWO);
   int soundButtonThree        = digitalRead(SOUND_BUTTON_THREE);
@@ -36,7 +36,7 @@ void loop() {
   int specialLightSliderOne   = analogRead(SPECIAL_LIGHT_SLIDER_ONE);
   int specialLightSliderTwo   = analogRead(SPECIAL_LIGHT_SLIDER_TWO);
   int specialLightSliderThree = analogRead(SPECIAL_LIGHT_SLIDER_THREE);
-
+  
   Serial.print("[");
   Serial.print(soundButtonOne);
   Serial.print(",");
@@ -54,7 +54,7 @@ void loop() {
   Serial.print(",");
   Serial.print(setButtonOne);
   Serial.print(",");
-  Serial.print(setButtonTwo); 
+  Serial.print(setButtonTwo);
   Serial.print(",");
   Serial.print(setButtonThree);
   Serial.print(",");
@@ -66,4 +66,5 @@ void loop() {
   Serial.print(",");
   Serial.print(specialCurtainPot);
   Serial.print("]\n");
+  
 }

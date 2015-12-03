@@ -56,7 +56,7 @@ void TTFB_Audience::update(Step* _step) {
 			int i = sweet::NumberUtils::randomInt(0, 600 - currentState);
 			if(i < 30) {
 				OpenAL_Sound * sound =  TTFB_ResourceManager::scenario->getAudio("clapping1")->sound;
-				sound->setGain(0.5f);
+				sound->setGain(0.3f);
 				sound->play();
 				lastSoundPlayed = 0;
 			}
@@ -65,7 +65,7 @@ void TTFB_Audience::update(Step* _step) {
 			int i = sweet::NumberUtils::randomInt(0, 600 + currentState);
 			if(i < 30) {
 				OpenAL_Sound * sound =  TTFB_ResourceManager::scenario->getAudio("snore4")->sound;
-				sound->setGain(0.5f);
+				sound->setGain(0.3f);
 				sound->play();
 				lastSoundPlayed = 0;
 			}
