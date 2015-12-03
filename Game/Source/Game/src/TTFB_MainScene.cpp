@@ -145,32 +145,36 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 
 	controller->setButtonThree.bind([this](int _value) {
 		if(controller->setButtonThree.justDown()) {
-			std::cout<<eventQueue.getRelativeTime();
-			if( eventQueue.getRelativeTime() > (15.0 + startSceneDelay) && eventQueue.getRelativeTime() < (19.0 + startSceneDelay)){
-				std::cout<<"IN TRIGGER";
-				blackKnight->breakLeftArmJoint();
-				blackKnight->applyImpulseLeftArm(0.0f, 5.0f);
-			}
-			if( eventQueue.getRelativeTime() > (34.5 + startSceneDelay) && eventQueue.getRelativeTime() < (38.5 + startSceneDelay)){
-				blackKnight->breakRightArmJoint();
-				blackKnight->applyImpulseRighttArm(0.0f, 5.0f);
-			}
-			if( eventQueue.getRelativeTime() > (63.0 + startSceneDelay) && eventQueue.getRelativeTime() < (67.0 + startSceneDelay)){
-				blackKnight->breakLeftLegJoint();
-				blackKnight->applyImpulseLegs(0.3f, 5.0f);
-				blackKnight->rootComponent->body->SetType(b2_dynamicBody);
-			}
-			if( eventQueue.getRelativeTime() > (81.0 + startSceneDelay) && eventQueue.getRelativeTime() < (85.0 + startSceneDelay)){
-				blackKnight->breakRightLegJoint();
-				blackKnight->applyImpulseLegs(0.3f, 5.0f);
-				//blackKnight->rootComponent->body->SetType(b2_dynamicBody);
-			}
+			
 		}
 	});
 
 	controller->setButtonFour.bind([this](int _value) {
 		if(controller->setButtonFour.justDown()) {
-			
+			std::cout<<"Yellow SET";
+			std::cout<<eventQueue.getRelativeTime();
+			if( eventQueue.getRelativeTime() > (16.0 + startSceneDelay) && eventQueue.getRelativeTime() < (25.0 + startSceneDelay)){
+				std::cout<<"IN TRIGGER ARMLEFT";
+				blackKnight->breakLeftArmJoint();
+				blackKnight->applyImpulseLeftArm(0.0f, 5.0f);
+			}
+			if( eventQueue.getRelativeTime() > (34.5 + startSceneDelay) && eventQueue.getRelativeTime() < (38.5 + startSceneDelay)){
+				std::cout<<"IN TRIGGER ARMRIGHT";
+				blackKnight->breakRightArmJoint();
+				blackKnight->applyImpulseRighttArm(0.0f, 5.0f);
+			}
+			if( eventQueue.getRelativeTime() > (63.0 + startSceneDelay) && eventQueue.getRelativeTime() < (67.0 + startSceneDelay)){
+				std::cout<<"IN TRIGGER LEFTLEG";
+				blackKnight->breakLeftLegJoint();
+				blackKnight->applyImpulseLegs(0.3f, 5.0f);
+				blackKnight->rootComponent->body->SetType(b2_dynamicBody);
+			}
+			if( eventQueue.getRelativeTime() > (81.0 + startSceneDelay) && eventQueue.getRelativeTime() < (85.0 + startSceneDelay)){
+				std::cout<<"IN TRIGGER LEFTRIGHT";
+				blackKnight->breakRightLegJoint();
+				blackKnight->applyImpulseLegs(0.3f, 5.0f);
+				//blackKnight->rootComponent->body->SetType(b2_dynamicBody);
+			}
 		}
 	});
 
@@ -234,7 +238,7 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 	});
 	
 #pragma endregion 
-	startSceneDelay = 5.0f;
+	startSceneDelay = 10.0f;
 	//scene setup cues
 	eventQueue.expectAt(5.f, 5.f, 
 		[this](){return !dialoguePlayer->muted;},
@@ -262,95 +266,95 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 			[this](){score -= 100;});
 
 	//light 0%
-	eventQueue.expectAt(1.5f + startSceneDelay, 2.f, 
+	eventQueue.expectAt(1.5f + startSceneDelay, 4.f, 
 		[this](){return lights[1]->getIntensities().r < 0.2;},
 			[this](){score += 100;}, 
 			[this](){score -= 100;});
 	//fog ON
-	eventQueue.expectAt(11.5f + startSceneDelay, 2.f, 
+	eventQueue.expectAt(11.5f + startSceneDelay, 4.f, 
 		[this](){return fogActive == true;},
 			[this](){score += 100;}, 
 			[this](){score -= 100;});
 	//fog OFF
-	eventQueue.expectAt(15.0f + startSceneDelay, 2.f, 
+	eventQueue.expectAt(15.0f + startSceneDelay, 4.f, 
 		[this](){return fogActive == false;},
 			[this](){score += 100;}, 
 			[this](){score -= 100;});
 	//sound2 effect
-	eventQueue.expectAt(17.0f + startSceneDelay, 2.f, 
+	eventQueue.expectAt(17.0f + startSceneDelay, 4.f, 
 		[this](){return conditions["blood1Played"];},
 			[this](){score += 100;}, 
 			[this](){score -= 100;});
 	//set3 - arm off
-	eventQueue.expectAt(17.0f + startSceneDelay, 2.f, 
+	eventQueue.expectAt(21.0f + startSceneDelay, 4.f, 
 		[this](){return blackKnight->rightArmBroken;},
 			[this](){score += 100;}, 
 			[this](){score -= 100;});
 	//sound2 effect
-	eventQueue.expectAt(36.5f + startSceneDelay, 2.f, 
+	eventQueue.expectAt(36.5f + startSceneDelay, 4.f, 
 		[this](){return conditions["blood2Played"];},
 			[this](){score += 100;}, 
 			[this](){score -= 100;});
 	//set3 - arm off
-	eventQueue.expectAt(36.5f + startSceneDelay, 2.f, 
+	eventQueue.expectAt(36.5f + startSceneDelay, 4.f, 
 		[this](){return blackKnight->leftArmBroken;},
 			[this](){score += 100;}, 
 			[this](){score -= 100;});
 	//fire
-	eventQueue.expectAt(42.5f + startSceneDelay, 2.f,
+	eventQueue.expectAt(42.5f + startSceneDelay, 4.f,
 		[this](){return fireActive;},
 			[this](){score += 100;}, 
 			[this](){score -= 100;});
 	//lights(1&3) 50%
-	eventQueue.expectAt(51.f + startSceneDelay, 3.0f, 
+	eventQueue.expectAt(51.f + startSceneDelay, 6.0f, 
 		[this](){return lights[1]->getIntensities().r > 1 && lights[1]->getIntensities().r < 3;},
 			[this](){std::cout<<"SuccessL1";}, 
 			[this](){std::cout<<"FailureL1";});
-	eventQueue.expectAt(51.f + startSceneDelay, 3.0f, 
+	eventQueue.expectAt(51.f + startSceneDelay, 6.0f, 
 		[this](){return lights[3]->getIntensities().r > 1 && lights[3]->getIntensities().r < 3;},
 			[this](){std::cout<<"SuccessL3";}, 
 			[this](){std::cout<<"FailureL3";});
 	//sound - whoosh
-	eventQueue.expectAt(59.f + startSceneDelay, 2.f, 
+	eventQueue.expectAt(59.f + startSceneDelay, 4.f, 
 		[this](){return conditions["whoosh1Played"];},
 			[this](){score += 100;}, 
 			[this](){score -= 100;});
 	//fire
-	eventQueue.expectAt(59.f + startSceneDelay, 2.f,
+	eventQueue.expectAt(59.f + startSceneDelay, 4.f,
 		[this](){return fireActive;},
 			[this](){score += 100;}, 
 			[this](){score -= 100;});
 	//sound3 - chicken
-	eventQueue.expectAt(63.f + startSceneDelay, 2.f, 
+	eventQueue.expectAt(63.f + startSceneDelay, 4.f, 
 		[this](){return conditions["chickenPlayed"];},
 			[this](){score += 100;}, 
 			[this](){score -= 100;});
 	//sound2 - blood
-	eventQueue.expectAt(65.0f + startSceneDelay, 2.f, 
+	eventQueue.expectAt(65.0f + startSceneDelay, 4.f, 
 		[this](){return conditions["blood3Played"];},
 			[this](){score += 100;}, 
 			[this](){score -= 100;});
 	//set3 - leg off
-	eventQueue.expectAt(65.0f + startSceneDelay, 2.f, 
+	eventQueue.expectAt(65.0f + startSceneDelay, 4.f, 
 		[this](){return blackKnight->leftLegBroken;},
 			[this](){score += 100;}, 
 			[this](){score -= 100;});
 	//lights(1&3) 100%
-	eventQueue.expectAt(76.f + startSceneDelay, 3.0f, 
+	eventQueue.expectAt(76.f + startSceneDelay, 6.0f, 
 		[this](){return lights[1]->getIntensities().r > 3.5;},
 			[this](){std::cout<<"SuccessL1";}, 
 			[this](){std::cout<<"FailureL1";});
-	eventQueue.expectAt(76.f + startSceneDelay, 3.0f, 
+	eventQueue.expectAt(76.f + startSceneDelay, 6.0f, 
 		[this](){return lights[3]->getIntensities().r > 3.5;},
 			[this](){std::cout<<"SuccessL3";}, 
 			[this](){std::cout<<"FailureL3";});
 	//sound2 - blood
-	eventQueue.expectAt(83.0f + startSceneDelay, 2.f, 
+	eventQueue.expectAt(83.0f + startSceneDelay, 4.f, 
 		[this](){return conditions["blood4Played"];},
 			[this](){score += 100;}, 
 			[this](){score -= 100;});
 	//set3 - leg off
-	eventQueue.expectAt(83.0f + startSceneDelay, 2.f, 
+	eventQueue.expectAt(83.0f + startSceneDelay, 4.f, 
 		[this](){return blackKnight->rightLegBroken;},
 			[this](){score += 100;}, 
 			[this](){score -= 100;});
