@@ -675,17 +675,14 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 	});
 	
 	eventQueue.at(90.f + startSceneDelay, [this](){
-		dialoguePlayer->playNext();
 		blackKnight->say(2.0f, L"You yellow bastards!", false);
 	});
 
 	eventQueue.at(92.f + startSceneDelay, [this](){
-		dialoguePlayer->playNext();
 		blackKnight->say(2.0f, L"Come back here and takes what's coming to you", false);
 	});
 
 	eventQueue.at(94.f + startSceneDelay, [this](){
-		dialoguePlayer->playNext();
 		blackKnight->say(2.0f, L"I'll bite your legs off!", true);
 	});
 
