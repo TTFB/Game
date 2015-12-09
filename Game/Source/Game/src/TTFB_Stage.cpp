@@ -5,6 +5,7 @@
 #include <Box2DWorld.h>
 #include <MeshInterface.h>
 #include <TTFB_ResourceManager.h>
+#include <Sprite.h>
 
 TTFB_Stage::TTFB_Stage(float _width, Box2DWorld * _world, std::string _floorTex, std::string _sideTex, std::string _backTex, std::string _topTex, std::string _bottomTex, Shader * _shader) : 
 	Entity(),
@@ -22,28 +23,28 @@ TTFB_Stage::TTFB_Stage(float _width, Box2DWorld * _world, std::string _floorTex,
 		vert.v *= 4; 
 	}
 
-	stageBack = new MeshEntity(MeshFactory::getPlaneMesh(), _shader);
-	stageBack->mesh->pushTexture2D(TTFB_ResourceManager::scenario->getTexture(_backTex)->texture);
+	stageBack = new Sprite(_shader);
+	stageBack->setPrimaryTexture(TTFB_ResourceManager::scenario->getTextureSampler(_backTex)->textureSampler);
 	childTransform->addChild(stageBack);
 	stageBack->firstParent()->scale(_width * 1.5f, 50.0f, 1.f);
 	stageBack->firstParent()->translate(0.f, 30.f, -2.5f);
 
-	stageFrontLeft = new MeshEntity(MeshFactory::getPlaneMesh(), _shader);
-	stageFrontLeft->mesh->pushTexture2D(TTFB_ResourceManager::scenario->getTexture(_sideTex)->texture);
+	stageFrontLeft = new Sprite(_shader);
+	stageFrontLeft->setPrimaryTexture(TTFB_ResourceManager::scenario->getTextureSampler(_sideTex)->textureSampler);
 	childTransform->addChild(stageFrontLeft);
 	stageFrontLeft->firstParent()->scale(-_width * 0.5f, 50.0f, 1.f);
 	stageFrontLeft->firstParent()->translate(-_width * 0.5f + 1.0f, 15.f, 3.5f);
 
-	stageFrontRight = new MeshEntity(MeshFactory::getPlaneMesh(), _shader);
-	stageFrontRight->mesh->pushTexture2D(TTFB_ResourceManager::scenario->getTexture(_sideTex)->texture);
+	stageFrontRight = new Sprite(_shader);
+	stageFrontRight->setPrimaryTexture(TTFB_ResourceManager::scenario->getTextureSampler(_sideTex)->textureSampler);
 	childTransform->addChild(stageFrontRight);
 	stageFrontRight->firstParent()->scale(_width * 0.5f, 50.0f, 1.f);
 	stageFrontRight->firstParent()->translate(_width * 0.5f - 1.0f, 15.f, 3.5f);
 
 	{
-		stageTop = new MeshEntity(MeshFactory::getPlaneMesh(), _shader);
-		Texture * top = TTFB_ResourceManager::scenario->getTexture(_topTex)->texture;
-		stageTop->mesh->pushTexture2D(top);
+		stageTop = new Sprite(_shader);
+		TextureSampler * top = TTFB_ResourceManager::scenario->getTextureSampler(_topTex)->textureSampler;
+		stageTop->setPrimaryTexture(top);
 		float ratio = (float)top->height/(float)top->width;
 		childTransform->addChild(stageTop);
 		stageTop->firstParent()->scale(_width * 0.5f,  ratio * _width * 0.5f, 1.f);
@@ -51,9 +52,9 @@ TTFB_Stage::TTFB_Stage(float _width, Box2DWorld * _world, std::string _floorTex,
 	}
 
 	{
-		stageBottom = new MeshEntity(MeshFactory::getPlaneMesh(), _shader);
-		Texture * bottom = TTFB_ResourceManager::scenario->getTexture(_bottomTex)->texture;
-		stageBottom->mesh->pushTexture2D(bottom);
+		stageBottom = new Sprite(_shader);
+		TextureSampler * bottom = TTFB_ResourceManager::scenario->getTextureSampler(_bottomTex)->textureSampler;
+		stageBottom->setPrimaryTexture(bottom);
 		float ratio = (float)bottom->height/(float)bottom->width;
 		childTransform->addChild(stageBottom);
 		stageBottom->firstParent()->scale(_width * 0.65f,  ratio * _width * 0.65f, 1.f);

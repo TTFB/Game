@@ -76,9 +76,69 @@
       "src": "audience.png"
     },
     {
+      "id": "renfieldHead",
+      "type": "textureSampler",
+      "src": "renfield/head.png.def"
+    },
+    {
+      "id": "renfieldTorso",
+      "type": "textureSampler",
+      "src": "renfield/body.png.def"
+    },
+    {
+      "id": "renfieldLeftArm",
+      "type": "textureSampler",
+      "src": "renfield/arm_left.png.def"
+    },
+    {
+      "id": "renfieldRightArm",
+      "type": "textureSampler",
+      "src": "renfield/arm_right.png.def"
+    },
+    {
+      "id": "renfieldRightLeg",
+      "type": "textureSampler",
+      "src": "renfield/leg_right.png.def"
+    },
+    {
+      "id": "renfieldLeftLeg",
+      "type": "textureSampler",
+      "src": "renfield/leg_left.png.def"
+    },
+    {
       "id": "speechBubble",
       "type": "texture",
       "src": "speech_bubble.png"
+    },
+      {
+      "id": "draculaHead",
+      "type": "textureSampler",
+      "src": "dracula/head.png.def"
+    },
+    {
+      "id": "draculaTorso",
+      "type": "textureSampler",
+      "src": "dracula/body.png.def"
+    },
+    {
+      "id": "draculaLeftArm",
+      "type": "textureSampler",
+      "src": "dracula/arm_left.png.def"
+    },
+    {
+      "id": "draculaRightArm",
+      "type": "textureSampler",
+      "src": "dracula/arm_right.png.def"
+    },
+    {
+      "id": "draculaRightLeg",
+      "type": "textureSampler",
+      "src": "dracula/leg_right.png.def"
+    },
+    {
+      "id": "draculaLeftLeg",
+      "type": "textureSampler",
+      "src": "dracula/leg_left.png.def"
     },
     {
       "id": "logo",
@@ -137,28 +197,28 @@
     },
     {
       "id": "L1_Background",
-      "type": "texture",
-      "src": "Level1_Assets/Level1_StageBackground.png"
+      "type": "textureSampler",
+      "src": "Level1_Assets/Level1_StageBackground.png.def"
     },
     {
       "id": "L1_Bottom",
-      "type": "texture",
-      "src": "Level1_Assets/Level1_StageBottom.png"
+      "type": "textureSampler",
+      "src": "Level1_Assets/Level1_StageBottom.png.def"
     },
     {
       "id": "L1_Foreground",
-      "type": "texture",
-      "src": "Level1_Assets/Level1_StageForeground.png"
+      "type": "textureSampler",
+      "src": "Level1_Assets/Level1_StageForeground.png.def"
     },
     {
       "id": "L1_Top",
-      "type": "texture",
-      "src": "Level1_Assets/Level1_StageTop.png"
+      "type": "textureSampler",
+      "src": "Level1_Assets/Level1_StageTop.png.def"
     },
     {
       "id": "L1_Side",
-      "type": "texture",
-      "src": "Level1_Assets/Level1_SideWalls.png"
+      "type": "textureSampler",
+      "src": "Level1_Assets/Level1_SideWalls.png.def"
     },
     {
       "id": "L3_Top",
@@ -178,17 +238,17 @@
     {
       "id": "L3_RightWall",
       "type": "textureSampler",
-      "src": "Level3_Assets/Level3_RightWall.png.deg"
+      "src": "Level3_Assets/Level3_RightWall.png.def"
     },
     {
       "id": "L3_LeftWall",
       "type": "textureSampler",
-      "src": "Level3_Assets/Level3_LeftWall.png.deg"
+      "src": "Level3_Assets/Level3_LeftWall.png.def"
     },
     {
       "id": "L3_CrowdNeutral",
       "type": "textureSampler",
-      "src": "Level3_Assets/Level3_Crowd_Neutral.png.deg"
+      "src": "Level3_Assets/Level3_Crowd_Neutral.png.def"
     },
     {
       "id": "spamalot_one_star",

@@ -1,9 +1,10 @@
 #pragma once
 
 #include <TTFB_Game.h>
-#include <TTFB_MainScene.h>
+#include <TTFB_SpamalotScene.h>
 #include <TTFB_MenuScene.h>
 #include <TTFB_Controller.h>
+#include <TTFB_DraculaScene.h>
 
 TTFB_Game::TTFB_Game() :
 	Game(true, std::pair<std::string, Scene *>("test", nullptr), false),
@@ -13,8 +14,9 @@ TTFB_Game::TTFB_Game() :
 	controller->update(&sweet::step);
 
 	scenes["menuScene"]  = new TTFB_MenuScene(this);
-	scenes["stageScene"] = new TTFB_MainScene(this);
-
+	scenes["spamalot"] = new TTFB_SpamalotScene(this);
+	scenes["dracula"]    = new TTFB_DraculaScene(this);
+ 
 	switchScene("menuScene", false);
 }
 

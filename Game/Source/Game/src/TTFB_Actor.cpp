@@ -13,6 +13,7 @@
 #include <Box2DSprite.h>
 #include <RenderOptions.h>
 #include <TTFB_Prop.h>
+#include <TTFB_Constants.h>
 
 TTFB_Actor::TTFB_Actor(std::string _name, Box2DWorld * _world, BulletWorld * _bulletWorld, Font * _font, Shader * _textShader, Shader * _shader) :
 	Box2DSuperSprite(_world, 0),
@@ -38,14 +39,14 @@ TTFB_Actor::TTFB_Actor(std::string _name, Box2DWorld * _world, BulletWorld * _bu
 	leftArm  = new Box2DSprite(_world, TTFB_ResourceManager::scenario->getTextureSampler(_name + "LeftArm")->textureSampler);
 	rightArm = new Box2DSprite(_world, TTFB_ResourceManager::scenario->getTextureSampler(_name + "RightArm")->textureSampler);
 	leftLeg	 = new Box2DSprite(_world, TTFB_ResourceManager::scenario->getTextureSampler(_name + "LeftLeg")->textureSampler);
-	rightLeg	 = new Box2DSprite(_world, TTFB_ResourceManager::scenario->getTextureSampler(_name + "RightLeg")->textureSampler);
+	rightLeg = new Box2DSprite(_world, TTFB_ResourceManager::scenario->getTextureSampler(_name + "RightLeg")->textureSampler);
 
-	torso->scale    = 0.01f;
-	head->scale     = 0.01f;
-	leftArm->scale  = 0.01f;
-	rightArm->scale = 0.01f;
-	leftLeg->scale  = 0.01f;
-	rightLeg->scale = 0.01f;
+	torso->scale    = B2_SCALE;
+	head->scale     = B2_SCALE;
+	leftArm->scale  = B2_SCALE;
+	rightArm->scale = B2_SCALE;
+	leftLeg->scale  = B2_SCALE;
+	rightLeg->scale = B2_SCALE;
 
 	//head->body->SetGravityScale(-0.3f);
 	//leftArm->body->SetGravityScale(0.3f);

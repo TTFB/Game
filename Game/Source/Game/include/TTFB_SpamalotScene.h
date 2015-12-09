@@ -11,7 +11,7 @@
 #include <map>
 #include <string>
 
-class TTFB_MainScene : public TTFB_StageScene{
+class TTFB_SpamalotScene : public TTFB_StageScene{
 public:
 
 	TTFB_EventQueue eventQueue;
@@ -56,6 +56,6 @@ public:
 	void stopLeftLegBleeding();
 	void stopRightLegBleeding();
 
-	TTFB_MainScene(Game * _game);
-	~TTFB_MainScene();
+	TTFB_SpamalotScene(Game * _game);
+	~TTFB_SpamalotScene();
 };

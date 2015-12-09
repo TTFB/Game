@@ -1,6 +1,6 @@
 #pragma once
 
-#include <TTFB_MainScene.h>
+#include <TTFB_SpamalotScene.h>
 #include <TTFB_ResourceManager.h>
 #include <TTFB_Actor.h>
 #include <TTFB_Stage.h>
@@ -55,7 +55,7 @@
 #include <ParticleSystem.h>
 #include <TTFB_Audience.h>
 
-TTFB_MainScene::TTFB_MainScene(Game * _game) :
+TTFB_SpamalotScene::TTFB_SpamalotScene(Game * _game) :
 	TTFB_StageScene(_game, 100.0f, "L1_Floor", "L1_Side", "L1_Background", "L1_Top", "L1_Bottom"),
 	bgMusicStarted(false),
 	lastFireEmission(0.0)
@@ -737,10 +737,10 @@ TTFB_MainScene::TTFB_MainScene(Game * _game) :
 
 }
 
-TTFB_MainScene::~TTFB_MainScene(){
+TTFB_SpamalotScene::~TTFB_SpamalotScene(){
 }
 
-void TTFB_MainScene::update(Step * _step){
+void TTFB_SpamalotScene::update(Step * _step){
 
 	//float lightOneVal = controller->soundButtonOne.currentState;
 	//lights[0]->setIntensities(glm::vec3(lightOneVal + 0.5f));
@@ -765,15 +765,15 @@ void TTFB_MainScene::update(Step * _step){
 	TTFB_StageScene::update(_step);
 }
 
-void TTFB_MainScene::render(sweet::MatrixStack * _matrixStack, RenderOptions * _renderOptions){
+void TTFB_SpamalotScene::render(sweet::MatrixStack * _matrixStack, RenderOptions * _renderOptions){
 	TTFB_StageScene::render(_matrixStack, _renderOptions);
 }
 
-void TTFB_MainScene::load(){
+void TTFB_SpamalotScene::load(){
 	TTFB_StageScene::load();
 }
 
-void TTFB_MainScene::leftArmBleed() {
+void TTFB_SpamalotScene::leftArmBleed() {
 	ParticleSystem * bloodSystem = new ParticleSystem(TTFB_ResourceManager::scenario->getTexture("blood")->texture, box2dWorld, 0);
 	bloodSystem->setShader(baseShader, true);
 	bloodSystem->emissionAmount = 5;
@@ -783,7 +783,7 @@ void TTFB_MainScene::leftArmBleed() {
 	blackKnight->leftArmJointTransform->addChild(bloodSystem);
 }
 
-void TTFB_MainScene::rightArmBleed() {
+void TTFB_SpamalotScene::rightArmBleed() {
 	ParticleSystem * bloodSystem = new ParticleSystem(TTFB_ResourceManager::scenario->getTexture("blood")->texture, box2dWorld, 0);
 	bloodSystem->setShader(baseShader, true);
 	bloodSystem->emissionAmount = 5;
@@ -793,7 +793,7 @@ void TTFB_MainScene::rightArmBleed() {
 	blackKnight->rightArmJointTransform->addChild(bloodSystem);
 }
 
-void TTFB_MainScene::leftLegBleed() {
+void TTFB_SpamalotScene::leftLegBleed() {
 	ParticleSystem * bloodSystem = new ParticleSystem(TTFB_ResourceManager::scenario->getTexture("blood")->texture, box2dWorld, 0);
 	bloodSystem->setShader(baseShader, true);
 	bloodSystem->emissionAmount = 5;
@@ -803,7 +803,7 @@ void TTFB_MainScene::leftLegBleed() {
 	blackKnight->leftLegJointTransform->addChild(bloodSystem);
 }
 
-void TTFB_MainScene::rightLegBleed() {
+void TTFB_SpamalotScene::rightLegBleed() {
 	ParticleSystem * bloodSystem = new ParticleSystem(TTFB_ResourceManager::scenario->getTexture("blood")->texture, box2dWorld, 0);
 	bloodSystem->setShader(baseShader, true);
 	bloodSystem->emissionAmount = 5;
@@ -813,6 +813,6 @@ void TTFB_MainScene::rightLegBleed() {
 	blackKnight->rightLegJointTransform->addChild(bloodSystem);
 }
 
-void TTFB_MainScene::unload(){
+void TTFB_SpamalotScene::unload(){
 	TTFB_StageScene::unload();	
 }
