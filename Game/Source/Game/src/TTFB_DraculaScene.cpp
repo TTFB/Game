@@ -3,6 +3,7 @@
 #include <TTFB_DraculaScene.h>
 #include <TTFB_ResourceManager.h>
 #include <TTFB_Actor.h>
+#include <TTFB_Stage.h>
 
 TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 	TTFB_StageScene(_game, 100.0f, "L1_Floor", "L3_RightWall", "L1_Background", "L3_Top", "L3_Bottom"),
@@ -12,7 +13,7 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 
 #pragma region PreSetup
 
-	startSceneDelay = 10.0f;
+	startSceneDelay = 3.0f;
 
 #pragma  endregion 
 
@@ -42,9 +43,17 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 
 	eventQueue.at(0.0f + startSceneDelay, [this](){
 		dialoguePlayer->playNext();
-		dracula->say(3.0f, L"I am Dracula", true);
+		dracula->say(3.0f, L"I am Dracula", false);
+		decScore(400);
 	});
 
+	eventQueue.at(4.0f + startSceneDelay, [this](){
+		incScore(400);
+	});
+
+	eventQueue.at(8.0f + startSceneDelay, [this](){
+		incScore(400);
+	});
 
 #pragma  endregion 
 

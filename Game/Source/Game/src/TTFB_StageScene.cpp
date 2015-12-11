@@ -66,25 +66,27 @@
 
 TTFB_StageScene::TTFB_StageScene(Game * _game, float _stageWidth, std::string _floorTex, std::string _sideTex, std::string _backTex, std::string _topTex, std::string _frontTex) :
 	TTFB_Scene(_game),
+	score(0),
+	scoreQueue(0),
 	screenSurfaceShader(new Shader("assets/engine basics/DefaultRenderSurface", false, true)),
 	screenSurface(new RenderSurface(screenSurfaceShader)),
 	screenFBO(new StandardFrameBuffer(true)),
 	baseShader(new ComponentShaderBase(true)),
 	characterShader(new ComponentShaderBase(true)),
 	textShader(new ComponentShaderText(true)),
-	scoreTextShader(new ComponentShaderText(true)),
 	debugDrawer(nullptr),
-	uiLayer(0,0,0,0),
 	box2dWorld(new Box2DWorld(b2Vec2(0.f, -10.0f))),
 	box2dDebug(box2dWorld->createDebugDrawer()),
 	font(new Font("assets/engine basics/OpenSans-Regular.ttf", 100, true)),
-	scoreFont(new Font("assets/engine basics/OpenSans-Regular.ttf", 40, true)),
-	score(0),
+	uiLayer(0,0,0,0),
 	fireActive(false),
 	fadeOutLights(false),
 	dimmingLights(false),
-	fireTimer(0)
+	scoreTextShader(new ComponentShaderText(true)),
+	fireTimer(0),
+	scoreScaler(0.0f)
 {
+	scoreFont = TTFB_ResourceManager::scenario->getFont("bebas")->font;
 
 	baseShader->addComponent(new ShaderComponentMVP(baseShader)); 
 	baseShader->addComponent(new ShaderComponentDiffuse(baseShader));
@@ -96,9 +98,34 @@ TTFB_StageScene::TTFB_StageScene(Game * _game, float _stageWidth, std::string _f
 
 	textShader->textComponent->setColor(glm::vec3(0.0f, 0.0f, 0.0f));
 
+	glm::uvec2 sd = sweet::getScreenDimensions();
+	uiLayer.resize(0, sd.x, 0, sd.y);
+
+	VerticalLinearLayout * container = new VerticalLinearLayout(bulletWorld);
+	container->setRationalWidth(1.0f);
+	container->setRationalHeight(1.0f);
+
+	HorizontalLinearLayout * scoreLayout = new HorizontalLinearLayout(bulletWorld);
+	scoreLayout->horizontalAlignment = kCENTER;
+	scoreLayout->verticalAlignment = kTOP;
+	scoreLayout->setRationalWidth(1.f);
+	scoreLayout->setPadding(15.0f);
+	scoreLayout->setPaddingTop(45.0f);
+	scoreLayout->setBackgroundColour(0.05f, 0.05f, 0.05f, 0.7f);
+	scoreLayout->boxSizing = kBORDER_BOX;
+
 	scoreTextShader->setColor(1.f, 1.f, 1.f);
 	scoreText = new TextArea(bulletWorld, scoreFont, scoreTextShader, 300);
-	uiLayer.addChild(scoreText);
+	scoreText->horizontalAlignment = kCENTER;
+
+	scoreLayout->addChild(scoreText);
+	container->addChild(scoreLayout);
+	uiLayer.addChild(container);
+
+	scoreLayout->invalidateLayout();
+
+	uiLayer.setRenderMode(kTEXTURE);
+	uiLayer.invalidateLayout();
 
 	//Set up debug camera
 	debugCam = new MousePerspectiveCamera();
@@ -125,8 +152,6 @@ TTFB_StageScene::TTFB_StageScene(Game * _game, float _stageWidth, std::string _f
 	//cameras.pop_back();
 
 	//
-	glm::uvec2 sd = sweet::getScreenDimensions();
-	uiLayer.resize(0, sd.x, 0, sd.y);
 
 	// mouse cursor
 	mouseIndicator = new Sprite();
@@ -203,6 +228,34 @@ TTFB_StageScene::~TTFB_StageScene(){
 
 
 void TTFB_StageScene::update(Step * _step){
+
+	if(scoreQueue > 0) {
+		score += 1;
+		scoreQueue -= 1;
+		scoreTextShader->setColor(102.0f/255.0f, 238.0f/255.0f, 87.0f/255.0f);
+	}else if(scoreQueue < 0) {
+		score -= 1;
+		scoreQueue += 1;
+		scoreTextShader->setColor(254.0/255.0f, 72.0/255.0f, 46.0/255.0f);
+	}
+
+	if(scoreScaler > 0.0005f || scoreScaler < -0.0005f) {
+		float curScale = scoreText->firstParent()->getScaleVector().x;
+		scoreText->firstParent()->scale(scoreScaler + curScale, scoreScaler + curScale, 1.0f, false);
+		if(scoreScaler > 0.0005f) {
+			scoreScaler -= 0.02;
+		}else {
+			scoreScaler += 0.02f;
+		}
+	}else {
+		float curScale = scoreText->firstParent()->getScaleVector().x;
+		if(curScale > 1.00005f) {
+			scoreText->firstParent()->scale(curScale -0.02f, -0.02f + curScale, 1.0f, false);
+		}else if(curScale < 0.99995f){
+			scoreText->firstParent()->scale(0.02f + curScale, 0.02f + curScale, 1.0f, false);
+		}
+	}
+	
 
 	if(score != lastScore) {
 		scoreText->setText(L"Score " + std::to_wstring(score));
@@ -383,6 +436,16 @@ void TTFB_StageScene::addFog() {
 void TTFB_StageScene::toggleFog() {
 	fog->setVisible(!fog->isVisible());
 	fogActive = fog->isVisible();
+}
+
+void TTFB_StageScene::incScore(int _score) {
+	scoreQueue += _score;
+	scoreScaler = 0.1f;
+}
+
+void TTFB_StageScene::decScore(int _score) {
+	scoreQueue -= _score;
+	scoreScaler = -0.1f;
 }
 
 void TTFB_StageScene::dimHouseLights() {

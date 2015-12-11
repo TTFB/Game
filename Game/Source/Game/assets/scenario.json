@@ -6,6 +6,12 @@
       "src": "../engine basics/cursor.png"
     },
     {
+    	"id":"bebas",
+    	"type":"font",
+    	"size":40,
+    	"src": "BebasNeue.otf"
+    },
+    {
       "id": "SPRITESHEET",
       "type": "texture",
       "src": "spritesheet.png"

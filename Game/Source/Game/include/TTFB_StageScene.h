@@ -48,6 +48,7 @@ public:
 
 	int score;
 	int lastScore;
+	int scoreQueue;
 
 	TTFB_EventQueue eventQueue;
 	
@@ -98,6 +99,7 @@ public:
 	bool dimmingLights;
 	ComponentShaderText* scoreTextShader;
 	double fireTimer;
+	float scoreScaler;
 	virtual void update(Step * _step) override;
 	virtual void render(sweet::MatrixStack * _matrixStack, RenderOptions * _renderOptions) override;
 	
@@ -113,6 +115,9 @@ public:
 	void toggleFog();
 
 	void dimHouseLights();
+
+	void incScore(int _score = 100);
+	void decScore(int _score = 100);
 
 	TTFB_StageScene(Game * _game, float _stageWidth, std::string _floorTex, std::string _sideTex, std::string _backTex, std::string _topTex, std::string _frontTex);
 	~TTFB_StageScene();

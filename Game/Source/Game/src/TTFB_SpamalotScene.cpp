@@ -239,69 +239,69 @@ TTFB_SpamalotScene::TTFB_SpamalotScene(Game * _game) :
 	//scene setup cues
 	eventQueue.expectAt(5.f, 5.f, 
 		[this](){return !dialoguePlayer->muted;},
-			[this](){score += 100;}, 
-			[this](){score -= 100;});
+			[this](){incScore();}, 
+			[this](){decScore();});
 	eventQueue.expectAt(5.f, 5.f, 
 		[this](){return setPieceTree1->isLowered();},
-		[this](){score += 100;}, 
-		[this](){score -= 100;});
+		[this](){incScore();}, 
+		[this](){decScore();});
 	eventQueue.expectAt(5.f, 5.f,
 		[this](){return setPieceMatte->isLowered();},
-			[this](){score += 100;}, 
-			[this](){score -= 100;});
+			[this](){incScore();}, 
+			[this](){decScore();});
 	eventQueue.expectAt(5.f, 5.f, 
 		[this](){return lights[1]->getIntensities().r > 3.5;},
-			[this](){score += 100;}, 
-			[this](){score -= 100;});
+			[this](){incScore();}, 
+			[this](){decScore();});
 	eventQueue.expectAt(5.f, 5.f, 
 		[this](){return lights[2]->getIntensities().r > 3.5;},
-			[this](){score += 100;}, 
-			[this](){score -= 100;});
+			[this](){incScore();}, 
+			[this](){decScore();});
 	eventQueue.expectAt(5.f, 5.f, 
 		[this](){return stage->curtainLeft->firstParent()->getTranslationVector().x < -44.0f;},
-			[this](){score += 100;}, 
-			[this](){score -= 100;});
+			[this](){incScore();}, 
+			[this](){decScore();});
 
 	//light 0%
 	eventQueue.expectAt(1.5f + startSceneDelay, 4.f, 
 		[this](){return lights[1]->getIntensities().r < 0.2;},
-			[this](){score += 100;}, 
-			[this](){score -= 100;});
+			[this](){incScore();}, 
+			[this](){decScore();});
 	//fog ON
 	eventQueue.expectAt(11.5f + startSceneDelay, 4.f, 
 		[this](){return fogActive == true;},
-			[this](){score += 100;}, 
-			[this](){score -= 100;});
+			[this](){incScore();}, 
+			[this](){decScore();});
 	//fog OFF
 	eventQueue.expectAt(15.0f + startSceneDelay, 4.f, 
 		[this](){return fogActive == false;},
-			[this](){score += 100;}, 
-			[this](){score -= 100;});
+			[this](){incScore();}, 
+			[this](){decScore();});
 	//sound2 effect
 	eventQueue.expectAt(17.0f + startSceneDelay, 4.f, 
 		[this](){return conditions["blood1Played"];},
-			[this](){score += 100;}, 
-			[this](){score -= 100;});
+			[this](){incScore();}, 
+			[this](){decScore();});
 	//set3 - arm off
 	eventQueue.expectAt(21.0f + startSceneDelay, 4.f, 
 		[this](){return blackKnight->rightArmBroken;},
-			[this](){score += 100;}, 
-			[this](){score -= 100;});
+			[this](){incScore();}, 
+			[this](){decScore();});
 	//sound2 effect
 	eventQueue.expectAt(36.5f + startSceneDelay, 4.f, 
 		[this](){return conditions["blood2Played"];},
-			[this](){score += 100;}, 
-			[this](){score -= 100;});
+			[this](){incScore();}, 
+			[this](){decScore();});
 	//set3 - arm off
 	eventQueue.expectAt(36.5f + startSceneDelay, 4.f, 
 		[this](){return blackKnight->leftArmBroken;},
-			[this](){score += 100;}, 
-			[this](){score -= 100;});
+			[this](){incScore();}, 
+			[this](){decScore();});
 	//fire
 	eventQueue.expectAt(42.5f + startSceneDelay, 4.f,
 		[this](){return fireActive;},
-			[this](){score += 100;}, 
-			[this](){score -= 100;});
+			[this](){incScore();}, 
+			[this](){decScore();});
 	//lights(1&3) 50%
 	eventQueue.expectAt(51.f + startSceneDelay, 6.0f, 
 		[this](){return lights[1]->getIntensities().r > 1 && lights[1]->getIntensities().r < 3;},
@@ -314,28 +314,28 @@ TTFB_SpamalotScene::TTFB_SpamalotScene(Game * _game) :
 	//sound - whoosh
 	eventQueue.expectAt(59.f + startSceneDelay, 4.f, 
 		[this](){return conditions["whoosh1Played"];},
-			[this](){score += 100;}, 
-			[this](){score -= 100;});
+			[this](){incScore();}, 
+			[this](){decScore();});
 	//fire
 	eventQueue.expectAt(59.f + startSceneDelay, 4.f,
 		[this](){return fireActive;},
-			[this](){score += 100;}, 
-			[this](){score -= 100;});
+			[this](){incScore();}, 
+			[this](){decScore();});
 	//sound3 - chicken
 	eventQueue.expectAt(63.f + startSceneDelay, 4.f, 
 		[this](){return conditions["chickenPlayed"];},
-			[this](){score += 100;}, 
-			[this](){score -= 100;});
+			[this](){incScore();}, 
+			[this](){decScore();});
 	//sound2 - blood
 	eventQueue.expectAt(65.0f + startSceneDelay, 4.f, 
 		[this](){return conditions["blood3Played"];},
-			[this](){score += 100;}, 
-			[this](){score -= 100;});
+			[this](){incScore();}, 
+			[this](){decScore();});
 	//set3 - leg off
 	eventQueue.expectAt(67.0f + startSceneDelay, 4.f, 
 		[this](){return blackKnight->leftLegBroken;},
-			[this](){score += 100;}, 
-			[this](){score -= 100;});
+			[this](){incScore();}, 
+			[this](){decScore();});
 	//lights(1&3) 100%
 	eventQueue.expectAt(76.f + startSceneDelay, 6.0f, 
 		[this](){return lights[1]->getIntensities().r > 3.5;},
@@ -348,18 +348,18 @@ TTFB_SpamalotScene::TTFB_SpamalotScene(Game * _game) :
 	//sound2 - blood
 	eventQueue.expectAt(83.0f + startSceneDelay, 4.f, 
 		[this](){return conditions["blood4Played"];},
-			[this](){score += 100;}, 
-			[this](){score -= 100;});
+			[this](){incScore();}, 
+			[this](){decScore();});
 	//set3 - leg off
 	eventQueue.expectAt(83.0f + startSceneDelay, 4.f, 
 		[this](){return blackKnight->rightLegBroken;},
-			[this](){score += 100;}, 
-			[this](){score -= 100;});
+			[this](){incScore();}, 
+			[this](){decScore();});
 	//////end scene
 	eventQueue.expectAt(101.f + startSceneDelay, 5.f, 
 		[this](){return dialoguePlayer->muted;},
-			[this](){score += 100;}, 
-			[this](){score -= 100;});
+			[this](){incScore();}, 
+			[this](){decScore();});
 	eventQueue.expectAt(101.f + startSceneDelay, 5.f, 
 		[this](){return lights[1]->getIntensities().r < 0.2;},
 			[this](){score+= 100;}, 
@@ -370,12 +370,12 @@ TTFB_SpamalotScene::TTFB_SpamalotScene(Game * _game) :
 			[this](){score-= 100;});
 	eventQueue.expectAt(101.f + startSceneDelay, 5.f, 
 		[this](){return lights[3]->getIntensities().r < 0.2;},
-			[this](){score += 100;}, 
-			[this](){score -= 100;;});
+			[this](){incScore();}, 
+			[this](){decScore();;});
 	eventQueue.expectAt(101.f + startSceneDelay, 5.f, 
 		[this](){return stage->curtainLeft->firstParent()->getTranslationVector().x < -5.0f;},
-			[this](){score += 100;}, 
-			[this](){score -= 100;});
+			[this](){incScore();}, 
+			[this](){decScore();});
 
 #pragma region AudioSetup
 
