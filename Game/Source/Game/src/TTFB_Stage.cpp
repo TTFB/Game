@@ -26,51 +26,48 @@ TTFB_Stage::TTFB_Stage(float _width, Box2DWorld * _world, std::string _floorTex,
 	stageBack = new Sprite(_shader);
 	stageBack->setPrimaryTexture(TTFB_ResourceManager::scenario->getTextureSampler(_backTex)->textureSampler);
 	childTransform->addChild(stageBack);
-	stageBack->firstParent()->scale(_width * 1.5f, 50.0f, 1.f);
-	stageBack->firstParent()->translate(0.f, 30.f, -2.5f);
+	stageBack->firstParent()->scale(_width, _width, 1.f);
+	stageBack->firstParent()->translate(0.f, 20.f, -2.5f);
 
 	stageFrontLeft = new Sprite(_shader);
 	stageFrontLeft->setPrimaryTexture(TTFB_ResourceManager::scenario->getTextureSampler(_sideTex)->textureSampler);
 	childTransform->addChild(stageFrontLeft);
-	stageFrontLeft->firstParent()->scale(-_width * 0.5f, 50.0f, 1.f);
-	stageFrontLeft->firstParent()->translate(-_width * 0.5f + 1.0f, 15.f, 3.5f);
+	stageFrontLeft->firstParent()->scale(-50.0f, 50.0f, 1.f);
+	stageFrontLeft->firstParent()->translate(-_width * 0.5f + 25.0f, 15.f, 3.5f);
 
 	stageFrontRight = new Sprite(_shader);
 	stageFrontRight->setPrimaryTexture(TTFB_ResourceManager::scenario->getTextureSampler(_sideTex)->textureSampler);
 	childTransform->addChild(stageFrontRight);
-	stageFrontRight->firstParent()->scale(_width * 0.5f, 50.0f, 1.f);
-	stageFrontRight->firstParent()->translate(_width * 0.5f - 1.0f, 15.f, 3.5f);
+	stageFrontRight->firstParent()->scale(50.0f, 50.0f, 1.f);
+	stageFrontRight->firstParent()->translate(_width * 0.5f - 25.0f, 15.f, 3.5f);
 
 	{
 		stageTop = new Sprite(_shader);
 		TextureSampler * top = TTFB_ResourceManager::scenario->getTextureSampler(_topTex)->textureSampler;
 		stageTop->setPrimaryTexture(top);
-		float ratio = (float)top->height/(float)top->width;
 		childTransform->addChild(stageTop);
-		stageTop->firstParent()->scale(_width * 0.5f,  ratio * _width * 0.5f, 1.f);
+		stageTop->firstParent()->scale(_width, _width, 1.f);
 		stageTop->firstParent()->translate(0.f, 25.f, 3.0f);
 	}
-
 	{
 		stageBottom = new Sprite(_shader);
 		TextureSampler * bottom = TTFB_ResourceManager::scenario->getTextureSampler(_bottomTex)->textureSampler;
 		stageBottom->setPrimaryTexture(bottom);
-		float ratio = (float)bottom->height/(float)bottom->width;
 		childTransform->addChild(stageBottom);
-		stageBottom->firstParent()->scale(_width * 0.65f,  ratio * _width * 0.65f, 1.f);
-		stageBottom->firstParent()->translate(0.f, -0.5f, 3.0f);
+		stageBottom->firstParent()->scale(_width, _width , 1.f);
+		stageBottom->firstParent()->translate(0.f, -2.f, 3.0f);
 	}
 
 	curtainLeft = new Sprite(_shader);
 	curtainLeft->setPrimaryTexture(TTFB_ResourceManager::scenario->getTextureSampler("L1_Curtain")->textureSampler);
 	childTransform->addChild(curtainLeft);
-	curtainLeft->firstParent()->scale(35 , 30, 30);
+	curtainLeft->firstParent()->scale(30 , 30, 30);
 	curtainLeft->firstParent()->translate(-_width * 0.5f, 15.f, 2.5);
 
 	curtainRight = new Sprite(_shader);
 	curtainRight->setPrimaryTexture(TTFB_ResourceManager::scenario->getTextureSampler("L1_Curtain")->textureSampler);
 	childTransform->addChild(curtainRight);
-	curtainRight->firstParent()->scale(-35 , 30, 30);
+	curtainRight->firstParent()->scale(-30 , 30, 30);
 	curtainRight->firstParent()->translate(_width * 0.5f, 15.f, 2.5f);
 }
 

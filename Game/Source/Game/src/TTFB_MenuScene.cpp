@@ -124,7 +124,7 @@ TTFB_MenuScene::TTFB_MenuScene(Game* _game)  :
 	playButton->setText(L"PLAY");
 	playButton->setBackgroundColour(1.0f, 1.0f, 1.0f, 1.0f);
 	buttonLayout->addChild(playButton);
-	playButton->invalidateLayout();
+	buttonLayout->invalidateLayout();
 
 	PointLight * light2 = new PointLight(glm::vec3(1, 1, 1),  0.01f, 0.001f, -1.f);
 	lights.push_back(light2);

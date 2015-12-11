@@ -5,7 +5,7 @@
 #include <TTFB_Actor.h>
 
 TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
-	TTFB_StageScene(_game, 100.0f, "L1_Floor", "L3_LeftWall", "L1_Background", "L3_Top", "L3_Bottom"),
+	TTFB_StageScene(_game, 100.0f, "L1_Floor", "L3_RightWall", "L1_Background", "L3_Top", "L3_Bottom"),
 	bgMusicStarted(false),
 	lastFireEmission(0.0)
 {
@@ -40,6 +40,12 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 
 	eventQueue.at(startSceneDelay - 5.0f, [this](){dimHouseLights();});
 
+	eventQueue.at(0.0f + startSceneDelay, [this](){
+		dialoguePlayer->playNext();
+		dracula->say(3.0f, L"I am Dracula", true);
+	});
+
+
 #pragma  endregion 
 
 #pragma region Expectations 
@@ -69,6 +75,8 @@ void TTFB_DraculaScene::update(Step* _step) {
 		backgroundMusic->play();
 		bgMusicStarted = true;
 	}
+
+	eventQueue.update(_step);
 
 	TTFB_StageScene::update(_step);
 }
