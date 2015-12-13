@@ -50,6 +50,11 @@ public:
 	int lastScore;
 	int scoreQueue;
 
+	int countDownSec;
+	float countDownScaler;
+	float countDownAcc;
+	Transform * countDownTextCont;
+
 	TTFB_EventQueue eventQueue;
 	
 	Shader * screenSurfaceShader;
@@ -59,6 +64,7 @@ public:
 	ComponentShaderBase * baseShader;
 	ComponentShaderBase * characterShader;
 	ComponentShaderText * textShader;
+	ComponentShaderText * countdownTextShader;
 
 	BulletWorld * bulletWorld;
 	BulletDebugDrawer * debugDrawer;
@@ -77,6 +83,7 @@ public:
 	
 	Font * font;
 	Font * scoreFont;
+	Font * countDownFont;
 
 	UILayer uiLayer;
 
@@ -90,6 +97,7 @@ public:
 	TTFB_Fog * fog;
 
 	TextArea * scoreText;
+	TextArea * countDownText;
 
 	bool fireActive;
 	bool lastFireActive;
@@ -118,6 +126,8 @@ public:
 
 	void incScore(int _score = 100);
 	void decScore(int _score = 100);
+
+	void countDown(int seconds);
 
 	void setStage(TTFB_Stage * _stage);
 

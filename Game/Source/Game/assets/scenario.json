@@ -12,6 +12,12 @@
     	"src": "BebasNeue.otf"
     },
     {
+    	"id":"bebas_200",
+    	"type":"font",
+    	"size":200,
+    	"src": "BebasNeue.otf"
+    },
+    {
       "id": "SPRITESHEET",
       "type": "texture",
       "src": "spritesheet.png"

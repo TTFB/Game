@@ -83,10 +83,15 @@ TTFB_StageScene::TTFB_StageScene(Game * _game) :
 	fadeOutLights(false),
 	dimmingLights(false),
 	scoreTextShader(new ComponentShaderText(true)),
+	countdownTextShader(new ComponentShaderText(true)),
 	fireTimer(0),
-	scoreScaler(0.0f)
+	scoreScaler(0.0f),
+	countDownSec(0),
+	countDownScaler(0.0f),
+	countDownAcc(0.0f)
 {
 	scoreFont = TTFB_ResourceManager::scenario->getFont("bebas")->font;
+	countDownFont = TTFB_ResourceManager::scenario->getFont("bebas_200")->font;
 
 	baseShader->addComponent(new ShaderComponentMVP(baseShader)); 
 	baseShader->addComponent(new ShaderComponentDiffuse(baseShader));
@@ -126,6 +131,30 @@ TTFB_StageScene::TTFB_StageScene(Game * _game) :
 
 	uiLayer.setRenderMode(kTEXTURE);
 	uiLayer.invalidateLayout();
+
+	countdownTextShader->setColor(1.f, 1.f, 1.f);
+	countDownText = new TextArea(bulletWorld, countDownFont, countdownTextShader, 300);
+	countDownText->horizontalAlignment = kCENTER;
+	countDownText->verticalAlignment = kMIDDLE;
+
+	Transform * trans = new Transform();
+	trans->addChild(countDownText, false);
+
+	countDownTextCont = new Transform();
+	countDownTextCont->addChild(trans);
+
+	HorizontalLinearLayout * countDownLayout = new HorizontalLinearLayout(bulletWorld);
+	countDownLayout->horizontalAlignment = kCENTER;
+	countDownLayout->verticalAlignment = kMIDDLE;
+	countDownLayout->setRationalWidth(1.0f);
+	countDownLayout->setRationalHeight(1.0F);
+
+	countDownLayout->childTransform->addChild(countDownTextCont);
+	uiLayer.addChild(countDownLayout);
+
+	countDownTextCont->translate(uiLayer.width.pixelSize/2, uiLayer.height.pixelSize/2, 0.f);
+	trans->translate(-150, -100, 0);
+	//trans->firstParent()->translate(-150, -100, 0);
 
 	//Set up debug camera
 	debugCam = new MousePerspectiveCamera();
@@ -223,6 +252,26 @@ TTFB_StageScene::~TTFB_StageScene(){
 
 
 void TTFB_StageScene::update(Step * _step){
+
+	if(countDownSec > -1) {
+		countDownText->setVisible(true);
+		countDownText->setText(std::to_string(countDownSec));
+		countDownAcc += _step->deltaTime;
+
+		if(countDownAcc <= 0.5f) {
+			countDownScaler = 1.f + countDownAcc * 2.f;
+		}
+
+		countDownTextCont->scale(countDownScaler, countDownScaler, 1.f, false);
+
+		if(countDownAcc > 1.0f) {
+			countDownAcc = 0.f;
+			countDownScaler = 1.0f;
+			countDownSec--;
+		}
+	}else {
+		countDownText->setVisible(false);
+	}
 
 	if(scoreQueue > 0) {
 		score += 1;
@@ -446,6 +495,10 @@ void TTFB_StageScene::incScore(int _score) {
 void TTFB_StageScene::decScore(int _score) {
 	scoreQueue -= _score;
 	scoreScaler = -0.1f;
+}
+
+void TTFB_StageScene::countDown(int seconds) {
+	countDownSec = seconds;
 }
 
 void TTFB_StageScene::setStage(TTFB_Stage * _stage) {

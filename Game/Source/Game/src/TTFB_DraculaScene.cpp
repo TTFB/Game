@@ -284,6 +284,7 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 	addFog();
 
 #pragma endregion 
+	
 }
 
 TTFB_DraculaScene::~TTFB_DraculaScene() {
