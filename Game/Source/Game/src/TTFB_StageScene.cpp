@@ -86,7 +86,7 @@ TTFB_StageScene::TTFB_StageScene(Game * _game) :
 	countdownTextShader(new ComponentShaderText(true)),
 	fireTimer(0),
 	scoreScaler(0.0f),
-	countDownSec(0),
+	countDownSec(-1),
 	countDownScaler(0.0f),
 	countDownAcc(0.0f)
 {

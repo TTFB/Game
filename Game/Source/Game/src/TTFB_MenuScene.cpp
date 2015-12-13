@@ -169,10 +169,14 @@ void TTFB_MenuScene::update(Step* _step) {
 
 	camController->update(_step);
 
-	if(introScreen->isVisible() && (controller->IsConnected() && controller->specialFireButton.justDown()) || keyboard->keyDown(GLFW_KEY_P)) {
-		game->switchScene("dracula", false);
+	if((controller->IsConnected() && controller->specialFireButton.justDown()) || keyboard->keyJustUp(GLFW_KEY_P)) {
+		if(introScreen->isVisible()){
+			game->switchScene("dracula", false);
+		}else {
+			introScreen->setVisible(true);
+		}
 	}
-	
+
 	Scene::update(_step);
 }
 
