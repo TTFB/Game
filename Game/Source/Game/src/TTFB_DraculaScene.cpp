@@ -4,28 +4,37 @@
 #include <TTFB_ResourceManager.h>
 #include <TTFB_Actor.h>
 #include <TTFB_Stage.h>
+#include <TTFB_DraculaStage.h>
+#include <Box2DSprite.h>
+#include <Keyboard.h>
 
 TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
-	TTFB_StageScene(_game, 100.0f, "L1_Floor", "L3_RightWall", "L1_Background", "L3_Top", "L3_Bottom"),
+	TTFB_StageScene(_game),
 	bgMusicStarted(false),
 	lastFireEmission(0.0)
 {
 
 #pragma region PreSetup
 
+	setStage(new TTFB_DraculaStage(box2dWorld, baseShader));
+
 	startSceneDelay = 3.0f;
 
 #pragma  endregion 
-
+	 
 #pragma region ActorSetup
 
 	dracula = createActor("dracula"); 
 	childTransform->addChild(dracula);
-	dracula->translateComponents(-20.f, dracula->getLegsOffset(), 0.f);
+	dracula->translateComponents(-15.f, dracula->getLegsOffset(), 0.f);
 
-	renfeild = createActor("renfield"); 
-	childTransform->addChild(renfeild);
-	renfeild->translateComponents(20.f, renfeild->getLegsOffset(), 0.f);
+	TwBar * bar = stage->stageBase->firstParent()->createAntTweakBarWindow("Stage");
+	stage->stageBack->firstParent()->addToAntTweakBar(bar, "Background");
+	dracula->torso->firstParent()->addToAntTweakBar(bar, "Dracula");
+
+	renfield = createActor("renfield"); 
+	childTransform->addChild(renfield);
+	renfield->translateComponents(15.f, renfield->getLegsOffset(), 0.f);
 
 #pragma endregion 
 
@@ -39,20 +48,126 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 
 #pragma region Events
 
+	float offset = 0.0f;
+
 	eventQueue.at(startSceneDelay - 5.0f, [this](){dimHouseLights();});
 
-	eventQueue.at(0.0f + startSceneDelay, [this](){
+	eventQueue.at(0.0f + startSceneDelay + offset, [this](){
 		dialoguePlayer->playNext();
-		dracula->say(3.0f, L"I am Dracula", false);
-		decScore(400);
+		dracula->say(3.0f, L"I am Dracula", true);
 	});
 
-	eventQueue.at(4.0f + startSceneDelay, [this](){
-		incScore(400);
+	eventQueue.at(3.2f + startSceneDelay + offset, [this](){
+		dialoguePlayer->playNext();
+		renfield->say(2.0f, L"It's really good to see you.", false);
 	});
 
-	eventQueue.at(8.0f + startSceneDelay, [this](){
-		incScore(400);
+	eventQueue.at(5.2f + startSceneDelay + offset, [this](){
+		dialoguePlayer->playNext();
+		renfield->say(2.f, L"I don't know what happened to the driver and my luggage and", false);
+	});
+
+	eventQueue.at(7.7f + startSceneDelay + offset, [this](){
+		renfield->say(3.f, L"...well...with all this, I thought I was in the wrong place.", true);
+	});
+
+	eventQueue.at(10.7f + startSceneDelay + offset, [this](){
+		dialoguePlayer->playNext();
+		dracula->say(2.3f, L"I bid you welcome", true);
+	});
+
+	// Go upstairs
+
+	eventQueue.at(13.f + startSceneDelay + offset, [this](){
+		TTFB_ResourceManager::scenario->getAudio("HowlingWolf1")->sound->play();
+	});
+
+	eventQueue.at(17.f + startSceneDelay + offset, [this](){
+		dialoguePlayer->playNext();
+		dracula->say(4.5f, L"Listen to them...children of the night. What music they make!", true);
+	});
+
+	// Walking through spider web
+
+	eventQueue.at(22.f + startSceneDelay + offset, [this](){
+		dialoguePlayer->playNext();
+		dracula->say(3.f, L"A spider spinning his web for the unwary fly." , false);
+	});
+
+	eventQueue.at(25.f + startSceneDelay + offset, [this](){
+		dialoguePlayer->playNext();
+		dracula->say(3.f, L"The blood...is the life, Mr. Renfield.", true);
+	});
+
+	eventQueue.at(28.f + startSceneDelay + offset, [this](){
+		dialoguePlayer->playNext();
+		renfield->say(1.5f, L"Why, yes.", true);
+	});
+
+	// Enter bed chamber
+
+	eventQueue.at(30.f + startSceneDelay + offset, [this](){
+		dialoguePlayer->playNext();
+		dracula->say(4.f, L"I'm sure you will find this part of my castle more inviting.", true);
+	});
+
+	eventQueue.at(34.f + startSceneDelay + offset, [this](){
+		dialoguePlayer->playNext();
+		renfield->say(5.f, L"Oh, rather! It's quite different from outside. Oh, and the fire! It's so cheerful", true);
+	});
+
+	eventQueue.at(39.f + startSceneDelay + offset, [this](){
+		dialoguePlayer->playNext();
+		dracula->say(3.f, L"I didn't know but that you might be hungry.", true);
+	});
+
+	eventQueue.at(42.f + startSceneDelay + offset, [this](){
+		dialoguePlayer->playNext();
+		renfield->say(3.f, L"Thank you. That's very kind of you. But I'm a bit worried about my luggage", false);
+	});
+
+	eventQueue.at(45.f + startSceneDelay + offset, [this](){
+		renfield->say(2.5f, L"You see, all your papers were in...", true);
+	});
+
+	eventQueue.at(47.5f + startSceneDelay + offset, [this](){
+		dialoguePlayer->playNext();
+		dracula->say(4.5f, L"I took the liberty of having your luggage brought up. Allow me.", true);
+	});
+
+	eventQueue.at(51.f + startSceneDelay + offset, [this](){
+		dialoguePlayer->playNext();
+		renfield->say(2.f, L"Oh, yes. Thanks", true);
+	});
+
+	eventQueue.at(53.f + startSceneDelay + offset, [this](){
+		dialoguePlayer->playNext();
+		dracula->say(3.5f, L"I trust you have kept your coming here...a secret?", true);
+	});
+
+	eventQueue.at(56.f + startSceneDelay + offset, [this](){
+		dialoguePlayer->playNext();
+		renfield->say(3.f, L"I've followed your instructions implicitly.", true);
+	});
+
+	eventQueue.at(59.f + startSceneDelay + offset, [this](){
+		dialoguePlayer->playNext();
+		dracula->say(2.f, L"Excellent, Mr. Renfield, excellent.", false);
+	});
+
+	eventQueue.at(61.f + startSceneDelay + offset, [this](){
+		dialoguePlayer->playNext();
+		dracula->say(5.f, L"And now, if you're not too fatiqued I would like to discuss the lease on Carfax Abbey", true);
+	});
+
+	eventQueue.at(66.f + startSceneDelay + offset, [this](){
+		dialoguePlayer->playNext();
+		renfield->say(5.f, L"Oh, yes. Everything is in order, awaiting your signature.", true);
+	});
+
+	eventQueue.at(71.f + startSceneDelay + offset, [this](){
+		dialoguePlayer->playNext();
+		dracula->say(5.f, L"Here is the lease. I hope I've brought enough labels for your luggage", true);
 	});
 
 #pragma  endregion 
@@ -83,6 +198,10 @@ void TTFB_DraculaScene::update(Step* _step) {
 	if(!bgMusicStarted) {
 		backgroundMusic->play();
 		bgMusicStarted = true;
+	}
+	
+	if(keyboard->keyDown(GLFW_KEY_K)) {
+		eventQueue.timeOffset += 0.01f;
 	}
 
 	eventQueue.update(_step);

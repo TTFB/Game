@@ -1,8 +1,8 @@
 {
-  "s": 1024,
-  "t": "Level3_RightWall.png",
-  "u": 0,
+  "w": 449,
   "v": 0,
-  "w": 134,
-  "h": 596
+  "u": 0,
+  "t": "Level3_RightWall.png",
+  "s": 2048,
+  "h": 2005
 }

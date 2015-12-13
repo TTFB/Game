@@ -14,6 +14,8 @@ public:
 	TTFB_EventQueue();
 	~TTFB_EventQueue();
 
+	float timeOffset;
+
 	void update(Step * _step) override;
 
 	TTFB_Subscription * at(float _seconds, std::function<void()> _do);
@@ -24,5 +26,4 @@ private:
 	std::vector<TTFB_Event * >  events;
 	std::vector<TTFB_Expectation> expectations;
 	bool firstUpdate;
-	float timeOffset;
 };

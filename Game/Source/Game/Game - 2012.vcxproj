@@ -18,6 +18,7 @@
     <ClCompile Include="src\TTFB_Controller.cpp" />
     <ClCompile Include="src\TTFB_DialoguePlayer.cpp" />
     <ClCompile Include="src\TTFB_DraculaScene.cpp" />
+    <ClCompile Include="src\TTFB_DraculaStage.cpp" />
     <ClCompile Include="src\TTFB_Entity.cpp" />
     <ClCompile Include="src\TTFB_Event.cpp" />
     <ClCompile Include="src\TTFB_EventQueue.cpp" />
@@ -32,6 +33,7 @@
     <ClCompile Include="src\TTFB_Scene.cpp" />
     <ClCompile Include="src\TTFB_SetPiece.cpp" />
     <ClCompile Include="src\TTFB_Slider.cpp" />
+    <ClCompile Include="src\TTFB_SpamalotStage.cpp" />
     <ClCompile Include="src\TTFB_StageScene.cpp" />
     <ClCompile Include="src\TTFB_Stage.cpp" />
     <ClCompile Include="src\TTFB_Subscription.cpp" />
@@ -46,6 +48,7 @@
     <ClInclude Include="include\TTFB_Controller.h" />
     <ClInclude Include="include\TTFB_DialoguePlayer.h" />
     <ClInclude Include="include\TTFB_DraculaScene.h" />
+    <ClInclude Include="include\TTFB_DraculaStage.h" />
     <ClInclude Include="include\TTFB_Entity.h" />
     <ClInclude Include="include\TTFB_Event.h" />
     <ClInclude Include="include\TTFB_EventQueue.h" />
@@ -60,6 +63,7 @@
     <ClInclude Include="include\TTFB_Scene.h" />
     <ClInclude Include="include\TTFB_SetPiece.h" />
     <ClInclude Include="include\TTFB_Slider.h" />
+    <ClInclude Include="include\TTFB_SpamalotStage.h" />
     <ClInclude Include="include\TTFB_StageScene.h" />
     <ClInclude Include="include\TTFB_Stage.h" />
     <ClInclude Include="include\TTFB_Subscription.h" />
@@ -99,11 +103,11 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(ENGINE_DIR)\Source\S-Tengine2\include;include;$(GLEW_DIR)\include;$(GLFW_DIR)\include;$(GLM_DIR);$(FREETYPE_DIR)\include;$(OPENAL_DIR)\include;$(CPPREST_DIR)\Release\include;$(BOX2D_DIR);$(BULLET_DIR)\src;$(IncludePath)</IncludePath>
+    <IncludePath>$(ENGINE_DIR)\Source\S-Tengine2\include;include;$(GLEW_DIR)\include;$(GLFW_DIR)\include;$(GLM_DIR);$(FREETYPE_DIR)\include;$(OPENAL_DIR)\include;$(CPPREST_DIR)\Release\include;$(BOX2D_DIR);$(BULLET_DIR)\src;$(ANT_DIR)\include;$(IncludePath)</IncludePath>
     <SourcePath>src;$(SourcePath)</SourcePath>
     <OutDir>..\..\Output\$(ProjectName)-$(Configuration)\</OutDir>
     <IntDir>..\..\Output\junk\$(ProjectName)-$(Configuration)\</IntDir>
-    <LibraryPath>$(GLEW_DIR)\lib\Release\Win32;$(GLFW_DIR)\src\Debug;$(OPENAL_DIR)\libs\Win32;$(CPPREST_DIR)\Binaries\Win32\Debug;$(BOX2D_DIR)\Build\vs2013\bin\x32\Debug;$(FREETYPE_DIR)\objs\vc2012\Win32;$(BULLET_DIR)\lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(GLEW_DIR)\lib\Release\Win32;$(GLFW_DIR)\src\Debug;$(OPENAL_DIR)\libs\Win32;$(CPPREST_DIR)\Binaries\Win32\Debug;$(BOX2D_DIR)\Build\vs2013\bin\x32\Debug;$(FREETYPE_DIR)\objs\vc2012\Win32;$(BULLET_DIR)\lib;$(ANT_DIR)\lib;$(LibraryPath)</LibraryPath>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <LinkIncremental>false</LinkIncremental>
@@ -130,7 +134,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32.lib;libsndfile-1.lib;OpenAL32.lib;freetype255MTd.lib;cpprest110d_2_5.lib;Box2D.lib;BulletSoftBody_vs2010_debug.lib;BulletDynamics_vs2010_debug.lib;BulletCollision_vs2010_debug.lib;LinearMath_vs2010_debug.lib;S-Tengine2 - 2012d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32.lib;libsndfile-1.lib;OpenAL32.lib;freetype255MTd.lib;cpprest110d_2_5.lib;Box2D.lib;BulletSoftBody_vs2010_debug.lib;BulletDynamics_vs2010_debug.lib;BulletCollision_vs2010_debug.lib;LinearMath_vs2010_debug.lib;S-Tengine2 - 2012d.lib;AntTweakBar.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <PerUserRedirection>true</PerUserRedirection>
       <AdditionalLibraryDirectories>$(ENGINE_DIR)\Output\S-Tengine2 - 2012-LibDebug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <Profile>true</Profile>
@@ -149,7 +153,7 @@
 copy /Y "$(CPPREST_DIR)\Binaries\Win32\Debug\cpprest110d_2_5.dll" "$(TargetDir)\cpprest110d_2_5.dll"
 copy /Y "$(OPENAL_DIR)\bin\Win32\libsndfile-1.dll" "$(TargetDir)\libsndfile-1.dll"
 copy /Y "$(OPENAL_DIR)\bin\Win32\soft_oal.dll" "$(TargetDir)\OpenAL32.dll"
-</Command>
+copy /Y "$(ANT_DIR)\lib\AntTweakBar.dll" "$(TargetDir)\AntTweakBar.dll"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -182,7 +186,7 @@ copy /Y "$(OPENAL_DIR)\bin\Win32\soft_oal.dll" "$(TargetDir)\OpenAL32.dll"
 copy /Y "$(CPPREST_DIR)\Binaries\Win32\Release\cpprest110_2_5.dll" "$(TargetDir)\cpprest110_2_5.dll"
 copy /Y "$(OPENAL_DIR)\bin\Win32\libsndfile-1.dll" "$(TargetDir)\libsndfile-1.dll"
 copy /Y "$(OPENAL_DIR)\bin\Win32\soft_oal.dll" "$(TargetDir)\OpenAL32.dll"
-</Command>
+copy /Y "$(ANT_DIR)\lib\AntTweakBar.dll" "$(TargetDir)\AntTweakBar.dll"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

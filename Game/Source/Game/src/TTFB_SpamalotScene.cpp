@@ -54,12 +54,18 @@
 #include <TTFB_SetPiece.h>
 #include <ParticleSystem.h>
 #include <TTFB_Audience.h>
+#include <TTFB_SpamalotStage.h>
+
 
 TTFB_SpamalotScene::TTFB_SpamalotScene(Game * _game) :
-	TTFB_StageScene(_game, 100.0f, "L1_Floor", "L1_Side", "L1_Background", "L1_Top", "L1_Bottom"),
+	TTFB_StageScene(_game),
 	bgMusicStarted(false),
 	lastFireEmission(0.0)
 {
+
+	// Must setup the stage first
+	setStage(new TTFB_SpamalotStage(box2dWorld, baseShader));
+
 	conditions["blood1Played"] = false; //holds like a bool
 	conditions["blood2Played"] = false; 
 	conditions["blood3Played"] = false; 

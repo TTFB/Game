@@ -13,6 +13,7 @@ public:
 	~TTFB_Game();
 
 	void update(Step * _step) override;
+	void draw() override;
 
 	enum BOX2D_CATEGORY{
 		kBOUNDARY = 0x0001,

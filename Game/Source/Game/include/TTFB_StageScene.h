@@ -119,6 +119,8 @@ public:
 	void incScore(int _score = 100);
 	void decScore(int _score = 100);
 
-	TTFB_StageScene(Game * _game, float _stageWidth, std::string _floorTex, std::string _sideTex, std::string _backTex, std::string _topTex, std::string _frontTex);
+	void setStage(TTFB_Stage * _stage);
+
+	TTFB_StageScene(Game * _game);
 	~TTFB_StageScene();
 };

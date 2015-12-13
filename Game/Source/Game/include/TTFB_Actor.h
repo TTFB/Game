@@ -27,6 +27,13 @@ public:
 
 	float speedMod;
 
+	Box2DSprite * torso;
+	Box2DSprite * head;
+	Box2DSprite * leftArm;
+	Box2DSprite * rightArm;
+	Box2DSprite* rightLeg;
+	Box2DSprite* leftLeg;
+
 	Transform * leftArmJointTransform;
 	Transform * rightArmJointTransform;
 	Transform * leftLegJointTransform;
@@ -68,13 +75,6 @@ public:
 	bool rightLegBroken;
 
 private:
-	Box2DSprite * torso;
-	Box2DSprite * head;
-	Box2DSprite * leftArm;
-	Box2DSprite * rightArm;
-	Box2DSprite* rightLeg;
-	Box2DSprite* leftLeg;
-
 	TextArea * speechArea; 
 	TTFB_Subscription * moveSubscription;
 	TTFB_Subscription * saySubscription;

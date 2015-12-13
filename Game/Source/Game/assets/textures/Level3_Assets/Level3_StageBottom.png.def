@@ -1,8 +1,8 @@
 {
-  "s": 1024,
-  "t": "Level3_StageBottom.png",
-  "u": 0,
+  "w": 2043,
   "v": 0,
-  "w": 1022,
-  "h": 168
+  "u": 0,
+  "t": "Level3_StageBottom.png",
+  "s": 2048,
+  "h": 335
 }

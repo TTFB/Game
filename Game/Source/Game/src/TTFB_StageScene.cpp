@@ -64,7 +64,7 @@
 #include <TTFB_Game.h>
 #include <TextArea.h>
 
-TTFB_StageScene::TTFB_StageScene(Game * _game, float _stageWidth, std::string _floorTex, std::string _sideTex, std::string _backTex, std::string _topTex, std::string _frontTex) :
+TTFB_StageScene::TTFB_StageScene(Game * _game) :
 	TTFB_Scene(_game),
 	score(0),
 	scoreQueue(0),
@@ -91,7 +91,7 @@ TTFB_StageScene::TTFB_StageScene(Game * _game, float _stageWidth, std::string _f
 	baseShader->addComponent(new ShaderComponentMVP(baseShader)); 
 	baseShader->addComponent(new ShaderComponentDiffuse(baseShader));
 	ShaderComponentTexture * texComp = new ShaderComponentTexture(baseShader);
-	texComp->alphaDiscardThreshold = 0.05f;
+	texComp->alphaDiscardThreshold = 0.1f;
 	baseShader->addComponent(texComp);
 	baseShader->addComponent(new ShaderComponentDepthOffset(baseShader));
 	baseShader->compileShader();
@@ -169,9 +169,6 @@ TTFB_StageScene::TTFB_StageScene(Game * _game, float _stageWidth, std::string _f
 	mouseIndicator->mesh->dirty = true;
 	mouseIndicator->setShader(uiLayer.shader, true);
 
-	stage = new TTFB_Stage(_stageWidth, box2dWorld, _floorTex, _sideTex, _backTex, _topTex, _frontTex, baseShader);
-	childTransform->addChild(stage);
-
 	audience = new TTFB_Audience(baseShader);
 	childTransform->addChild(audience)->translate(0.f, 11.f, 20.0f);
 	audience->firstParent()->scale(25.0f, 25.0f * 0.562f, 1.0f);
@@ -184,8 +181,6 @@ TTFB_StageScene::TTFB_StageScene(Game * _game, float _stageWidth, std::string _f
 	box2dDebug->drawing = false;
 
 	fireSystem = new ParticleSystem(TTFB_ResourceManager::scenario->getTexture("blood")->texture, box2dWorld, 0);
-	stage->childTransform->addChild(fireSystem);
-
 	fireSystem->setShader(baseShader, true);
 
 #pragma region LightSetup
@@ -232,11 +227,17 @@ void TTFB_StageScene::update(Step * _step){
 	if(scoreQueue > 0) {
 		score += 1;
 		scoreQueue -= 1;
-		scoreTextShader->setColor(102.0f/255.0f, 238.0f/255.0f, 87.0f/255.0f);
 	}else if(scoreQueue < 0) {
 		score -= 1;
 		scoreQueue += 1;
+	}
+
+	if(scoreQueue < 0) {
 		scoreTextShader->setColor(254.0/255.0f, 72.0/255.0f, 46.0/255.0f);
+	}else if(scoreQueue > 0) {
+		scoreTextShader->setColor(102.0f/255.0f, 238.0f/255.0f, 87.0f/255.0f);
+	}else{
+		scoreTextShader->setColor(1.f, 1.f, 1.f);
 	}
 
 	if(scoreScaler > 0.0005f || scoreScaler < -0.0005f) {
@@ -256,7 +257,6 @@ void TTFB_StageScene::update(Step * _step){
 		}
 	}
 	
-
 	if(score != lastScore) {
 		scoreText->setText(L"Score " + std::to_wstring(score));
 		lastScore = score;
@@ -446,6 +446,12 @@ void TTFB_StageScene::incScore(int _score) {
 void TTFB_StageScene::decScore(int _score) {
 	scoreQueue -= _score;
 	scoreScaler = -0.1f;
+}
+
+void TTFB_StageScene::setStage(TTFB_Stage * _stage) {
+	stage = _stage;
+	childTransform->addChild(stage);
+	stage->childTransform->addChild(fireSystem);
 }
 
 void TTFB_StageScene::dimHouseLights() {

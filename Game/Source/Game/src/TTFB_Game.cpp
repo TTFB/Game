@@ -5,6 +5,10 @@
 #include <TTFB_MenuScene.h>
 #include <TTFB_Controller.h>
 #include <TTFB_DraculaScene.h>
+#include <AntTweakBar.h>
+#include <Keyboard.h>
+
+int myVar = 5;
 
 TTFB_Game::TTFB_Game() :
 	Game(true, std::pair<std::string, Scene *>("test", nullptr), false),
@@ -25,6 +29,15 @@ TTFB_Game::~TTFB_Game(){
 }
 
 void TTFB_Game::update(Step* _step) {
+	
+if(keyboard->keyJustUp(GLFW_KEY_3)) {
+		sweet::toggleAntTweakBar();
+	}
+
 	controller->update(_step);
 	Game::update(_step);
+}
+
+void TTFB_Game::draw() {
+	Game::draw();
 }

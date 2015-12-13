@@ -17,7 +17,7 @@ public:
 	TTFB_EventQueue eventQueue;
 
 	TTFB_Actor * dracula;
-	TTFB_Actor * renfeild;
+	TTFB_Actor * renfield;
 
 	TTFB_DialoguePlayer * dialoguePlayer;
 
