@@ -60,6 +60,9 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 	eventQueue.at(3.2f + startSceneDelay + offset, [this](){
 		dialoguePlayer->playNext();
 		renfield->say(2.0f, L"It's really good to see you.", false);
+
+		
+		incScore(100);
 	});
 
 	eventQueue.at(5.2f + startSceneDelay + offset, [this](){
@@ -68,7 +71,7 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 	});
 
 	eventQueue.at(7.7f + startSceneDelay + offset, [this](){
-		renfield->say(3.f, L"...well...with all this, I thought I was in the wrong place.", true);
+		renfield->say(3.f, L"...well.. .with all this, I thought I was in the wrong place.", true);
 	});
 
 	eventQueue.at(10.7f + startSceneDelay + offset, [this](){
@@ -84,7 +87,7 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 
 	eventQueue.at(17.f + startSceneDelay + offset, [this](){
 		dialoguePlayer->playNext();
-		dracula->say(4.5f, L"Listen to them...children of the night. What music they make!", true);
+		dracula->say(4.5f, L"Listen to them... children of the night. What music they make!", true);
 	});
 
 	// Walking through spider web
@@ -162,13 +165,105 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 
 	eventQueue.at(66.f + startSceneDelay + offset, [this](){
 		dialoguePlayer->playNext();
-		renfield->say(5.f, L"Oh, yes. Everything is in order, awaiting your signature.", true);
+		renfield->say(4.f, L"Oh, yes. Everything is in order, awaiting your signature. Here is the lease.", false);
 	});
 
-	eventQueue.at(71.f + startSceneDelay + offset, [this](){
+	eventQueue.at(68.f + startSceneDelay + offset, [this](){
 		dialoguePlayer->playNext();
-		dracula->say(5.f, L"Here is the lease. I hope I've brought enough labels for your luggage", true);
 	});
+
+	eventQueue.at(70.f + startSceneDelay + offset, [this](){
+		dialoguePlayer->playNext();
+		renfield->say(4.f, L"I hope I've brought enough labels for your luggage", true);
+	});
+
+	eventQueue.at(74.f + startSceneDelay + offset, [this](){
+		dialoguePlayer->playNext();
+		dracula->say(4.f, L"I am taking with me only three...boxes.", true);
+	});
+
+	eventQueue.at(78.f + startSceneDelay + offset, [this](){
+		dialoguePlayer->playNext();
+		renfield->say(2.f, L"Very well", true);
+	});
+
+	eventQueue.at(80.f + startSceneDelay + offset, [this](){
+		dialoguePlayer->playNext();
+		dracula->say(6.f, L"I have chartered a ship to take us to England. We will be leaving... tomorrow... evening.", true);
+	});
+
+	eventQueue.at(86.f + startSceneDelay + offset, [this](){
+		dialoguePlayer->playNext();
+		renfield->say(2.f, L"Everything will be ready", true);
+	});
+
+	eventQueue.at(87.f + startSceneDelay + offset, [this](){
+		dialoguePlayer->playNext();
+		// Pointing to bed
+		dracula->say(3.f, L"I hope you will find this comfortable", true);
+	});
+
+	eventQueue.at(90.f + startSceneDelay + offset, [this](){
+		dialoguePlayer->playNext();
+		renfield->say(3.f, L"Thanks. It looks very inviting", true);
+	});
+
+	// Renfield cuts his finger
+	
+	eventQueue.at(93.f + startSceneDelay + offset, [this](){
+		dialoguePlayer->playNext();
+		renfield->say(2.f, L"Ouch!", true);
+	});
+
+	// Dracula stealthly approaches Renfield
+
+	// Renfields crucifix falls over the cut finger
+
+	// Dracula turns away
+
+	eventQueue.at(95.f + startSceneDelay + offset, [this](){
+		dialoguePlayer->playNext();
+		renfield->say(5.f, L"Oh, it's nothing serious. Just a small cut from that paperclip. It's just a scratch.!", true);
+	});
+	
+	eventQueue.at(100.f + startSceneDelay + offset, [this](){
+		dialoguePlayer->playNext();
+		// Pours glass of wine
+		dracula->say(4.f, L"This...is very old wine. I hope you will like it.", true);
+	});
+
+	eventQueue.at(104.f + startSceneDelay + offset, [this](){
+		dialoguePlayer->playNext();
+		renfield->say(3.f, L"Aren't you drinking?", true);
+	});
+
+	eventQueue.at(107.f + startSceneDelay + offset, [this](){
+		dialoguePlayer->playNext();
+		dracula->say(3.f, L"I never drink... wine", true);
+	});
+
+	eventQueue.at(110.f + startSceneDelay + offset, [this](){
+		dialoguePlayer->playNext();
+		renfield->say(3.f, L"Well, it's delicous", true);
+	});
+
+	eventQueue.at(113.f + startSceneDelay + offset, [this](){
+		dialoguePlayer->playNext();
+		dracula->say(3.f, L"And, now, I'll leave you.", true);
+	});
+
+	eventQueue.at(116.f + startSceneDelay + offset, [this](){
+		dialoguePlayer->playNext();
+		renfield->say(3.f, L"Well, good night.", true);
+	});
+
+	eventQueue.at(119.f + startSceneDelay + offset, [this](){
+		dialoguePlayer->playNext();
+		dracula->say(3.f, L"Good night, Mr. Renfield.", true);
+	});
+
+	// Dracula leaves
+	// Bat flies through window
 
 #pragma  endregion 
 

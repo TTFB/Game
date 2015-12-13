@@ -123,6 +123,7 @@ TTFB_MenuScene::TTFB_MenuScene(Game* _game)  :
 	playButton->setMouseEnabled(true);
 	playButton->setText(L"PLAY");
 	playButton->setBackgroundColour(1.0f, 1.0f, 1.0f, 1.0f);
+	playButton->setHeight(200);
 	buttonLayout->addChild(playButton);
 	buttonLayout->invalidateLayout();
 
@@ -171,7 +172,7 @@ void TTFB_MenuScene::update(Step* _step) {
 	if(introScreen->isVisible() && (controller->IsConnected() && controller->specialFireButton.justDown()) || keyboard->keyDown(GLFW_KEY_P)) {
 		game->switchScene("dracula", false);
 	}
-
+	
 	Scene::update(_step);
 }
 
