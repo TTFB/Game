@@ -104,7 +104,7 @@ TTFB_MenuScene::TTFB_MenuScene(Game* _game)  :
 	uiLayer.addChild(introScreen);
 	introScreen->setVisible(false);
 
-	playButton->eventManager.addEventListener("click", [=](sweet::Event * _event){
+	/*playButton->eventManager.addEventListener("click", [=](sweet::Event * _event){
 		introScreen->setVisible(true);
 	});
 
@@ -127,7 +127,7 @@ TTFB_MenuScene::TTFB_MenuScene(Game* _game)  :
 	playButton->setBackgroundColour(1.0f, 1.0f, 1.0f, 1.0f);
 	playButton->setHeight(200);
 	buttonLayout->addChild(playButton);
-	buttonLayout->invalidateLayout();
+	buttonLayout->invalidateLayout();*/
 
 	PointLight * light2 = new PointLight(glm::vec3(1, 1, 1),  0.01f, 0.001f, -1.f);
 	lights.push_back(light2);
@@ -173,7 +173,7 @@ void TTFB_MenuScene::update(Step* _step) {
 
 	if((controller->IsConnected() && controller->specialFireButton.justDown()) || keyboard->keyJustUp(GLFW_KEY_P)) {
 		if(introScreen->isVisible()){
-			((TTFB_Game *)game)->switchToScene(SPAMALOT);
+			((TTFB_Game *)game)->switchToScene(DRACULA);
 			return;
 		}else {
 			introScreen->setVisible(true);

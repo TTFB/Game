@@ -396,6 +396,10 @@ TTFB_SpamalotScene::TTFB_SpamalotScene(Game * _game) :
 
 	eventQueue.at(startSceneDelay - 5.0f, [this](){dimHouseLights();});
 
+	eventQueue.at(0.00f, [this]{
+		countDown(startSceneDelay);
+	});
+
 	eventQueue.at(0.0f + startSceneDelay, [this](){
 		kingArthur->speedMod = 1.0f;
 		kingArthur->move(-7.0f);
@@ -724,7 +728,7 @@ void TTFB_SpamalotScene::update(Step * _step){
 
 	//fireActive = true;
 	
-	if(fireTimer < 1.0 && fireActive && _step->time - lastFireEmission > 0.2f){
+	if(fireTimer < 1.0 && fireActive && _step->time - lastFireEmission > 0.15f){
 		b2Vec2 blackKnightPos = blackKnight->getBox2dPos();
 		Particle * p = fireSystem->addParticle(glm::vec3(blackKnightPos.x + 3,  stage->getVisibleBounds().getBottomRight().y + 0.2f, 0), TTFB_ResourceManager::scenario->getTexture("fireRed")->texture);
 		Particle * p1 = fireSystem->addParticle(glm::vec3(blackKnightPos.x + 3, stage->getVisibleBounds().getBottomRight().y + 0.2f, 0), TTFB_ResourceManager::scenario->getTexture("fireOrange")->texture);
@@ -733,7 +737,9 @@ void TTFB_SpamalotScene::update(Step * _step){
 		lastFireEmission = _step->time;
 	}
 
-	eventQueue.update(_step);
+	if(!sceneEnded){
+		eventQueue.update(_step);
+	}
 	TTFB_StageScene::update(_step);
 }
 
@@ -795,8 +801,8 @@ void TTFB_SpamalotScene::endScene() {
 	if(score <= ONE_STAR){
 		TTFB_StageScene::endScene(SPAMALOT, SPAMALOT, "lose", "");
 	}else if(score > ONE_STAR && score < THREE_STARS){
-		TTFB_StageScene::endScene(SPAMALOT, DRACULA, "spamalotMediocre", ""); // Add in sound effect
+		TTFB_StageScene::endScene(SPAMALOT, DRACULA, "spamalotMediocre", "PreDraculaDialogue_Mediocre"); // Add in sound effect
 	}else{
-		TTFB_StageScene::endScene(SPAMALOT, DRACULA, "spamalotGood", ""); // Add in sound effect
+		TTFB_StageScene::endScene(SPAMALOT, DRACULA, "spamalotGood", "PreDraculaDialogue_Excellent"); // Add in sound effect
 	}
 }

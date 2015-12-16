@@ -189,6 +189,7 @@ TTFB_StageScene::TTFB_StageScene(Game * _game) :
 
 	//
 
+#ifdef _DEBUG
 	// mouse cursor
 	mouseIndicator = new Sprite();
 	uiLayer.childTransform->addChild(mouseIndicator);
@@ -204,6 +205,7 @@ TTFB_StageScene::TTFB_StageScene(Game * _game) :
 
 	mouseIndicator->mesh->dirty = true;
 	mouseIndicator->setShader(uiLayer.shader, true);
+#endif
 
 	audience = new TTFB_Audience(baseShader);
 	childTransform->addChild(audience)->translate(0.f, 11.f, 20.0f);
@@ -346,7 +348,7 @@ void TTFB_StageScene::update(Step * _step){
 	}
 
 	if(dimmingLights) {
-		if(lights[1]->getAmbientCoefficient() <= 0.002) {
+		if(lights[1]->getAmbientCoefficient() <= 0.0015) {
 			dimmingLights = false;
 		}else {
 			lights[1]->setAmbientCoefficient(lights[1]->getAmbientCoefficient() - 0.0002);
@@ -387,7 +389,9 @@ void TTFB_StageScene::update(Step * _step){
 
 	uiLayer.update(_step);
 
+#ifdef _DEBUG
 	mouseIndicator->parents.at(0)->translate(mouse->mouseX(), mouse->mouseY(), 0, false);
+#endif
 
 	if(keyboard->keyJustDown(GLFW_KEY_F12)){
 		game->toggleFullScreen();

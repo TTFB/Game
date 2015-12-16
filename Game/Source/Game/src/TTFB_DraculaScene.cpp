@@ -21,7 +21,7 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 
 	setStage(new TTFB_DraculaStage(box2dWorld, baseShader));
 
-	startSceneDelay = 3.0f;
+	startSceneDelay = 10.0f;
 
 #pragma  endregion 
 	 
@@ -52,6 +52,10 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 #pragma region Events
 
 	float offset = 0.0f;
+
+	eventQueue.at(0.00f, [this]{
+		countDown(startSceneDelay);
+	});
 
 	eventQueue.at(startSceneDelay - 5.0f, [this](){dimHouseLights();});
 
@@ -275,9 +279,41 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 
 #pragma region ControllerSetup
 
+	controller->lightSliderOne.bind([this](int _value){
+		lights[1]->setIntensities(glm::vec3(((float)_value + 0.0001f)/1024));
+	});
+
+	controller->lightSliderTwo.bind([this](int _value){
+		lights[2]->setIntensities(glm::vec3(((float)_value + 0.0001f)/1024));
+	});
+
+	controller->lightSliderThree.bind([this](int _value){
+		lights[3]->setIntensities(glm::vec3(((float)_value + 0.0001f)/1024));
+	});
+	
+	// Move this into stage scene
+	controller->specialCurtainPot.bind([this](int _value){
+		float increase = _value / 30.0f;
+		glm::vec3 leftTrans = stage->curtainLeft->firstParent()->getTranslationVector();
+		glm::vec3 rightTrans = stage->curtainRight->firstParent()->getTranslationVector();
+		leftTrans.x  = (-increase - 12);
+		rightTrans.x = (increase + 12);
+		stage->curtainLeft->firstParent()->translate(leftTrans, false);
+		stage->curtainRight->firstParent()->translate(rightTrans, false);
+		//-46 is open, -12 is closed for left curtain
+	});
+
 	controller->specialFogSwitch.bind([this](int _value) {
 		if(controller->specialFogSwitch.justDown() || controller->specialFogSwitch.justUp()) {
 			toggleFog();
+		}
+	});
+
+	controller->soundMicSwitch.bind([this](int _value) {
+		if(_value == 1) {
+			dialoguePlayer->unmute();
+		}else {
+			dialoguePlayer->mute();
 		}
 	});
 
@@ -308,7 +344,9 @@ void TTFB_DraculaScene::update(Step* _step) {
 		eventQueue.timeOffset += 0.01f;
 	}
 
-	eventQueue.update(_step);
+	if(!sceneEnded){
+		eventQueue.update(_step);
+	}
 
 	TTFB_StageScene::update(_step);
 }
