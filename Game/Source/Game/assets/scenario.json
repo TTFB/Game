@@ -6,16 +6,36 @@
       "src": "../engine basics/cursor.png"
     },
     {
-    	"id":"bebas",
-    	"type":"font",
-    	"size":40,
-    	"src": "BebasNeue.otf"
+      "id": "bebas",
+      "type": "font",
+      "size": 40,
+      "src": "BebasNeue.otf"
     },
     {
-    	"id":"bebas_200",
-    	"type":"font",
-    	"size":200,
-    	"src": "BebasNeue.otf"
+      "id": "bebas_200",
+      "type": "font",
+      "size": 200,
+      "src": "BebasNeue.otf"
+    },
+    {
+      "id": "lose",
+      "type": "texture",
+      "src": "lose.png"
+    },
+    {
+      "id": "spamalotmediocre",
+      "type": "texture",
+      "src": "spamalotTwoStars.png"
+    },
+    {
+      "id": "spamalotGood",
+      "type": "texture",
+      "src": "spamalotThreeStars.png"
+    },
+    {
+      "id": "draculaWin",
+      "type": "texture",
+      "src": "draculaWin.png"
     },
     {
       "id": "SPRITESHEET",
@@ -122,7 +142,7 @@
       "type": "texture",
       "src": "speech_bubble.png"
     },
-      {
+    {
       "id": "draculaHead",
       "type": "textureSampler",
       "src": "dracula/head.png.def"

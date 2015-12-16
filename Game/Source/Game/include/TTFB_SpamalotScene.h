@@ -32,6 +32,7 @@ public:
 	TTFB_DialoguePlayer * dialoguePlayer;
 
 	OpenAL_Sound * backgroundMusic;
+	OpenAL_Sound * clapping;
 
 	std::map<std::string, bool> conditions;
 
@@ -55,6 +56,8 @@ public:
 	void stopRightArmBleeding();
 	void stopLeftLegBleeding();
 	void stopRightLegBleeding();
+
+	void endScene();
 
 	TTFB_SpamalotScene(Game * _game);
 	~TTFB_SpamalotScene();

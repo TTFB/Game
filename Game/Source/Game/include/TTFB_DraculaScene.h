@@ -22,6 +22,7 @@ public:
 	TTFB_DialoguePlayer * dialoguePlayer;
 
 	OpenAL_Sound * backgroundMusic;
+	OpenAL_Sound * clapping;
 
 	std::map<std::string, bool> conditions;
 
@@ -38,4 +39,6 @@ public:
 	
 	virtual void load() override;
 	virtual void unload() override;
+
+	void endScene();
 };

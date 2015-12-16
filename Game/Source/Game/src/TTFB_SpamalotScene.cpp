@@ -60,7 +60,8 @@
 TTFB_SpamalotScene::TTFB_SpamalotScene(Game * _game) :
 	TTFB_StageScene(_game),
 	bgMusicStarted(false),
-	lastFireEmission(0.0)
+	lastFireEmission(0.0),
+	clapping(nullptr)
 {
 
 	// Must setup the stage first
@@ -693,57 +694,22 @@ TTFB_SpamalotScene::TTFB_SpamalotScene(Game * _game) :
 	});
 
 	eventQueue.at(110.f + startSceneDelay, [this](){
-		endScene(SPAMALOT);
-		OpenAL_Sound * sound =  TTFB_ResourceManager::scenario->getAudio("clapping1")->sound;
-		sound->setGain(0.8f);
-		sound->play();
+		endScene();
+		clapping = TTFB_ResourceManager::scenario->getAudio("clapping1")->sound;
+		clapping->setGain(0.8f);
+		clapping->play();
 	});
 
 #pragma endregion 
 
-	//eventQueue.at(6.0f, [this](){
-	//	kingArthur->say(1.0f, L"What?", true);
-	//});
-
-	/*int * i = new int(0);
-
-	eventQueue.at(6.f, [this](){
-			//ent->setCurrentAnimation("walk");
-			kingArthur->move(3.0f)->subscribe([this](){
-				//ent->setCurrentAnimation("stand");
-			});
-		});
-	eventQueue.expectAt(6.f, 2.f, 
-		[i](){return *i == 1;},
-		[](){std::cout<<"Success";}, 
-		[](){std::cout<<"Failure";});
-	eventQueue.at(7.f,  [i](){*i = 1;});
-	eventQueue.at(7.f,  [i](){*i = 1;});
-	eventQueue.at(9.f,  [this](){kingArthur->say(2.0f, L"fsdf",  true)->subscribe(
-			[this](){kingArthur->say(2.0f, L"sasas", true);}
-		);
-	});
-	eventQueue.at(11.f, [this](){
-		//ent->setCurrentAnimation("walk");
-		kingArthur->flip();
-		kingArthur->move(-7.0f)->subscribe([this](){
-			//ent->setCurrentAnimation("stand");
-		});
-	}); 
-
-	eventQueue.when([this](){
-			return *i == 1;
-		},
-		[this](){
-			kingArthur->say(3.0f, L"wwoowowowo", false);
-		}
-	);*/
-
 	addFog();
-
 }
 
 TTFB_SpamalotScene::~TTFB_SpamalotScene(){
+	if(clapping != nullptr) {
+		clapping->stop();
+	}
+	delete dialoguePlayer;
 }
 
 void TTFB_SpamalotScene::update(Step * _step){
@@ -821,4 +787,16 @@ void TTFB_SpamalotScene::rightLegBleed() {
 
 void TTFB_SpamalotScene::unload(){
 	TTFB_StageScene::unload();	
+}
+
+void TTFB_SpamalotScene::endScene() {
+	dialoguePlayer->playing = false;
+	backgroundMusic->stop();
+	if(score <= ONE_STAR){
+		TTFB_StageScene::endScene(SPAMALOT, SPAMALOT, "lose", "");
+	}else if(score > ONE_STAR && score < THREE_STARS){
+		TTFB_StageScene::endScene(SPAMALOT, DRACULA, "spamalotMediocre", ""); // Add in sound effect
+	}else{
+		TTFB_StageScene::endScene(SPAMALOT, DRACULA, "spamalotGood", ""); // Add in sound effect
+	}
 }

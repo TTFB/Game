@@ -20,6 +20,8 @@
 #include <PointLight.h>
 #include <MouseCameraController.h>
 #include <TTFB_Controller.h>
+#include <TTFB_Game.h>
+#include <TTFB_Constants.h>
 
 
 TTFB_MenuScene::TTFB_MenuScene(Game* _game)  :
@@ -171,7 +173,8 @@ void TTFB_MenuScene::update(Step* _step) {
 
 	if((controller->IsConnected() && controller->specialFireButton.justDown()) || keyboard->keyJustUp(GLFW_KEY_P)) {
 		if(introScreen->isVisible()){
-			game->switchScene("dracula", false);
+			((TTFB_Game *)game)->switchToScene(DRACULA);
+			return;
 		}else {
 			introScreen->setVisible(true);
 		}

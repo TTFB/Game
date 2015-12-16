@@ -7,11 +7,13 @@
 #include <TTFB_DraculaStage.h>
 #include <Box2DSprite.h>
 #include <Keyboard.h>
+#include <TTFB_Constants.h>
 
 TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 	TTFB_StageScene(_game),
 	bgMusicStarted(false),
-	lastFireEmission(0.0)
+	lastFireEmission(0.0),
+	clapping(nullptr)
 {
 
 #pragma region PreSetup
@@ -60,9 +62,6 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 	eventQueue.at(3.2f + startSceneDelay + offset, [this](){
 		dialoguePlayer->playNext();
 		renfield->say(2.0f, L"It's really good to see you.", false);
-
-		
-		incScore(100);
 	});
 
 	eventQueue.at(5.2f + startSceneDelay + offset, [this](){
@@ -283,11 +282,15 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 
 	addFog();
 
-#pragma endregion 
-	
+#pragma endregion 	
+
 }
 
 TTFB_DraculaScene::~TTFB_DraculaScene() {
+	if(clapping != nullptr) {
+		clapping->stop();
+	}
+	delete dialoguePlayer;
 }
 
 void TTFB_DraculaScene::update(Step* _step) {
@@ -318,4 +321,14 @@ void TTFB_DraculaScene::load() {
 void TTFB_DraculaScene::unload() {
 	
 	TTFB_StageScene::unload();
+}
+
+void TTFB_DraculaScene::endScene() {
+	dialoguePlayer->playing = false;
+	backgroundMusic->stop();
+	if(score <= ONE_STAR){
+		TTFB_StageScene::endScene(DRACULA, DRACULA, "lose", "");
+	}else {
+		TTFB_StageScene::endScene(DRACULA, MENU, "draculaWin", ""); // Add in sound effect
+	}
 }

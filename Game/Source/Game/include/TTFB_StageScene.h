@@ -8,6 +8,8 @@
 #include <TTFB_Scene.h>
 #include "TTFB_Fog.h"
 #include <TextArea.h>
+#include "TTFB_NewsArticle.h"
+#include <string>
 
 class TTFB_SetPiece;
 class TTFB_Prop;
@@ -54,6 +56,13 @@ public:
 	float countDownScaler;
 	float countDownAcc;
 	Transform * countDownTextCont;
+
+	bool sceneEnded;
+	bool showingNewsPaper;
+
+	NodeUI * endMessage;
+	OpenAL_Sound * endSound;
+	bool endAudioPlayed;
 
 	TTFB_EventQueue eventQueue;
 	
@@ -105,9 +114,14 @@ public:
 	bool fogActive;
 	bool fadeOutLights;
 	bool dimmingLights;
+	
 	ComponentShaderText* scoreTextShader;
+	
 	double fireTimer;
 	float scoreScaler;
+	
+	TTFB_NewsArticle* newsArticle;
+
 	virtual void update(Step * _step) override;
 	virtual void render(sweet::MatrixStack * _matrixStack, RenderOptions * _renderOptions) override;
 	
@@ -115,7 +129,7 @@ public:
 	virtual void unload() override;
 
 	virtual TTFB_Actor * createActor(std::string _name);
-	virtual void endScene(std::string _sceneKey);
+	virtual void endScene(std::string _currentScene, std::string _nextScene, std::string _message, std::string audio);
 	virtual TTFB_Prop * addProp(std::string _samplerResourceId, glm::vec3 _pos);
 	virtual TTFB_SetPiece * addSetPiece(std::string _samplerResourceId, glm::vec3 _pos);
 
@@ -133,4 +147,7 @@ public:
 
 	TTFB_StageScene(Game * _game);
 	~TTFB_StageScene();
+
+private:
+	std::string pendingScene;
 };

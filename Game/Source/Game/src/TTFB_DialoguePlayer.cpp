@@ -8,8 +8,15 @@ TTFB_DialoguePlayer::TTFB_DialoguePlayer(std::string _source) :
 	src(_source),
 	current(1),
 	muted(false),
-	currentSound(nullptr)
+	currentSound(nullptr),
+	playing(true)
 {
+}
+
+TTFB_DialoguePlayer::~TTFB_DialoguePlayer() {
+	if(currentSound != nullptr){
+		currentSound->stop();
+	}
 }
 
 void TTFB_DialoguePlayer::mute() {
@@ -27,9 +34,11 @@ void TTFB_DialoguePlayer::unmute() {
 }
 
 void TTFB_DialoguePlayer::playNext() {
-	OpenAL_Sound * sound = TTFB_ResourceManager::scenario->getAudio(src + std::to_string(current))->sound;
-	sound->play();
-	currentSound = sound;
-	sound->setGain((float)((int) !muted));
-	current++;
+	if(playing){
+		OpenAL_Sound * sound = TTFB_ResourceManager::scenario->getAudio(src + std::to_string(current))->sound;
+		sound->play();
+		currentSound = sound;
+		sound->setGain((float)((int) !muted));
+		current++;
+	}
 }

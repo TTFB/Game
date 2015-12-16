@@ -6,7 +6,12 @@ class OpenAL_Sound;
 
 class TTFB_DialoguePlayer {
 public:
+
+	bool playing;
+
 	TTFB_DialoguePlayer(std::string src);
+	~TTFB_DialoguePlayer();
+
 	void playNext();
 	void mute();
 	void unmute();

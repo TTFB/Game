@@ -15,6 +15,8 @@ public:
 	void update(Step * _step) override;
 	void draw() override;
 
+	void switchToScene(std::string _scene);
+
 	enum BOX2D_CATEGORY{
 		kBOUNDARY = 0x0001,
 		kPLAYER = 0x0002,

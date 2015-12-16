@@ -88,7 +88,13 @@ TTFB_StageScene::TTFB_StageScene(Game * _game) :
 	scoreScaler(0.0f),
 	countDownSec(-1),
 	countDownScaler(0.0f),
-	countDownAcc(0.0f)
+	countDownAcc(0.0f),
+	sceneEnded(false),
+	showingNewsPaper(false),
+	newsArticle(nullptr),
+	endMessage(nullptr),
+	endSound(nullptr),
+	endAudioPlayed(false)
 {
 	scoreFont = TTFB_ResourceManager::scenario->getFont("bebas")->font;
 	countDownFont = TTFB_ResourceManager::scenario->getFont("bebas_200")->font;
@@ -247,6 +253,9 @@ TTFB_StageScene::~TTFB_StageScene(){
 	screenSurface->safeDelete();
 	//screenSurfaceShader->safeDelete();
 	screenFBO->safeDelete();
+	if(endSound != nullptr) {
+		endSound->stop();
+	}
 	delete debugDrawer;
 }
 
@@ -335,8 +344,7 @@ void TTFB_StageScene::update(Step * _step){
 	}
 
 	if(dimmingLights) {
-		
-		if(lights[1]->getAmbientCoefficient() <= 0.0004) {
+		if(lights[1]->getAmbientCoefficient() <= 0.002) {
 			dimmingLights = false;
 		}else {
 			lights[1]->setAmbientCoefficient(lights[1]->getAmbientCoefficient() - 0.0002);
@@ -385,6 +393,23 @@ void TTFB_StageScene::update(Step * _step){
 
 	if(keyboard->keyJustDown(GLFW_KEY_1)){
 		cycleCamera();
+	}
+
+	if(keyboard->keyJustUp(GLFW_KEY_P) || controller->IsConnected() && controller->specialFireButton.justUp()) {
+		if(sceneEnded) {
+			if(showingNewsPaper) {
+				newsArticle->setVisible(false);
+				showingNewsPaper = false;
+				if(!endAudioPlayed && endSound != nullptr) {
+					endSound->play();
+					endAudioPlayed = true;
+				}
+				endMessage->setVisible(true);
+			}else{
+				((TTFB_Game *)game)->switchToScene(pendingScene);
+				return;
+			}
+		}
 	}
 
 	debugCam->update(_step);
@@ -437,9 +462,15 @@ TTFB_Actor * TTFB_StageScene::createActor(std::string _name) {
 	return new TTFB_Actor(_name, box2dWorld, bulletWorld, font, textShader, baseShader);
 }
 
-void TTFB_StageScene::endScene(std::string _sceneKey) {
+void TTFB_StageScene::endScene(std::string _currentScene, std::string _nextScene, std::string _message, std::string _audio) {
+
+	if(score <= ONE_STAR){
+		pendingScene = _currentScene;
+	}else {
+		pendingScene = _nextScene;	
+	}
 	
-	TTFB_NewsArticle * testArticle = new TTFB_NewsArticle(baseShader, _sceneKey, score);
+	newsArticle = new TTFB_NewsArticle(baseShader, _currentScene, score);
 	
 	VerticalLinearLayout * articleContainer = new VerticalLinearLayout(bulletWorld);
 	articleContainer->horizontalAlignment = kCENTER;
@@ -447,13 +478,31 @@ void TTFB_StageScene::endScene(std::string _sceneKey) {
 	articleContainer->setRationalWidth(1, &uiLayer);
 	articleContainer->setRationalHeight(1, &uiLayer);
 
-	articleContainer->childTransform->addChild(testArticle->container);
+	articleContainer->childTransform->addChild(newsArticle->container);
 
 	uiLayer.addChild(articleContainer);
 
 	articleContainer->firstParent()->translate(uiLayer.getWidth()/2, uiLayer.getHeight()/2, 0, true);
 
 	fadeOutLights = true;
+	sceneEnded = true;
+	showingNewsPaper = true;
+
+	if(score <= ONE_STAR) {
+		_message = "loseScreen";
+		_audio = "";
+	}
+
+	endMessage = new NodeUI(bulletWorld);
+	endMessage->setRationalWidth(1);
+	endMessage->setRationalHeight(1);
+	endMessage->background->mesh->pushTexture2D(TTFB_ResourceManager::scenario->getTexture(_message)->texture);
+	uiLayer.addChild(endMessage);
+	endMessage->setVisible(false);
+
+	if(_audio != "") {
+		endSound = TTFB_ResourceManager::scenario->getAudio(_audio)->sound;
+	}
 }
 
 TTFB_Prop * TTFB_StageScene::addProp(std::string _samplerResourceId, glm::vec3 _pos) {

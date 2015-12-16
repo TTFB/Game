@@ -10,7 +10,7 @@
 TTFB_SpamalotStage::TTFB_SpamalotStage(Box2DWorld * _world, Shader * _shader) :
 	TTFB_Stage()
 {
-	stageBase = new Box2DMeshEntity(_world, MeshFactory::getCubeMesh(), b2_staticBody, true, _shader);
+	stageBase = new Box2DMeshEntity(_world, MeshFactory::getCubeMesh(), b2_staticBody, _shader);
 	stageBase->mesh->pushTexture2D(TTFB_ResourceManager::scenario->getTexture("L1_Floor")->texture);
 	childTransform->addChild(stageBase);
 	stageBase->firstParent()->scale(100, 10.0f, 5.f);
