@@ -93,3 +93,20 @@ void TTFB_Controller::updateValues(std::vector<std::string> _stringVals) {
 		specialCurtainPot.currentState = atoi(_stringVals[(int)SPECIAL_CURTAIN_POT].c_str());
 	}
 }
+
+void TTFB_Controller::clearBindings() {
+	soundButtonOne.bindFunc = nullptr;
+	soundButtonTwo.bindFunc = nullptr;
+	soundButtonThree.bindFunc = nullptr;
+	soundMicSwitch.bindFunc = nullptr;
+	lightSliderOne.bindFunc = nullptr;
+	lightSliderTwo.bindFunc = nullptr;
+	lightSliderThree.bindFunc = nullptr;
+	setButtonOne.bindFunc = nullptr;
+	setButtonTwo.bindFunc = nullptr;
+	setButtonThree.bindFunc = nullptr;
+	setButtonFour.bindFunc = nullptr;
+	specialFogSwitch.bindFunc = nullptr;
+	specialFireButton.bindFunc = nullptr;
+	specialCurtainPot.bindFunc = nullptr;
+}

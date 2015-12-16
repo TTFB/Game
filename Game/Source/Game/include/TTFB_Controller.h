@@ -50,4 +50,5 @@ public:
 
 	void update(Step * _step) override;
 	void updateValues(std::vector<std::string> _stringVals);
+	void clearBindings();
 };

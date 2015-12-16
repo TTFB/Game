@@ -724,9 +724,9 @@ void TTFB_SpamalotScene::update(Step * _step){
 
 	//fireActive = true;
 	
-	if(fireTimer < 1.0 && fireActive && _step->time - lastFireEmission > 0.1f){
+	if(fireTimer < 1.0 && fireActive && _step->time - lastFireEmission > 0.2f){
 		b2Vec2 blackKnightPos = blackKnight->getBox2dPos();
-		Particle * p = fireSystem->addParticle(glm::vec3(blackKnightPos.x + 3,  stage->getVisibleBounds().getBottomRight().y + 0.2f, 0),  TTFB_ResourceManager::scenario->getTexture("fireRed")->texture);
+		Particle * p = fireSystem->addParticle(glm::vec3(blackKnightPos.x + 3,  stage->getVisibleBounds().getBottomRight().y + 0.2f, 0), TTFB_ResourceManager::scenario->getTexture("fireRed")->texture);
 		Particle * p1 = fireSystem->addParticle(glm::vec3(blackKnightPos.x + 3, stage->getVisibleBounds().getBottomRight().y + 0.2f, 0), TTFB_ResourceManager::scenario->getTexture("fireOrange")->texture);
 		Particle * p2 = fireSystem->addParticle(glm::vec3(blackKnightPos.x + 3, stage->getVisibleBounds().getBottomRight().y + 0.2f, 0), TTFB_ResourceManager::scenario->getTexture("fireYellow")->texture);
 		Particle * p3 = fireSystem->addParticle(glm::vec3(blackKnightPos.x + 3, stage->getVisibleBounds().getBottomRight().y + 0.2f, 0), TTFB_ResourceManager::scenario->getTexture("smoke")->texture);

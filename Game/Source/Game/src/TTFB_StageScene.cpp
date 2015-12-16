@@ -256,6 +256,7 @@ TTFB_StageScene::~TTFB_StageScene(){
 	if(endSound != nullptr) {
 		endSound->stop();
 	}
+	controller->clearBindings();
 	delete debugDrawer;
 }
 
@@ -523,7 +524,7 @@ TTFB_SetPiece * TTFB_StageScene::addSetPiece(std::string _samplerResourceId, glm
 void TTFB_StageScene::addFog() {
 	fog = new TTFB_Fog(baseShader);
 	childTransform->addChild(fog);
-	fog->firstParent()->translate(0, 6.5, 2);
+	fog->firstParent()->translate(0, 10, 2);
 	fog->firstParent()->scale(50, -3, 1);
 	fog->setVisible(false);
 	if(controller->IsConnected()) {

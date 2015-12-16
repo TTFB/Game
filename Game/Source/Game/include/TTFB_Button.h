@@ -22,6 +22,5 @@ public :
 	bool justUp();
 	bool justDown();
 
-private:
 	std::function<void(int)> bindFunc;
 };

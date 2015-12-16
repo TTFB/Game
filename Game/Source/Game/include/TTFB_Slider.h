@@ -15,6 +15,5 @@ public :
 
 	void bind(std::function<void(int)> _bind);
 
-private:
 	std::function<void(int)> bindFunc;
 };
