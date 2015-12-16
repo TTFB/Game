@@ -1201,6 +1201,16 @@
       "id": "HowlingWolf3",
       "type": "audio",
       "src": "HowlingWolf3.ogg"
+    },
+	{
+      "id": "PreDraculaDialogue_Mediocre",
+      "type": "audio",
+      "src": "TransitionDialogue/PreDracula_Mediocre.ogg"
+    },
+	{
+      "id": "PreDraculaDialogue_Excellent",
+      "type": "audio",
+      "src": "TransitionDialogue/PreDracula_Excellent.ogg"
     }
   ]
 }
