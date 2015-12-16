@@ -8,6 +8,7 @@
 #include <Box2DSprite.h>
 #include <Keyboard.h>
 #include <TTFB_Constants.h>
+#include <TTFB_Controller.h>
 
 TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 	TTFB_StageScene(_game),
@@ -274,7 +275,11 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 
 #pragma region ControllerSetup
 
-	// Add controller bindings here
+	controller->specialFogSwitch.bind([this](int _value) {
+		if(controller->specialFogSwitch.justDown() || controller->specialFogSwitch.justUp()) {
+			toggleFog();
+		}
+	});
 
 #pragma endregion 
 

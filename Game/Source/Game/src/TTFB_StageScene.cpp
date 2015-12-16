@@ -177,6 +177,7 @@ TTFB_StageScene::TTFB_StageScene(Game * _game) :
 	cameras.push_back(stageCam);
 	childTransform->addChild(stageCam);
 	stageCam->firstParent()->translate(0.0f, 15.f, 29.598f);
+	stageCam->farClip = 50.0f;
 	stageCam->yaw = 90.0f;
 	stageCam->pitch = -7.f;
 	activeCamera = stageCam;
@@ -490,7 +491,7 @@ void TTFB_StageScene::endScene(std::string _currentScene, std::string _nextScene
 	showingNewsPaper = true;
 
 	if(score <= ONE_STAR) {
-		_message = "loseScreen";
+		_message = "lose";
 		_audio = "";
 	}
 
@@ -524,8 +525,8 @@ TTFB_SetPiece * TTFB_StageScene::addSetPiece(std::string _samplerResourceId, glm
 void TTFB_StageScene::addFog() {
 	fog = new TTFB_Fog(baseShader);
 	childTransform->addChild(fog);
-	fog->firstParent()->translate(0, 10, 2);
-	fog->firstParent()->scale(50, -3, 1);
+	fog->firstParent()->translate(0, 6.3, 1.5);
+	fog->firstParent()->scale(100, 15, 1);
 	fog->setVisible(false);
 	if(controller->IsConnected()) {
 		fog->setVisible((bool)controller->specialFogSwitch.currentState);

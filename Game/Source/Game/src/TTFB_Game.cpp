@@ -26,7 +26,7 @@ TTFB_Game::TTFB_Game() :
 }
 
 TTFB_Game::~TTFB_Game(){
-
+	scenes.clear();
 }
 
 void TTFB_Game::update(Step* _step) {

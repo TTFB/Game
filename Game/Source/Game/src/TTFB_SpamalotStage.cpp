@@ -38,7 +38,6 @@ TTFB_SpamalotStage::TTFB_SpamalotStage(Box2DWorld * _world, Shader * _shader) :
 	childTransform->addChild(stageFrontRight);
 	stageFrontRight->firstParent()->scale(50.0f, 70.0f, 1.f);
 	stageFrontRight->firstParent()->translate(100 * 0.5f - 20.0f, 15.f, 3.5f);
-
 	{
 		stageTop = new Sprite(_shader);
 		TextureSampler * top = TTFB_ResourceManager::scenario->getTextureSampler("L1_Top")->textureSampler;
@@ -52,8 +51,8 @@ TTFB_SpamalotStage::TTFB_SpamalotStage(Box2DWorld * _world, Shader * _shader) :
 		TextureSampler * bottom = TTFB_ResourceManager::scenario->getTextureSampler("L1_Bottom")->textureSampler;
 		stageBottom->setPrimaryTexture(bottom);
 		childTransform->addChild(stageBottom);
-		stageBottom->firstParent()->scale(105, 105 , 1.f);
-		stageBottom->firstParent()->translate(0.f, 0.f, 3.0f);
+		stageBottom->firstParent()->scale(55, 55, 1.f);
+		stageBottom->firstParent()->translate(0.f, 0.f, 2.5f);
 	}
 
 	curtainLeft = new Sprite(_shader);
