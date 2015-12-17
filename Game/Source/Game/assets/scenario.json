@@ -17,25 +17,30 @@
       "size": 200,
       "src": "BebasNeue.otf"
     },
+	{
+      "id": "titleScreen",
+      "type": "texture",
+      "src": "titleScreen.png.def"
+    },
     {
       "id": "lose",
       "type": "texture",
-      "src": "lose.png"
+      "src": "tryAgain.png.def"
     },
     {
       "id": "spamalotMediocre",
       "type": "texture",
-      "src": "spamalotTwoStars.png"
+      "src": "preDracula_Mediocre.png.def"
     },
     {
       "id": "spamalotGood",
       "type": "texture",
-      "src": "spamalotThreeStars.png"
+      "src": "preDracula_Excellent.png.def"
     },
     {
       "id": "draculaWin",
       "type": "texture",
-      "src": "draculaWin.png"
+      "src": "congratulationsScreen.png.def"
     },
     {
       "id": "SPRITESHEET",
