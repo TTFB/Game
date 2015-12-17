@@ -283,6 +283,41 @@
       "src": "Level3_Assets/Level3_Crowd_Neutral.png.def"
     },
     {
+      "id": "L3_CrowdBored1",
+      "type": "texture",
+      "src": "Level3_Assets/Level3_Crowd_Bored1.png"
+    },
+    {
+      "id": "L3_CrowdBored2",
+      "type": "texture",
+      "src": "Level3_Assets/Level3_Crowd_Bored2.png"
+    },
+    {
+      "id": "L3_CrowdBored3",
+      "type": "texture",
+      "src": "Level3_Assets/Level3_Crowd_Bored3.png"
+    },
+    {
+      "id": "L3_CrowdBored4",
+      "type": "texture",
+      "src": "Level3_Assets/Level3_Crowd_Bored4.png"
+    },
+    {
+      "id": "L3_CrowdHappy1",
+      "type": "texture",
+      "src": "Level3_Assets/Level3_Crowd_Happy1.png"
+    },
+    {
+      "id": "L3_CrowdHappy2",
+      "type": "texture",
+      "src": "Level3_Assets/Level3_Crowd_Happy2.png"
+    },
+    {
+      "id": "L3_CrowdHappy3",
+      "type": "texture",
+      "src": "Level3_Assets/Level3_Crowd_Happy3.png"
+    },
+    {
       "id": "spamalot_one_star",
       "type": "textureSampler",
       "src": "Newspapers/grail_1star.png.def"
