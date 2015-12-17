@@ -285,37 +285,37 @@
     {
       "id": "L3_CrowdBored1",
       "type": "texture",
-      "src": "Level3_Assets/Level3_Crowd_Bored1.png"
+      "src": "Level3_Assets/Level3_Crowd_Bored1.png.def"
     },
     {
       "id": "L3_CrowdBored2",
       "type": "texture",
-      "src": "Level3_Assets/Level3_Crowd_Bored2.png"
+      "src": "Level3_Assets/Level3_Crowd_Bored2.png.def"
     },
     {
       "id": "L3_CrowdBored3",
       "type": "texture",
-      "src": "Level3_Assets/Level3_Crowd_Bored3.png"
+      "src": "Level3_Assets/Level3_Crowd_Bored3.png.def"
     },
     {
       "id": "L3_CrowdBored4",
       "type": "texture",
-      "src": "Level3_Assets/Level3_Crowd_Bored4.png"
+      "src": "Level3_Assets/Level3_Crowd_Bored4.png.def"
     },
     {
       "id": "L3_CrowdHappy1",
       "type": "texture",
-      "src": "Level3_Assets/Level3_Crowd_Happy1.png"
+      "src": "Level3_Assets/Level3_Crowd_Happy1.png.def"
     },
     {
       "id": "L3_CrowdHappy2",
       "type": "texture",
-      "src": "Level3_Assets/Level3_Crowd_Happy2.png"
+      "src": "Level3_Assets/Level3_Crowd_Happy2.png.def"
     },
     {
       "id": "L3_CrowdHappy3",
       "type": "texture",
-      "src": "Level3_Assets/Level3_Crowd_Happy3.png"
+      "src": "Level3_Assets/Level3_Crowd_Happy3.png.def"
     },
     {
       "id": "spamalot_one_star",
