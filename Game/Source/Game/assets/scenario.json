@@ -1238,6 +1238,26 @@
       "src": "HowlingWolf3.ogg"
     },
 	{
+      "id": "introDialogue",
+      "type": "audio",
+      "src": "TransitionDialogue/introDialogue.ogg"
+    },
+	{
+      "id": "TryAgain",
+      "type": "audio",
+      "src": "TransitionDialogue/tryAgain.ogg"
+    },
+	{
+      "id": "Ending",
+      "type": "audio",
+      "src": "TransitionDialogue/congratulations_Ending.ogg"
+    },
+	{
+      "id": "PreDraculaDialogue_Mediocre",
+      "type": "audio",
+      "src": "TransitionDialogue/PreDracula_Mediocre.ogg"
+    },
+	{
       "id": "PreDraculaDialogue_Mediocre",
       "type": "audio",
       "src": "TransitionDialogue/PreDracula_Mediocre.ogg"
