@@ -17,25 +17,30 @@
       "size": 200,
       "src": "BebasNeue.otf"
     },
+	{
+      "id": "titleScreen",
+      "type": "texture",
+      "src": "titleScreen.png.def"
+    },
     {
       "id": "lose",
       "type": "texture",
-      "src": "lose.png"
+      "src": "tryAgain.png.def"
     },
     {
       "id": "spamalotMediocre",
       "type": "texture",
-      "src": "spamalotTwoStars.png"
+      "src": "preDracula_Mediocre.png.def"
     },
     {
       "id": "spamalotGood",
       "type": "texture",
-      "src": "spamalotThreeStars.png"
+      "src": "preDracula_Excellent.png.def"
     },
     {
       "id": "draculaWin",
       "type": "texture",
-      "src": "draculaWin.png"
+      "src": "congratulationsScreen.png.def"
     },
     {
       "id": "SPRITESHEET",
@@ -281,6 +286,81 @@
       "id": "L3_CrowdNeutral",
       "type": "textureSampler",
       "src": "Level3_Assets/Level3_Crowd_Neutral.png.def"
+    },
+	{
+      "id": "L3_Fireplace",
+      "type": "textureSampler",
+      "src": "Level3_Assets/Level3_Fireplace.png.def"
+    },
+	{
+      "id": "L3_Bat",
+      "type": "textureSampler",
+      "src": "Props/bat.png.def"
+    },
+	{
+      "id": "L3_Lease",
+      "type": "textureSampler",
+      "src": "Props/lease.png.def"
+    },
+	{
+      "id": "L3_spiderWeb1",
+      "type": "textureSampler",
+      "src": "Props/spiderWeb1.png.def"
+    },
+	{
+      "id": "L3_spiderWeb2",
+      "type": "textureSampler",
+      "src": "Props/spiderWeb2.png.def"
+    },
+	{
+      "id": "L3_Luggage",
+      "type": "textureSampler",
+      "src": "Props/luggageV2.png.def"
+    },
+	{
+      "id": "L3_wineBottle",
+      "type": "textureSampler",
+      "src": "Props/wineBottle.png.def"
+    },
+	{
+      "id": "L3_wineGlass",
+      "type": "textureSampler",
+      "src": "Props/wineGlass.png.def"
+    },
+    {
+      "id": "L3_CrowdBored1",
+      "type": "texture",
+      "src": "Level3_Assets/Level3_Crowd_Bored1.png.def"
+    },
+    {
+      "id": "L3_CrowdBored2",
+      "type": "texture",
+      "src": "Level3_Assets/Level3_Crowd_Bored2.png.def"
+    },
+    {
+      "id": "L3_CrowdBored3",
+      "type": "texture",
+      "src": "Level3_Assets/Level3_Crowd_Bored3.png.def"
+    },
+    {
+      "id": "L3_CrowdBored4",
+      "type": "texture",
+      "src": "Level3_Assets/Level3_Crowd_Bored4.png.def"
+    },
+    {
+      "id": "L3_CrowdHappy1",
+      "type": "texture",
+      "src": "Level3_Assets/Level3_Crowd_Happy1.png.def"
+    },
+    {
+      "id": "L3_CrowdHappy2",
+      "type": "texture",
+      "src": "Level3_Assets/Level3_Crowd_Happy2.png.def"
+    },
+    {
+      "id": "L3_CrowdHappy3",
+      "type": "texture",
+      "src": "Level3_Assets/Level3_Crowd_Happy3.png.def"
     },
     {
       "id": "spamalot_one_star",
@@ -1201,6 +1281,26 @@
       "id": "HowlingWolf3",
       "type": "audio",
       "src": "HowlingWolf3.ogg"
+    },
+	{
+      "id": "introDialogue",
+      "type": "audio",
+      "src": "TransitionDialogue/introDialogue.ogg"
+    },
+	{
+      "id": "TryAgain",
+      "type": "audio",
+      "src": "TransitionDialogue/tryAgain.ogg"
+    },
+	{
+      "id": "Ending",
+      "type": "audio",
+      "src": "TransitionDialogue/congratulations_Ending.ogg"
+    },
+	{
+      "id": "PreDraculaDialogue_Mediocre",
+      "type": "audio",
+      "src": "TransitionDialogue/PreDracula_Mediocre.ogg"
     },
 	{
       "id": "PreDraculaDialogue_Mediocre",
