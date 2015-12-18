@@ -287,6 +287,46 @@
       "type": "textureSampler",
       "src": "Level3_Assets/Level3_Crowd_Neutral.png.def"
     },
+	{
+      "id": "L3_Fireplace",
+      "type": "textureSampler",
+      "src": "Level3_Assets/Level3_Fireplace.png.def"
+    },
+	{
+      "id": "L3_Bat",
+      "type": "textureSampler",
+      "src": "Props/bat.png.def"
+    },
+	{
+      "id": "L3_Lease",
+      "type": "textureSampler",
+      "src": "Props/lease.png.def"
+    },
+	{
+      "id": "L3_spiderWeb1",
+      "type": "textureSampler",
+      "src": "Props/spiderWeb1.png.def"
+    },
+	{
+      "id": "L3_spiderWeb2",
+      "type": "textureSampler",
+      "src": "Props/spiderWeb2.png.def"
+    },
+	{
+      "id": "L3_Luggage",
+      "type": "textureSampler",
+      "src": "Props/luggageV2.png.def"
+    },
+	{
+      "id": "L3_wineBottle",
+      "type": "textureSampler",
+      "src": "Props/wineBottle.png.def"
+    },
+	{
+      "id": "L3_wineGlass",
+      "type": "textureSampler",
+      "src": "Props/wineGlass.png.def"
+    },
     {
       "id": "L3_CrowdBored1",
       "type": "texture",
