@@ -25,7 +25,7 @@ TTFB_Controller::TTFB_Controller() : Arduino(""),
 }
 
 void TTFB_Controller::update(Step* _step) {
-
+	
 	if(connected){
 		// Update all components befor parsing new data
 		soundButtonOne.update(_step);

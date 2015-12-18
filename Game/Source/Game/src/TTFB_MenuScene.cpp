@@ -173,7 +173,7 @@ void TTFB_MenuScene::update(Step* _step) {
 
 	if((controller->IsConnected() && controller->specialFireButton.justDown()) || keyboard->keyJustUp(GLFW_KEY_P)) {
 		if(introScreen->isVisible()){
-			((TTFB_Game *)game)->switchToScene(DRACULA);
+			((TTFB_Game *)game)->switchToScene(SPAMALOT);
 			return;
 		}else {
 			introScreen->setVisible(true);
