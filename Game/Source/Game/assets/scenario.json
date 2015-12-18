@@ -543,6 +543,11 @@
       "src": "Level1_Assets/Level1_Curtain.png.def"
     },
 	{
+      "id": "L3_Curtain",
+      "type": "textureSampler",
+      "src": "Level3_Assets/Level3_Curtain.png.def"
+    },
+	{
       "id": "openingMusic",
       "type": "audio",
       "src": "General/openingMusic.ogg"
