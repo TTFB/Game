@@ -293,6 +293,11 @@
       "src": "Level3_Assets/Level3_Fireplace.png.def"
     },
 	{
+      "id": "L3_Bed",
+      "type": "textureSampler",
+      "src": "Level3_Assets/Level3_Bed.png.def"
+    },
+	{
       "id": "L3_Bat",
       "type": "textureSampler",
       "src": "Props/bat.png.def"
