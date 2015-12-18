@@ -542,6 +542,11 @@
       "type": "textureSampler",
       "src": "Level1_Assets/Level1_Curtain.png.def"
     },
+	{
+      "id": "openingMusic",
+      "type": "audio",
+      "src": "General/openingMusic.ogg"
+    },
     {
       "id": "cheer1",
       "type": "audio",
