@@ -29,8 +29,8 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 	// Set pieces
 	setPeiceWall1 = addSetPiece("L3_wall1", glm::vec3(10.f, 20.f, -0.5f), 1.5f);
 	setPeiceWall1->raise();
-	setPieceBG = addSetPiece("L3_ramps", glm::vec3(-5.f, 20.f, -0.5));
-	setPieceBG->raise();
+	setPieceStairs = addSetPiece("L3_ramps", glm::vec3(0.f, 20.f, -0.5), 2.2f);
+	setPieceStairs->raise();
 
 #pragma  endregion 
 	 
@@ -64,19 +64,18 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 
 	eventQueue.at(0.00f, [this]{
 		countDown(startSceneDelay);
+		// Test lowering wall1
+		setPeiceWall1->lower();
+		setPieceStairs->lower();
 	});
 
 	eventQueue.at(startSceneDelay - 5.0f, [this](){dimHouseLights();});
 
 	eventQueue.at(0.0f + startSceneDelay + offset, [this](){
 		dialoguePlayer->playNext();
-		dracula->move(-15);
-		renfield->move(-17);
+		dracula->move(-17);
+		renfield->move(-19);
 		dracula->say(3.0f, L"I am Dracula", true);
-
-		// Test lowering wall1
-		setPeiceWall1->lower();
-		setPieceBG->lower();
 	});
 
 	eventQueue.at(3.2f + startSceneDelay + offset, [this](){
@@ -100,10 +99,10 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 
 	// Go upstairs
 	eventQueue.at(12.0f + startSceneDelay + offset, [this](){
-		dracula->move(-7);
-		renfield->move(-5);
-		dracula->moveY(8);
-		renfield->moveY(6);
+		dracula->move(-5);
+		renfield->move(-7);
+		dracula->moveY(9);
+		renfield->moveY(9);
 	});
 
 	eventQueue.at(13.f + startSceneDelay + offset, [this](){
@@ -119,6 +118,8 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 
 	eventQueue.at(22.f + startSceneDelay + offset, [this](){
 		dialoguePlayer->playNext();
+		dracula->move(2);
+		renfield->move(0);
 		dracula->say(3.f, L"A spider spinning his web for the unwary fly." , false);
 	});
 
@@ -137,11 +138,16 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 	eventQueue.at(30.f + startSceneDelay + offset, [this](){
 		dialoguePlayer->playNext();
 		dracula->say(4.f, L"I'm sure you will find this part of my castle more inviting.", true);
+		dracula->move(10.f);
+		dracula->moveY(10.f);
+		renfield->move(7.f);
+		renfield->moveY(10.f);
 	});
 
 	eventQueue.at(34.f + startSceneDelay + offset, [this](){
 		dialoguePlayer->playNext();
 		renfield->say(5.f, L"Oh, rather! It's quite different from outside. Oh, and the fire! It's so cheerful", true);
+		renfield->move(14.f);
 	});
 
 	eventQueue.at(39.f + startSceneDelay + offset, [this](){
