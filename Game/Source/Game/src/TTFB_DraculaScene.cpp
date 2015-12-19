@@ -39,7 +39,7 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 
 	renfield = createActor("renfield"); 
 	childTransform->addChild(renfield);
-	renfield->translateComponents(15.f, renfield->getLegsOffset(), 0.f);
+	renfield->translateComponents(-25.f, renfield->getLegsOffset(), 0.f);
 
 #pragma endregion 
 
@@ -63,6 +63,8 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 
 	eventQueue.at(0.0f + startSceneDelay + offset, [this](){
 		dialoguePlayer->playNext();
+		dracula->move(-18);
+		renfield->move(-20);
 		dracula->say(3.0f, L"I am Dracula", true);
 	});
 

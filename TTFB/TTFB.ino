@@ -67,6 +67,5 @@ void loop() {
   Serial.print(specialCurtainPot);
   Serial.print("]\n");
 
-  delay(20);
   
 }
