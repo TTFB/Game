@@ -19,8 +19,10 @@ TTFB_Actor::TTFB_Actor(std::string _name, Box2DWorld * _world, BulletWorld * _bu
 	Box2DSuperSprite(_world, 0),
 	speechArea(new TextArea(_bulletWorld, _font, _textShader, 1000.0f)),
 	moveDirection(0),
+	moveDirectionY(0),
 	saySubscription(new TTFB_Subscription()),
 	moveSubscription(new TTFB_Subscription()),
+	moveSubscriptionY(new TTFB_Subscription()),
 	speechAreaScale(0.01f),
 	speedMod(1.0f),
 	leftArmBroken(false),
@@ -48,11 +50,6 @@ TTFB_Actor::TTFB_Actor(std::string _name, Box2DWorld * _world, BulletWorld * _bu
 	leftLeg->scale  = B2_SCALE;
 	rightLeg->scale = B2_SCALE;
 
-	//head->body->SetGravityScale(-0.3f);
-	//leftArm->body->SetGravityScale(0.3f);
-	///rightArm->body->SetGravityScale(0.3f);
-	//legs->body->SetGravityScale(0.3f);
-
 	torso->createFixture(filt)->SetDensity(1.f);
 	head->createFixture(filt)->SetDensity(1.f);
 	leftArm->createFixture(filt)->SetDensity(1.f);
@@ -76,15 +73,6 @@ TTFB_Actor::TTFB_Actor(std::string _name, Box2DWorld * _world, BulletWorld * _bu
 	speechArea->background->mesh->pushTexture2D(TTFB_ResourceManager::scenario->getTexture("speechBubble")->texture);
 	speechArea->setPadding(50, 50, 100, 50);
 	speechArea->setWrapMode(kWORD);
-
-	//SpriteSheetAnimation * shWalk = new SpriteSheetAnimation(TTFB_ResourceManager::scenario->getTexture("SPRITESHEET")->texture, 0.1f);
-	//shWalk->pushFramesInRange(0, 26, 128, 150);
-	
-	//SpriteSheetAnimation * shStand = new SpriteSheetAnimation(TTFB_ResourceManager::scenario->getTexture("SPRITESHEET")->texture, 0.1f);
-	//shStand->pushFramesInRange(7, 7, 128, 150);
-	
-	//torso->addAnimation("walk", shWalk, false);
-	//torso->addAnimation("stand", shStand, true);
 
 	// make the root component the torso
 	addComponent(&leftArm);
@@ -211,6 +199,29 @@ TTFB_Subscription * TTFB_Actor::move(float _moveBy) {
 		});
 	}
 	return moveSubscription;
+}
+
+TTFB_Subscription * TTFB_Actor::moveY(float _moveBy) {
+	b2Vec2 pos = torso->body->GetPosition();
+	if(_moveBy - pos.y > 0) {
+		moveDirectionY = 1;
+	}else if(_moveBy - pos.y  < 0) {
+		moveDirectionY = -1;	
+	}else {
+		moveDirectionY = 0;
+	}
+	float target = _moveBy; 
+	if(firstParent() != nullptr){
+		when([target, this](){
+			float curY = rootComponent->body->GetPosition().y;
+			return moveDirectionY > 0 ? curY > target : curY < target;
+		},
+		[this](){
+			moveDirectionY = 0;
+			moveSubscriptionY->publish();
+		});
+	}
+	return moveSubscriptionY;
 }
 
 TTFB_Subscription * TTFB_Actor::say(float _durationSeconds, std::wstring _say, bool _hideOnComplete) {
@@ -354,11 +365,15 @@ void TTFB_Actor::update(Step* _step) {
 	TTFB_Whenable::update(_step);
 	float curX = rootComponent->body->GetPosition().x;
 	float curY = rootComponent->body->GetPosition().y;
-	float targX = curX + (1.0f * moveDirection *speedMod * 0.05 * _step->deltaTimeCorrection);
-	rootComponent->setTranslationPhysical(targX, curY, 0.f);
+	float targX = curX + (1.0f * moveDirection * speedMod * 0.05 * _step->deltaTimeCorrection);
+	float targY = curY + (1.0f * moveDirectionY * speedMod * 0.05 * _step->deltaTimeCorrection);
+	
+	rootComponent->setTranslationPhysical(targX, targY, 0.f);
+
 	speechArea->firstParent()->translate(head->body->GetWorldCenter().x - speechArea->getWidth() * 0.5f * speechAreaScale,
 		head->body->GetWorldCenter().y + speechArea->getHeight() * 0.5f * speechAreaScale + 1.0f,
 		speechArea->firstParent()->getTranslationVector().z, false);
+
 	Box2DSuperSprite::update(_step);
 }
 

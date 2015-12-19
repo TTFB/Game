@@ -46,6 +46,7 @@ public:
 	virtual void render(sweet::MatrixStack * _matrixStack, RenderOptions * _renderOptions) override;
 	
 	virtual TTFB_Subscription * move(float _moveBy);
+	TTFB_Subscription* moveY(float _moveBy);
 	virtual TTFB_Subscription * say(float _durationSeconds, std::wstring _say, bool _hideOnComplete);
 	virtual void flip();
 	virtual float getLegsOffset();
@@ -77,8 +78,10 @@ public:
 private:
 	TextArea * speechArea; 
 	TTFB_Subscription * moveSubscription;
+	TTFB_Subscription * moveSubscriptionY;
 	TTFB_Subscription * saySubscription;
 	int		   moveDirection;
+	int		   moveDirectionY;
 	float speechAreaScale;
 
 	void breakJoint(Box2DSprite * _sprite);

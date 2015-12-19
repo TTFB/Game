@@ -1361,6 +1361,16 @@
       "id": "L3_wall3_wCandle",
       "type": "textureSampler",
       "src": "Level3_Assets/wall3_wCandle.png.def"
+    },
+    {
+      "id": "L3_ramps",
+      "type": "textureSampler",
+      "src": "Level3_Assets/ramps.png.def"
+    },
+    {
+      "id": "L3_background",
+      "type": "textureSampler",
+      "src": "Level3_Assets/background.png.def"
     }
   ]
 }
