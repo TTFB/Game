@@ -22,9 +22,9 @@ TTFB_DraculaStage::TTFB_DraculaStage(Box2DWorld * _world, Shader * _shader) :
 	}
 
 	stageBack = new Sprite(_shader);
-	stageBack->setPrimaryTexture(TTFB_ResourceManager::scenario->getTextureSampler("L1_Background")->textureSampler);
+	stageBack->setPrimaryTexture(TTFB_ResourceManager::scenario->getTextureSampler("L3_Background")->textureSampler);
 	childTransform->addChild(stageBack);
-	stageBack->firstParent()->scale(70, 70, 1.f);
+	stageBack->firstParent()->scale(90, 90, 1.f);
 	stageBack->firstParent()->translate(0.f, 19.f, -2.5f);
 
 	stageFrontLeft = new Sprite(_shader);

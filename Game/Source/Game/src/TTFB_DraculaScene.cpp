@@ -9,6 +9,7 @@
 #include <Keyboard.h>
 #include <TTFB_Constants.h>
 #include <TTFB_Controller.h>
+#include <TTFB_SetPiece.h>
 
 TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 	TTFB_StageScene(_game),
@@ -24,6 +25,10 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 	addAudience("L3");
 
 	startSceneDelay = 3.0f;
+
+	// Set pieces
+	setPeiceWall1 = addSetPiece("L3_wall1", glm::vec3(10.f, 20.f, -0.5f));
+	setPeiceWall1->raise();
 
 #pragma  endregion 
 	 
@@ -66,6 +71,9 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 		dracula->move(-18);
 		renfield->move(-20);
 		dracula->say(3.0f, L"I am Dracula", true);
+
+		// Test lowering wall1
+		setPeiceWall1->lower();
 	});
 
 	eventQueue.at(3.2f + startSceneDelay + offset, [this](){

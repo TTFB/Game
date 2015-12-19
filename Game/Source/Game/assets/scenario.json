@@ -1368,7 +1368,7 @@
       "src": "Level3_Assets/ramps.png.def"
     },
     {
-      "id": "L3_background",
+      "id": "L3_Background",
       "type": "textureSampler",
       "src": "Level3_Assets/background.png.def"
     }
