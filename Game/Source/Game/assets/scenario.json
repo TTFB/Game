@@ -20,27 +20,27 @@
 	{
       "id": "titleScreen",
       "type": "texture",
-      "src": "titleScreen.png.def"
+      "src": "titleScreen.png"
     },
     {
       "id": "lose",
       "type": "texture",
-      "src": "tryAgain.png.def"
+      "src": "tryAgain.png"
     },
     {
       "id": "spamalotMediocre",
       "type": "texture",
-      "src": "preDracula_Mediocre.png.def"
+      "src": "preDracula_Mediocre.png"
     },
     {
       "id": "spamalotGood",
       "type": "texture",
-      "src": "preDracula_Excellent.png.def"
+      "src": "preDracula_Excellent.png"
     },
     {
       "id": "draculaWin",
       "type": "texture",
-      "src": "congratulationsScreen.png.def"
+      "src": "congratulationsScreen.png"
     },
     {
       "id": "SPRITESHEET",
@@ -334,37 +334,37 @@
     },
     {
       "id": "L3_CrowdBored1",
-      "type": "texture",
+      "type": "textureSampler",
       "src": "Level3_Assets/Level3_Crowd_Bored1.png.def"
     },
     {
       "id": "L3_CrowdBored2",
-      "type": "texture",
+      "type": "textureSampler",
       "src": "Level3_Assets/Level3_Crowd_Bored2.png.def"
     },
     {
       "id": "L3_CrowdBored3",
-      "type": "texture",
+      "type": "textureSampler",
       "src": "Level3_Assets/Level3_Crowd_Bored3.png.def"
     },
     {
       "id": "L3_CrowdBored4",
-      "type": "texture",
+      "type": "textureSampler",
       "src": "Level3_Assets/Level3_Crowd_Bored4.png.def"
     },
     {
       "id": "L3_CrowdHappy1",
-      "type": "texture",
+      "type": "textureSampler",
       "src": "Level3_Assets/Level3_Crowd_Happy1.png.def"
     },
     {
       "id": "L3_CrowdHappy2",
-      "type": "texture",
+      "type": "textureSampler",
       "src": "Level3_Assets/Level3_Crowd_Happy2.png.def"
     },
     {
       "id": "L3_CrowdHappy3",
-      "type": "texture",
+      "type": "textureSampler",
       "src": "Level3_Assets/Level3_Crowd_Happy3.png.def"
     },
     {
