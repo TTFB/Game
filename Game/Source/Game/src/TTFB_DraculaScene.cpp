@@ -9,6 +9,7 @@
 #include <Keyboard.h>
 #include <TTFB_Constants.h>
 #include <TTFB_Controller.h>
+#include <TTFB_SetPiece.h>
 
 TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 	TTFB_StageScene(_game),
@@ -25,13 +26,16 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 
 	startSceneDelay = 3.0f;
 
+	setPieceWall1 = addSetPiece("L3_wall1", glm::vec3(10.f, 20.f, -0.5f));
+	setPieceWall1->raise();
+
 #pragma  endregion 
 	 
 #pragma region ActorSetup
 
 	dracula = createActor("dracula"); 
 	childTransform->addChild(dracula);
-	dracula->translateComponents(-15.f, dracula->getLegsOffset(), 0.f);
+	dracula->translateComponents(-12.f, dracula->getLegsOffset(), 0.f);
 
 	TwBar * bar = stage->stageBase->firstParent()->createAntTweakBarWindow("Stage");
 	stage->stageBack->firstParent()->addToAntTweakBar(bar, "Background");
@@ -63,8 +67,8 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 
 	eventQueue.at(0.0f + startSceneDelay + offset, [this](){
 		dialoguePlayer->playNext();
-		dracula->move(-18);
-		renfield->move(-20);
+		dracula->move(-15);
+		renfield->move(-17);
 		dracula->say(3.0f, L"I am Dracula", true);
 	});
 
@@ -88,6 +92,11 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 	});
 
 	// Go upstairs
+	eventQueue.at(12.0f + startSceneDelay + offset, [this](){
+		dracula->move(-7);
+		renfield->move(-5);
+		//dracula->moveY(20);
+	});
 
 	eventQueue.at(13.f + startSceneDelay + offset, [this](){
 		TTFB_ResourceManager::scenario->getAudio("HowlingWolf1")->sound->play();
@@ -293,6 +302,11 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 
 	controller->lightSliderThree.bind([this](int _value){
 		lights[3]->setIntensities(glm::vec3(((float)_value + 0.0001f)/1024));
+	});
+
+	controller->setButtonOne.bind([this](int _value) {
+		if(controller->setButtonOne.justDown()) {
+		}
 	});
 	
 	// Move this into stage scene

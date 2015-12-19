@@ -19,6 +19,8 @@ public:
 	TTFB_Actor * dracula;
 	TTFB_Actor * renfield;
 
+	TTFB_SetPiece * setPieceWall1;
+
 	TTFB_DialoguePlayer * dialoguePlayer;
 
 	OpenAL_Sound * backgroundMusic;
