@@ -74,6 +74,7 @@ TTFB_SpamalotScene::TTFB_SpamalotScene(Game * _game) :
 	conditions["whoosh1Played"] = false; 
 	conditions["chickenPlayed"] = false; 
 
+	addAudience("L1");
 
 #pragma region SetSetup
 
@@ -799,7 +800,7 @@ void TTFB_SpamalotScene::endScene() {
 	dialoguePlayer->playing = false;
 	backgroundMusic->stop();
 	if(score <= ONE_STAR){
-		TTFB_StageScene::endScene(SPAMALOT, SPAMALOT, "lose", "");
+		TTFB_StageScene::endScene(SPAMALOT, SPAMALOT, "lose", "TryAgain");
 	}else if(score > ONE_STAR && score < THREE_STARS){
 		TTFB_StageScene::endScene(SPAMALOT, DRACULA, "spamalotMediocre", "PreDraculaDialogue_Mediocre"); // Add in sound effect
 	}else{

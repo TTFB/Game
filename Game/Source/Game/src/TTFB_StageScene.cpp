@@ -207,10 +207,6 @@ TTFB_StageScene::TTFB_StageScene(Game * _game) :
 	mouseIndicator->setShader(uiLayer.shader, true);
 #endif
 
-	audience = new TTFB_Audience(baseShader);
-	childTransform->addChild(audience)->translate(0.f, 11.f, 20.0f);
-	audience->firstParent()->scale(25.0f, 25.0f * 0.562f, 1.0f);
-
 	// Add the debug drawer last so it appears on top
 	childTransform->addChild(box2dDebug, true);
 
@@ -357,20 +353,22 @@ void TTFB_StageScene::update(Step * _step){
 		}
 	}
 
-	if(score <= -2000) {
-		audience->setBored(3);
-	}else if(score <= -1000) {
-		audience->setBored(2);
-	}else if(score <= -500) {
-		audience->setBored(1);
-	}else if(score > -500 && score < 500) {
-		audience->setNeutral();
-	}else if(score >= 500) {
-		audience->setHappy(1);
-	}else if(score >= 1000) {
-		audience->setHappy(2);
-	}else if(score >= 2000) {
-		audience->setHappy(3);
+	if(audience != nullptr){
+		if(score <= -2000) {
+			audience->setBored(3);
+		}else if(score <= -1000) {
+			audience->setBored(2);
+		}else if(score <= -500) {
+			audience->setBored(1);
+		}else if(score > -500 && score < 500) {
+			audience->setNeutral();
+		}else if(score >= 500) {
+			audience->setHappy(1);
+		}else if(score >= 1000) {
+			audience->setHappy(2);
+		}else if(score >= 2000) {
+			audience->setHappy(3);
+		}
 	}
 
 	// Toggle debug drawer
@@ -496,7 +494,7 @@ void TTFB_StageScene::endScene(std::string _currentScene, std::string _nextScene
 
 	if(score <= ONE_STAR) {
 		_message = "lose";
-		_audio = "";
+		_audio = "TryAgain";
 	}
 
 	endMessage = new NodeUI(bulletWorld);
@@ -505,6 +503,8 @@ void TTFB_StageScene::endScene(std::string _currentScene, std::string _nextScene
 	endMessage->background->mesh->pushTexture2D(TTFB_ResourceManager::scenario->getTexture(_message)->texture);
 	uiLayer.addChild(endMessage);
 	endMessage->setVisible(false);
+	
+	audience->stopAudio();
 
 	if(_audio != "") {
 		endSound = TTFB_ResourceManager::scenario->getAudio(_audio)->sound;
@@ -561,6 +561,12 @@ void TTFB_StageScene::setStage(TTFB_Stage * _stage) {
 	stage = _stage;
 	childTransform->addChild(stage);
 	stage->childTransform->addChild(fireSystem);
+}
+
+void TTFB_StageScene::addAudience(std::string _prefix) {
+	audience = new TTFB_Audience(_prefix, baseShader);
+	childTransform->addChild(audience)->translate(0.f, 9.f, 20.0f);
+	audience->firstParent()->scale(35.0f, 35.0f, 1.0f);
 }
 
 void TTFB_StageScene::dimHouseLights() {

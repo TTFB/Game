@@ -145,6 +145,8 @@ public:
 
 	void setStage(TTFB_Stage * _stage);
 
+	void addAudience(std::string _prefix);
+
 	TTFB_StageScene(Game * _game);
 	~TTFB_StageScene();
 

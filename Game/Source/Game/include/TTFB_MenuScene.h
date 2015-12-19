@@ -71,7 +71,7 @@ public:
 	TTFB_Stage * stage;
 
 	Sprite * mouseIndicator;
-
+	OpenAL_Sound * introSpeech;
 
 	virtual void update(Step * _step) override;
 	virtual void render(sweet::MatrixStack * _matrixStack, RenderOptions * _renderOptions) override;

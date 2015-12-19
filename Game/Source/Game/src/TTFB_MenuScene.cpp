@@ -91,10 +91,15 @@ TTFB_MenuScene::TTFB_MenuScene(Game* _game)  :
 	camController = new MouseCameraController(debugCam);
 
 	music = TTFB_ResourceManager::scenario->getAudio("openingMusic")->sound;
+	music->setGain(0.2f);
+
+	introSpeech = TTFB_ResourceManager::scenario->getAudio("introDialogue")->sound;
+	introSpeech->setGain(2.f);
 }
 
 TTFB_MenuScene::~TTFB_MenuScene() {
 	music->stop();
+	introSpeech->stop();
 	deleteChildTransform();
 	baseShader->safeDelete();
 	characterShader->safeDelete();
@@ -133,10 +138,11 @@ void TTFB_MenuScene::update(Step* _step) {
 
 	if((controller->IsConnected() && controller->specialFireButton.justDown()) || keyboard->keyJustUp(GLFW_KEY_P)) {
 		if(introScreen->isVisible()){
-			((TTFB_Game *)game)->switchToScene(SPAMALOT);
+			((TTFB_Game *)game)->switchToScene(DRACULA);
 			return;
 		}else {
 			introScreen->setVisible(true);
+			introSpeech->play();
 		}
 	}
 

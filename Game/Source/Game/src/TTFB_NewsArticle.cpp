@@ -31,7 +31,7 @@ TTFB_NewsArticle::TTFB_NewsArticle(Shader * _shader, std::string _play, int _sco
 				break;
 			case 3:
 				article = TTFB_ResourceManager::scenario->getTextureSampler("spamalot_three_stars")->textureSampler->texture;
-				sound   = TTFB_ResourceManager::scenario->getAudio("spamalot_two_stars_sound")->sound;
+				sound   = TTFB_ResourceManager::scenario->getAudio("spamalot_three_stars_sound")->sound;
 				break;
 			default:
 				throw "Bad score";
@@ -65,7 +65,7 @@ TTFB_NewsArticle::TTFB_NewsArticle(Shader * _shader, std::string _play, int _sco
 				break;
 			case 3:
 				article = TTFB_ResourceManager::scenario->getTextureSampler("dracula_three_stars")->textureSampler->texture;
-				sound   = TTFB_ResourceManager::scenario->getAudio("dracula_two_stars_sound")->sound;
+				sound   = TTFB_ResourceManager::scenario->getAudio("dracula_three_stars_sound")->sound;
 				break;
 			
 			default:

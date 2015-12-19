@@ -21,7 +21,9 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 
 	setStage(new TTFB_DraculaStage(box2dWorld, baseShader));
 
-	startSceneDelay = 10.0f;
+	addAudience("L3");
+
+	startSceneDelay = 3.0f;
 
 #pragma  endregion 
 	 
@@ -370,8 +372,8 @@ void TTFB_DraculaScene::endScene() {
 	dialoguePlayer->playing = false;
 	backgroundMusic->stop();
 	if(score <= ONE_STAR){
-		TTFB_StageScene::endScene(DRACULA, DRACULA, "lose", "");
+		TTFB_StageScene::endScene(DRACULA, DRACULA, "lose", "TryAgain");
 	}else {
-		TTFB_StageScene::endScene(DRACULA, MENU, "draculaWin", ""); // Add in sound effect
+		TTFB_StageScene::endScene(DRACULA, MENU, "draculaWin", "Ending"); // Add in sound effect
 	}
 }

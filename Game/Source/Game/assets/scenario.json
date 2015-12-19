@@ -189,43 +189,43 @@
     },
     {
       "id": "L1_CrowdNeutral",
-      "type": "texture",
-      "src": "Level1_Assets/Level1_Crowd_Neutral.png"
+      "type": "textureSampler",
+      "src": "Level1_Assets/Level1_Crowd_Neutral.png.def"
     },
     {
       "id": "L1_CrowdBored1",
-      "type": "texture",
-      "src": "Level1_Assets/Level1_Crowd_Bored1.png"
+      "type": "textureSampler",
+      "src": "Level1_Assets/Level1_Crowd_Bored1.png.def"
     },
     {
       "id": "L1_CrowdBored2",
-      "type": "texture",
-      "src": "Level1_Assets/Level1_Crowd_Bored2.png"
+      "type": "textureSampler",
+      "src": "Level1_Assets/Level1_Crowd_Bored2.png.def"
     },
     {
       "id": "L1_CrowdBored3",
-      "type": "texture",
-      "src": "Level1_Assets/Level1_Crowd_Bored3.png"
+      "type": "textureSampler",
+      "src": "Level1_Assets/Level1_Crowd_Bored3.png.def"
     },
     {
       "id": "L1_CrowdBored4",
-      "type": "texture",
-      "src": "Level1_Assets/Level1_Crowd_Bored4.png"
+      "type": "textureSampler",
+      "src": "Level1_Assets/Level1_Crowd_Bored4.png.def"
     },
     {
       "id": "L1_CrowdHappy1",
-      "type": "texture",
-      "src": "Level1_Assets/Level1_Crowd_Happy1.png"
+      "type": "textureSampler",
+      "src": "Level1_Assets/Level1_Crowd_Happy1.png.def"
     },
     {
       "id": "L1_CrowdHappy2",
-      "type": "texture",
-      "src": "Level1_Assets/Level1_Crowd_Happy2.png"
+      "type": "textureSampler",
+      "src": "Level1_Assets/Level1_Crowd_Happy2.png.def"
     },
     {
       "id": "L1_CrowdHappy3",
-      "type": "texture",
-      "src": "Level1_Assets/Level1_Crowd_Happy3.png"
+      "type": "textureSampler",
+      "src": "Level1_Assets/Level1_Crowd_Happy3.png.def"
     },
     {
       "id": "L1_Floor",
