@@ -1,10 +1,6 @@
 #pragma once
 
 #include <TTFB_Stage.h>
-#include <MeshFactory.h>
-#include <Box2DWorld.h>
-#include <MeshInterface.h>
-#include <TTFB_ResourceManager.h>
 #include <Sprite.h>
 
 TTFB_Stage::TTFB_Stage() : 
@@ -23,11 +19,11 @@ TTFB_Stage::TTFB_Stage() :
 TTFB_Stage::~TTFB_Stage() {
 }
 
-sweet::Rectangle TTFB_Stage::getVisibleBounds() {
-	float left = 0.0f;
-	float right = 0.0f;
-	float top = 0.0f;
-	float bottom = 0.0f;
+sweet::Rectangle TTFB_Stage::getVisibleBounds() const {
+	float left;
+	float right;
+	float top;
+	float bottom;
 
 	left = stageFrontLeft->firstParent()->getTranslationVector().x + stageFrontLeft->firstParent()->getScaleVector().x * 0.5f;
 	right = stageFrontRight->firstParent()->getTranslationVector().x - stageFrontRight->firstParent()->getScaleVector().x * 0.5f;

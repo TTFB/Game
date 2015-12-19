@@ -131,7 +131,7 @@ public:
 	virtual TTFB_Actor * createActor(std::string _name);
 	virtual void endScene(std::string _currentScene, std::string _nextScene, std::string _message, std::string audio);
 	virtual TTFB_Prop * addProp(std::string _samplerResourceId, glm::vec3 _pos);
-	virtual TTFB_SetPiece * addSetPiece(std::string _samplerResourceId, glm::vec3 _pos);
+	virtual TTFB_SetPiece * addSetPiece(std::string _samplerResourceId, glm::vec3 _pos, float _scaleMultiplier = 1.0f);
 
 	void addFog();
 	void toggleFog();

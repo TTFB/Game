@@ -5,7 +5,7 @@
 #include <TTFB_Actor.h>
 #include <TTFB_Constants.h>
 
-TTFB_SetPiece::TTFB_SetPiece(Box2DWorld* _world, std::string _samplerResourceId, Shader* _shader, sweet::Rectangle _stageBounds) :
+TTFB_SetPiece::TTFB_SetPiece(Box2DWorld* _world, std::string _samplerResourceId, Shader* _shader, sweet::Rectangle _stageBounds, float _scaleMultiplier) :
 	Box2DSprite(_world, TTFB_ResourceManager::scenario->getTextureSampler(_samplerResourceId)->textureSampler),
 	raiseDir(0),
 	stageBounds(_stageBounds),
@@ -18,7 +18,7 @@ TTFB_SetPiece::TTFB_SetPiece(Box2DWorld* _world, std::string _samplerResourceId,
 	filt.maskBits     = 0x000000 | Category::BOUNDARY;
 
 	setShader(_shader);
-	scale = B2_SCALE;
+	scale = B2_SCALE * _scaleMultiplier;
 	createFixture(filt);
 	body->SetGravityScale(0.0f);
 }

@@ -518,8 +518,8 @@ TTFB_Prop * TTFB_StageScene::addProp(std::string _samplerResourceId, glm::vec3 _
 	return prop;
 }
 
-TTFB_SetPiece * TTFB_StageScene::addSetPiece(std::string _samplerResourceId, glm::vec3 _pos) {
-	TTFB_SetPiece * set = new TTFB_SetPiece(box2dWorld, _samplerResourceId, baseShader, stage->getVisibleBounds());
+TTFB_SetPiece * TTFB_StageScene::addSetPiece(std::string _samplerResourceId, glm::vec3 _pos, float _scaleMultiplier) {
+	TTFB_SetPiece * set = new TTFB_SetPiece(box2dWorld, _samplerResourceId, baseShader, stage->getVisibleBounds(), _scaleMultiplier);
 	childTransform->addChild(set);
 	_pos.y = stage->getVisibleBounds().getTopLeft().y + 10;
 	set->setTranslationPhysical(_pos);

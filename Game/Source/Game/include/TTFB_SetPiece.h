@@ -6,7 +6,7 @@
 class TTFB_SetPiece : public Box2DSprite {
 public:	
 
-	TTFB_SetPiece(Box2DWorld * _world, std::string _samplerResourceId, Shader * _shader, sweet::Rectangle _stageBounds);
+	TTFB_SetPiece(Box2DWorld * _world, std::string _samplerResourceId, Shader * _shader, sweet::Rectangle _stageBounds, float _scaleMultiplier = 1.f);
 
 	void update(Step * _step) override;
 
@@ -18,7 +18,7 @@ public:
 	bool isRaised();
 
 private:
-	int raiseDir;
+	int  raiseDir;
 	bool forceFrame;
 	bool lowered;
 	bool raised;
