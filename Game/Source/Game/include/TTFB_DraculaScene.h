@@ -20,6 +20,7 @@ public:
 	TTFB_Actor * renfield;
 
 	TTFB_SetPiece * setPeiceWall1;
+	TTFB_SetPiece * setPieceBG;
 
 	TTFB_DialoguePlayer * dialoguePlayer;
 

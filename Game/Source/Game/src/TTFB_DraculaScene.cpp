@@ -29,6 +29,8 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 	// Set pieces
 	setPeiceWall1 = addSetPiece("L3_wall1", glm::vec3(10.f, 20.f, -0.5f));
 	setPeiceWall1->raise();
+	setPieceBG = addSetPiece("L3_ramps", glm::vec3(-5.f, 20.f, -0.5));
+	setPieceBG->raise();
 
 #pragma  endregion 
 	 
@@ -74,6 +76,7 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 
 		// Test lowering wall1
 		setPeiceWall1->lower();
+		setPieceBG->lower();
 	});
 
 	eventQueue.at(3.2f + startSceneDelay + offset, [this](){
@@ -99,7 +102,8 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 	eventQueue.at(12.0f + startSceneDelay + offset, [this](){
 		dracula->move(-7);
 		renfield->move(-5);
-		//dracula->moveY(20);
+		dracula->moveY(8);
+		renfield->moveY(6);
 	});
 
 	eventQueue.at(13.f + startSceneDelay + offset, [this](){
