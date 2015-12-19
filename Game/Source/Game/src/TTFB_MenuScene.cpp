@@ -21,6 +21,7 @@
 #include <MouseCameraController.h>
 #include <TTFB_Controller.h>
 #include <TTFB_Game.h>
+#include <OpenALSound.h>
 #include <TTFB_Constants.h>
 
 
@@ -33,7 +34,10 @@ TTFB_MenuScene::TTFB_MenuScene(Game* _game)  :
 	characterShader(new ComponentShaderBase(true)),
 	textShader(new ComponentShaderText(true)),
 	uiLayer(0,0,0,0),
-	font(new Font("assets/engine basics/OpenSans-Regular.ttf", 32, true)) {
+	font(new Font("assets/engine basics/OpenSans-Regular.ttf", 32, true)),
+	musicPlaying(false),
+	music(nullptr)
+{
 
 	bulletWorld = new BulletWorld();
 	
@@ -66,36 +70,11 @@ TTFB_MenuScene::TTFB_MenuScene(Game* _game)  :
 	glm::uvec2 sd = sweet::getScreenDimensions();
 	uiLayer.resize(0, sd.x, 0, sd.y);
 
-	// mouse cursor
-	mouseIndicator = new Sprite();
-	uiLayer.childTransform->addChild(mouseIndicator);
-	mouseIndicator->mesh->pushTexture2D(TTFB_ResourceManager::scenario->getTexture("CURSOR")->texture);
-	mouseIndicator->parents.at(0)->scale(32, 32, 1);
-	mouseIndicator->mesh->scaleModeMag = GL_NEAREST;
-	mouseIndicator->mesh->scaleModeMin = GL_NEAREST;
-
-	for(unsigned long int i = 0; i < mouseIndicator->mesh->vertices.size(); ++i){
-		mouseIndicator->mesh->vertices[i].x += 0.5f;
-		mouseIndicator->mesh->vertices[i].y -= 0.5f;
-	}
-
-	mouseIndicator->mesh->dirty = true;
-	mouseIndicator->setShader(uiLayer.shader, true);
-
-	VerticalLinearLayout * buttonLayout = new VerticalLinearLayout(bulletWorld);
-	buttonLayout->setRationalWidth(1, &uiLayer);
-	buttonLayout->setRationalHeight(1, &uiLayer);
-	buttonLayout->horizontalAlignment = kCENTER;
-	buttonLayout->verticalAlignment   = kMIDDLE;
-	uiLayer.addChild(buttonLayout);
-
 	NodeUI * logo = new NodeUI(bulletWorld);
-	logo->setPixelWidth(759);
-	logo->setPixelHeight(557);
-	logo->background->mesh->pushTexture2D(TTFB_ResourceManager::scenario->getTexture("logo")->texture);
-	buttonLayout->addChild(logo);
-
-	TextArea * playButton = new TextArea(bulletWorld, font, textShader, 200);
+	logo->setRationalWidth(1);
+	logo->setRationalHeight(1);
+	logo->background->mesh->pushTexture2D(TTFB_ResourceManager::scenario->getTexture("titleScreen")->texture);
+	uiLayer.addChild(logo);
 
 	introScreen = new NodeUI(bulletWorld);
 	introScreen->setRationalWidth(1);
@@ -104,40 +83,18 @@ TTFB_MenuScene::TTFB_MenuScene(Game* _game)  :
 	uiLayer.addChild(introScreen);
 	introScreen->setVisible(false);
 
-	/*playButton->eventManager.addEventListener("click", [=](sweet::Event * _event){
-		introScreen->setVisible(true);
-	});
-
-	playButton->eventManager.addEventListener("mousein", [=](sweet::Event * _event){
-		playButton->setBackgroundColour(1, 0, 0, 1);
-	});
-
-	playButton->eventManager.addEventListener("mouseout", [=](sweet::Event * _event){
-		playButton->setBackgroundColour(1, 1, 1, 1);
-	});
-
-	playButton->eventManager.addEventListener("mouseup", [=](sweet::Event * _event){
-		playButton->setBackgroundColour(0, 0, 1, 1);
-	});
-
-	playButton->horizontalAlignment = kCENTER;
-	playButton->verticalAlignment = kMIDDLE;
-	playButton->setMouseEnabled(true);
-	playButton->setText(L"PLAY");
-	playButton->setBackgroundColour(1.0f, 1.0f, 1.0f, 1.0f);
-	playButton->setHeight(200);
-	buttonLayout->addChild(playButton);
-	buttonLayout->invalidateLayout();*/
-
 	PointLight * light2 = new PointLight(glm::vec3(1, 1, 1),  0.01f, 0.001f, -1.f);
 	lights.push_back(light2);
 	childTransform->addChild(light2);
 	light2->firstParent()->translate(0, 0, -5);
 
 	camController = new MouseCameraController(debugCam);
+
+	music = TTFB_ResourceManager::scenario->getAudio("openingMusic")->sound;
 }
 
 TTFB_MenuScene::~TTFB_MenuScene() {
+	music->stop();
 	deleteChildTransform();
 	baseShader->safeDelete();
 	characterShader->safeDelete();
@@ -150,14 +107,17 @@ TTFB_MenuScene::~TTFB_MenuScene() {
 
 void TTFB_MenuScene::update(Step* _step) {
 
+	if(!musicPlaying) {
+		music->play(true);
+		musicPlaying = true;
+	}
+
 	bulletWorld->update(_step);
 
 	glm::uvec2 sd = sweet::getScreenDimensions();
 	uiLayer.resize(0, sd.x, 0, sd.y);
 
 	uiLayer.update(_step);
-
-	mouseIndicator->parents.at(0)->translate(mouse->mouseX(), mouse->mouseY(), 0, false);
 
 	if(keyboard->keyJustDown(GLFW_KEY_F12)){
 		game->toggleFullScreen();

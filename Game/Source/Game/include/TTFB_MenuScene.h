@@ -8,6 +8,7 @@
 #include <BulletWorld.h>
 #include <TTFB_EventQueue.h>
 #include "TTFB_Scene.h"
+#include <OpenALSound.h>
 
 class TTFB_Controller;
 class PerspectiveCamera;
@@ -56,6 +57,9 @@ public:
 	MousePerspectiveCamera * debugCam;
 	MouseCameraController * camController;
 
+	OpenAL_Sound * music;
+	bool musicPlaying;
+
 	MeshEntity * cheese;
 	
 	NodeUI * introScreen;
@@ -67,6 +71,7 @@ public:
 	TTFB_Stage * stage;
 
 	Sprite * mouseIndicator;
+
 
 	virtual void update(Step * _step) override;
 	virtual void render(sweet::MatrixStack * _matrixStack, RenderOptions * _renderOptions) override;
