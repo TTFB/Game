@@ -27,7 +27,7 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 	startSceneDelay = 3.0f;
 
 	// Set pieces
-	setPeiceWall1 = addSetPiece("L3_wall1", glm::vec3(10.f, 20.f, -0.5f));
+	setPeiceWall1 = addSetPiece("L3_wall1", glm::vec3(10.f, 20.f, -0.5f), 1.5f);
 	setPeiceWall1->raise();
 	setPieceBG = addSetPiece("L3_ramps", glm::vec3(-5.f, 20.f, -0.5));
 	setPieceBG->raise();

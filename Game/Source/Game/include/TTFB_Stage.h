@@ -22,5 +22,5 @@ public:
 	TTFB_Stage();
 	~TTFB_Stage();
 
-	sweet::Rectangle getVisibleBounds();
+	sweet::Rectangle getVisibleBounds() const;
 };
