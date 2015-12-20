@@ -11,7 +11,7 @@ public:
 	void update(Step * _step) override;
 
 	void raise();
-	void lower();
+	void lower(float _offset = 0.0f);
 	void toggle();
 
 	bool isLowered();
@@ -23,4 +23,5 @@ private:
 	bool lowered;
 	bool raised;
 	sweet::Rectangle stageBounds;
+	float offset;
 };
