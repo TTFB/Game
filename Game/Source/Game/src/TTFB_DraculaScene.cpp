@@ -29,13 +29,24 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 
 	// Set pieces
 
-	/*setPeiceWall1 = addSetPiece("L3_wall1", glm::vec3(10.f, 20.f, -0.5f), 1.5f);
-	setPeiceWall1->raise();
-	setPieceStairs = addSetPiece("L3_ramps", glm::vec3(0.f, 20.f, -0.5), 2.2f);
-	setPieceStairs->raise();*/
+	setPeiceBuilding = addSetPiece("L3_MainBuilding", glm::vec3(3.f, 20.f, -0.5f), 2.5f);
+	setPeiceBuilding->raise();
+	//setPeiceBuildingForeground= addSetPiece("L3_BuildingForeground", glm::vec3(3.f, 20.f, -0.5f), 2.5f);
+	//setPeiceBuildingForeground->raise();
+	setPieceWeb= addSetPiece("L3_spiderWeb2", glm::vec3(-2.f, 25.f, -0.5f), 1.0f);
+	setPieceWeb->raise();
+	setPieceBed = addSetPiece("L3_Bed", glm::vec3(18.f, 20.f, -0.5f), 0.2f);
+	setPieceWeb->raise();
+	setPieceFireplace = addSetPiece("L3_Fireplace", glm::vec3(15.f, 20.f, -0.5f), 0.3f);
+	setPieceWeb->raise();
 
 	//sound conditions
 	conditions["wolfCallPlayed"] = false; //holds like a bool
+	conditions["draculaSoundPlayed"] = false;
+	conditions["boxSound1Played"] = false;
+	conditions["boxSound2Played"] = false;
+	conditions["boxSound3Played"] = false;
+	
 
 #pragma  endregion 
 	 
@@ -70,8 +81,12 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 	eventQueue.at(0.00f, [this]{
 		countDown(startSceneDelay);
 		// Test lowering wall1
-		//setPeiceWall1->lower();
-		//setPieceStairs->lower();
+		setPeiceBuilding->lower();
+		//setPeiceBuildingForeground->lower();
+		setPieceWeb->lower();
+		setPieceBed->lower();
+		setPieceFireplace->lower();
+		setPieceFireplace->setTranslationPhysical(0.f,1.f,0.f,true);
 	});
 
 	eventQueue.at(startSceneDelay - 5.0f, [this](){dimHouseLights();});
@@ -106,8 +121,8 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 	eventQueue.at(12.0f + startSceneDelay + offset, [this](){
 		dracula->move(-5);
 		renfield->move(-7);
-		dracula->moveY(9);
-		renfield->moveY(9);
+		dracula->moveY(11.7);
+		renfield->moveY(11.7);
 	});
 
 	eventQueue.at(17.f + startSceneDelay + offset, [this](){
@@ -321,6 +336,10 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 			[this](){incScore();}, 
 			[this](){decScore();});
 	//dracula enters sound effect
+	eventQueue.expectAt(2.0f + offset + startSceneDelay, 2.f, 
+		[this](){return conditions["draculaSoundPlayed"];},
+			[this](){incScore();}, 
+			[this](){decScore();});
 	//blue Light dim (outside) to 30%
 	eventQueue.expectAt(11.5f + startSceneDelay + offset, 3.f, 
 		[this](){return lights[1]->getIntensities().r > 0.2 && lights[1]->getIntensities().r < 1.5;},
@@ -349,12 +368,28 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 			[this](){incScore();}, 
 			[this](){decScore();});
 	//luggage placed set
-	//lights 70%
+	//lights 70% (red, inside)
+	eventQueue.expectAt(53.0f + startSceneDelay + offset, 3.f, 
+		[this](){return lights[2]->getIntensities().r > 0.2 && lights[2]->getIntensities().r < 3.5;},
+			[this](){incScore();}, 
+			[this](){decScore();});
 	//lease appears set
-	//knocking sound set
-	//lights 30%
-	//lights 1 100%
-	//lights 2 30%
+	//knocking sound set (boxes)
+	eventQueue.expectAt(75.0f + offset + startSceneDelay, 2.f, 
+		[this](){return conditions["boxSound1Played"];},
+			[this](){incScore();}, 
+			[this](){decScore();});
+	eventQueue.expectAt(75.0f + offset + startSceneDelay, 2.f, 
+		[this](){return conditions["boxSound2Played"];},
+			[this](){incScore();}, 
+			[this](){decScore();});
+	eventQueue.expectAt(75.0f + offset + startSceneDelay, 2.f, 
+		[this](){return conditions["boxSound3Played"];},
+			[this](){incScore();}, 
+			[this](){decScore();});
+	//lights 3 30%
+	//lights 3 100%
+	//lights 1 30%
 	        
 #pragma endregion 
 
@@ -415,6 +450,26 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 				TTFB_ResourceManager::scenario->getAudio("HowlingWolf1" )->sound->play();
 				conditions["wolfCallPlayed"] = true;
 			}
+			if( eventQueue.getRelativeTime() > (73.0 + startSceneDelay) && eventQueue.getRelativeTime() < (77.0 + startSceneDelay)){
+				TTFB_ResourceManager::scenario->getAudio("doorKnock" )->sound->play();
+				if(conditions["boxSound1Played"] == true){
+					if(conditions["boxSound2Played"] == true){
+						conditions["boxSound3Played"] = true;
+					}else
+						conditions["boxSound2Played"] = true;
+				}else
+					conditions["boxSound1Played"] = true;
+			}
+		}
+	});
+
+	controller->soundButtonTwo.bind([this](int _value) {
+		if(controller->soundButtonTwo.justDown()) {
+			if( eventQueue.getRelativeTime() > (0.0 + startSceneDelay) && eventQueue.getRelativeTime() < (4.0 + startSceneDelay)){
+				TTFB_ResourceManager::scenario->getAudio("DraculaSound" )->sound->play();
+				conditions["draculaSoundPlayed"] = true;
+			}
+			
 		}
 	});
 
