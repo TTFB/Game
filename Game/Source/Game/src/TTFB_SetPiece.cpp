@@ -11,7 +11,8 @@ TTFB_SetPiece::TTFB_SetPiece(Box2DWorld* _world, std::string _samplerResourceId,
 	stageBounds(_stageBounds),
 	forceFrame(false),
 	lowered(false),
-	raised(true)
+	raised(true),
+	offset(0.f)
 {
 	b2Filter filt;
 	filt.categoryBits = Category::SET_PIECE;
@@ -23,7 +24,7 @@ TTFB_SetPiece::TTFB_SetPiece(Box2DWorld* _world, std::string _samplerResourceId,
 	body->SetGravityScale(0.0f);
 }
 
-void TTFB_SetPiece::update(Step* _step) {
+void TTFB_SetPiece::update(Step * _step) {
 	setTranslationPhysical(0.0f, 0.1f * raiseDir, 0.0f, true);
 	if(!forceFrame){
 		if(stageBounds.getTopLeft().y + 10 < body->GetPosition().y - getCorrectedHeight() * 0.5f) {
@@ -31,7 +32,7 @@ void TTFB_SetPiece::update(Step* _step) {
 			raised = true;
 			lowered = false;
 		}
-		if(stageBounds.getBottomLeft().y >= body->GetPosition().y - getCorrectedHeight() * 0.5f) {
+		if(stageBounds.getBottomLeft().y + offset >= body->GetPosition().y - getCorrectedHeight() * 0.5f) {
 			raiseDir = 0;
 			raised = false;
 			lowered = true;
@@ -51,11 +52,12 @@ void TTFB_SetPiece::raise() {
 	raiseDir = 1;
 }
 
-void TTFB_SetPiece::lower() {
+void TTFB_SetPiece::lower(float _offset) {
+	offset = _offset;
 	raiseDir = -1;
 }
 
-bool TTFB_SetPiece::isLowered() {
+bool TTFB_SetPiece::isLowered() const {
 	return lowered;
 }
 

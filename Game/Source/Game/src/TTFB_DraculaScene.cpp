@@ -46,7 +46,6 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 	conditions["boxSound1Played"] = false;
 	conditions["boxSound2Played"] = false;
 	conditions["boxSound3Played"] = false;
-	
 
 #pragma  endregion 
 	 
@@ -84,10 +83,9 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 		// Test lowering wall1
 		setPeiceBuilding->lower();
 		//setPeiceBuildingForeground->lower();
-		setPieceWeb->lower();
-		setPieceBed->lower();
-		setPieceFireplace->lower();
-		setPieceFireplace->setTranslationPhysical(0.f,1.f,0.f,true);
+		setPieceWeb->lower(5.0f);
+		setPieceBed->lower(4.4f);
+		setPieceFireplace->lower(4.4f);
 	});
 
 	eventQueue.at(startSceneDelay - 5.0f, [this](){dimHouseLights();});
