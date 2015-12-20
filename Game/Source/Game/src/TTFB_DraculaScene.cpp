@@ -35,7 +35,7 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 	//setPeiceBuildingForeground->raise();
 	setPieceWeb= addSetPiece("L3_spiderWeb2", glm::vec3(-2.f, 25.f, -0.5f), 1.0f);
 	setPieceWeb->raise();
-	setPieceBed = addSetPiece("L3_Bed", glm::vec3(18.f, 20.f, -0.5f), 0.2f);
+	setPieceBed = addSetPiece("L3_Bed", glm::vec3(20.f, 20.f, -0.5f), 0.2f);
 	setPieceWeb->raise();
 	setPieceFireplace = addSetPiece("L3_Fireplace", glm::vec3(15.f, 20.f, -0.5f), 0.3f);
 	setPieceWeb->raise();
@@ -59,6 +59,7 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 	TwBar * bar = stage->stageBase->firstParent()->createAntTweakBarWindow("Stage");
 	stage->stageBack->firstParent()->addToAntTweakBar(bar, "Background");
 	dracula->torso->firstParent()->addToAntTweakBar(bar, "Dracula");
+	
 
 	renfield = createActor("renfield"); 
 	childTransform->addChild(renfield);
@@ -155,9 +156,7 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 		dialoguePlayer->playNext();
 		dracula->say(4.f, L"I'm sure you will find this part of my castle more inviting.", true);
 		dracula->move(10.f);
-		dracula->moveY(10.f);
 		renfield->move(7.f);
-		renfield->moveY(10.f);
 	});
 
 	eventQueue.at(34.f + startSceneDelay + offset, [this](){
@@ -277,6 +276,7 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 		dialoguePlayer->playNext();
 		// Pours glass of wine
 		dracula->say(4.f, L"This...is very old wine. I hope you will like it.", true);
+		dracula->pickupPropLeft(addProp("L3_wineBottle", glm::vec3(-8, 10, 0.f)));
 	});
 
 	eventQueue.at(104.f + startSceneDelay + offset, [this](){
