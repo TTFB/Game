@@ -19,11 +19,15 @@ public:
 	TTFB_Actor * dracula;
 	TTFB_Actor * renfield;
 
+	TTFB_Prop * wineProp;
+
 	TTFB_SetPiece * setPeiceBuilding;
 	TTFB_SetPiece * setPeiceBuildingForeground;
 	TTFB_SetPiece * setPieceWeb;
 	TTFB_SetPiece * setPieceBed;
 	TTFB_SetPiece * setPieceFireplace;
+	TTFB_SetPiece * setPieceLuggage;
+	TTFB_SetPiece * setPieceLease;
 
 	TTFB_DialoguePlayer * dialoguePlayer;
 

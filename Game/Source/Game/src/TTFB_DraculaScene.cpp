@@ -10,6 +10,7 @@
 #include <TTFB_Constants.h>
 #include <TTFB_Controller.h>
 #include <TTFB_SetPiece.h>
+#include <TTFB_Prop.h>
 #include <ParticleSystem.h>
 
 TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
@@ -36,9 +37,13 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 	setPieceWeb= addSetPiece("L3_spiderWeb2", glm::vec3(-2.f, 25.f, -0.5f), 1.0f);
 	setPieceWeb->raise();
 	setPieceBed = addSetPiece("L3_Bed", glm::vec3(20.f, 20.f, -0.5f), 0.2f);
-	setPieceWeb->raise();
+	setPieceBed->raise();
 	setPieceFireplace = addSetPiece("L3_Fireplace", glm::vec3(15.f, 20.f, -0.5f), 0.3f);
-	setPieceWeb->raise();
+	setPieceFireplace->raise();
+	setPieceLuggage = addSetPiece("L3_Fireplace", glm::vec3(15.f, 20.f, -0.5f), 0.3f);
+	setPieceLuggage->raise();
+	setPieceLease = addSetPiece("L3_Fireplace", glm::vec3(15.f, 20.f, -0.5f), 0.3f);
+	setPieceLease->raise();
 
 	//sound conditions
 	conditions["wolfCallPlayed"] = false; //holds like a bool
@@ -46,6 +51,9 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 	conditions["boxSound1Played"] = false;
 	conditions["boxSound2Played"] = false;
 	conditions["boxSound3Played"] = false;
+
+	wineProp = addProp("L3_wineBottle", glm::vec3(-8, 10, 0.f));
+	wineProp->setVisible(false);
 
 #pragma  endregion 
 	 
@@ -58,7 +66,7 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 	TwBar * bar = stage->stageBase->firstParent()->createAntTweakBarWindow("Stage");
 	stage->stageBack->firstParent()->addToAntTweakBar(bar, "Background");
 	dracula->torso->firstParent()->addToAntTweakBar(bar, "Dracula");
-	
+	dracula->pickupPropLeft(wineProp);
 
 	renfield = createActor("renfield"); 
 	childTransform->addChild(renfield);
@@ -81,11 +89,8 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 	eventQueue.at(0.00f, [this]{
 		countDown(startSceneDelay);
 		// Test lowering wall1
-		setPeiceBuilding->lower();
+		
 		//setPeiceBuildingForeground->lower();
-		setPieceWeb->lower(5.0f);
-		setPieceBed->lower(4.4f);
-		setPieceFireplace->lower(4.4f);
 	});
 
 	eventQueue.at(startSceneDelay - 5.0f, [this](){dimHouseLights();});
@@ -274,7 +279,8 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 		dialoguePlayer->playNext();
 		// Pours glass of wine
 		dracula->say(4.f, L"This...is very old wine. I hope you will like it.", true);
-		dracula->pickupPropLeft(addProp("L3_wineBottle", glm::vec3(-8, 10, 0.f)));
+		wineProp->setVisible(true);
+		
 	});
 
 	eventQueue.at(104.f + startSceneDelay + offset, [this](){
@@ -295,6 +301,7 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 	eventQueue.at(113.f + startSceneDelay + offset, [this](){
 		dialoguePlayer->playNext();
 		dracula->say(3.f, L"And, now, I'll leave you.", true);
+		wineProp->setVisible(false);
 	});
 
 	eventQueue.at(116.f + startSceneDelay + offset, [this](){
@@ -327,6 +334,10 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 		[this](){return stage->curtainLeft->firstParent()->getTranslationVector().x < -44.0f;},
 			[this](){incScore();}, 
 			[this](){decScore();});
+	eventQueue.expectAt(22.f, 4.f, 
+		[this](){return setPeiceBuilding->isLowered();},
+		[this](){incScore();}, 
+		[this](){decScore();});
 	//need to drop set pieces
 	//fog ON
 	eventQueue.expectAt(0.0f + startSceneDelay+ offset, 2.f, 
@@ -349,12 +360,20 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 			[this](){incScore();}, 
 			[this](){decScore();});
 	//wolf call
-	eventQueue.expectAt(13.0f + offset + startSceneDelay, 4.f, 
+	eventQueue.expectAt(14.0f + offset + startSceneDelay, 4.f, 
 		[this](){return conditions["wolfCallPlayed"];},
 			[this](){incScore();}, 
 			[this](){decScore();});
 	//spider web set
+	eventQueue.expectAt(22.f, 4.f, 
+		[this](){return setPieceWeb->isLowered();},
+		[this](){incScore();}, 
+		[this](){decScore();});
 	//bedroom interior set
+	eventQueue.expectAt(30.f, 4.f, 
+		[this](){return setPieceBed->isLowered();},
+		[this](){incScore();}, 
+		[this](){decScore();});
 	//fog OFF
 	eventQueue.expectAt(34.0f + startSceneDelay+ offset, 3.f, 
 		[this](){return fogActive == false;},
@@ -387,7 +406,15 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 			[this](){decScore();});
 	//lights 3 30%
 	//lights 3 100%
-	//lights 1 30%
+	//lights 2 50%
+	//paperclup cut sound effect
+	//pouring wine sound effect
+	//dracula leaving sound effeect (think closing door? exit stage left)
+	//bats sound effect
+	//renfield fainting sound effect
+	//mic off
+	//curtain close
+	//lights off
 	        
 #pragma endregion 
 
@@ -407,8 +434,34 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 
 	controller->setButtonOne.bind([this](int _value) {
 		if(controller->setButtonOne.justDown()) {
+			setPeiceBuilding->lower();
 		}
 	});
+
+	controller->setButtonTwo.bind([this](int _value) {
+		if(controller->setButtonOne.justDown()) {
+			if( eventQueue.getRelativeTime() < (53.0 + startSceneDelay)){
+				setPieceLuggage->lower();
+			}
+			if( eventQueue.getRelativeTime() > (53.0 + startSceneDelay)){
+				setPieceLease->lower();
+			}
+		}
+	});
+
+	controller->setButtonThree.bind([this](int _value) {
+		if(controller->setButtonOne.justDown()) {
+			setPieceBed->lower(4.4f);
+			setPieceFireplace->lower(4.4f);
+		}
+	});
+
+	controller->setButtonFour.bind([this](int _value) {
+		if(controller->setButtonOne.justDown()) {
+			setPieceWeb->lower(5.0f);
+		}
+	});
+	
 	
 	// Move this into stage scene
 	controller->specialCurtainPot.bind([this](int _value){
