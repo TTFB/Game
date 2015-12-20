@@ -1332,45 +1332,25 @@
       "type": "textureSampler",
       "src": "Level3_Assets/trees_n_bush.png.def"
     },
-    {
-      "id": "L3_wall1",
+	{
+      "id": "L3_Backdrop",
       "type": "textureSampler",
-      "src": "Level3_Assets/wall1.png.def"
+      "src": "Level3_Assets/Level3_Backdrop.png.def"
     },
-     {
-      "id": "L3_wall1_wCandle",
+	{
+      "id": "L3_BuildingForeground",
       "type": "textureSampler",
-      "src": "Level3_Assets/wall1_wCandle.png.def"
+      "src": "Level3_Assets/Level3_BuidlingForeground.png.def"
     },
-    {
-      "id": "L3_wall2",
+	{
+      "id": "L3_MainBuilding",
       "type": "textureSampler",
-      "src": "Level3_Assets/wall2.png.def"
+      "src": "Level3_Assets/Level3_MainBuilding.png.def"
     },
-    {
-      "id": "L3_wall2_wCandle",
+	{
+      "id": "L3_Foliage",
       "type": "textureSampler",
-      "src": "Level3_Assets/wall2_wCandle.png.def"
-    },
-      {
-      "id": "L3_wall3",
-      "type": "textureSampler",
-      "src": "Level3_Assets/wall3.png.def"
-    },
-    {
-      "id": "L3_wall3_wCandle",
-      "type": "textureSampler",
-      "src": "Level3_Assets/wall3_wCandle.png.def"
-    },
-    {
-      "id": "L3_ramps",
-      "type": "textureSampler",
-      "src": "Level3_Assets/ramps.png.def"
-    },
-    {
-      "id": "L3_Background",
-      "type": "textureSampler",
-      "src": "Level3_Assets/background.png.def"
+      "src": "Level3_Assets/Level3_Foliage.png.def"
     }
   ]
 }
