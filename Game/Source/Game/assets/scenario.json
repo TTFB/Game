@@ -1297,6 +1297,36 @@
       "type": "audio",
       "src": "HowlingWolf3.ogg"
     },
+	{
+      "id": "doorKnock",
+      "type": "audio",
+      "src": "doorKnock.ogg"
+    },
+	{
+      "id": "pouringWine",
+      "type": "audio",
+      "src": "pouring.ogg"
+    },
+	{
+      "id": "PaperclipCut",
+      "type": "audio",
+      "src": "cut.ogg"
+    },
+	{
+      "id": "fall",
+      "type": "audio",
+      "src": "fall.ogg"
+    },
+	{
+      "id": "DraculaSound",
+      "type": "audio",
+      "src": "DraculaSound.ogg"
+    },
+	{
+      "id": "doorClosing",
+      "type": "audio",
+      "src": "doorClosing.ogg"
+    },
     {
       "id": "introDialogue",
       "type": "audio",
