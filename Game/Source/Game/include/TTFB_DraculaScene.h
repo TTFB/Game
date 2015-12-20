@@ -19,8 +19,11 @@ public:
 	TTFB_Actor * dracula;
 	TTFB_Actor * renfield;
 
-	TTFB_SetPiece * setPeiceWall1;
-	TTFB_SetPiece * setPieceStairs;
+	TTFB_SetPiece * setPeiceBuilding;
+	TTFB_SetPiece * setPeiceBuildingForeground;
+	TTFB_SetPiece * setPieceWeb;
+	TTFB_SetPiece * setPieceBed;
+	TTFB_SetPiece * setPieceFireplace;
 
 	TTFB_DialoguePlayer * dialoguePlayer;
 
