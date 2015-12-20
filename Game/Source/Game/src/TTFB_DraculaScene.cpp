@@ -10,6 +10,7 @@
 #include <TTFB_Constants.h>
 #include <TTFB_Controller.h>
 #include <TTFB_SetPiece.h>
+#include <ParticleSystem.h>
 
 TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 	TTFB_StageScene(_game),
@@ -27,10 +28,13 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 	startSceneDelay = 3.0f;
 
 	// Set pieces
-	setPeiceWall1 = addSetPiece("L3_wall1", glm::vec3(10.f, 20.f, -0.5f), 1.5f);
+	/*setPeiceWall1 = addSetPiece("L3_wall1", glm::vec3(10.f, 20.f, -0.5f), 1.5f);
 	setPeiceWall1->raise();
 	setPieceStairs = addSetPiece("L3_ramps", glm::vec3(0.f, 20.f, -0.5), 2.2f);
-	setPieceStairs->raise();
+	setPieceStairs->raise();*/
+
+	//sound conditions
+	conditions["wolfCallPlayed"] = false; //holds like a bool
 
 #pragma  endregion 
 	 
@@ -65,8 +69,8 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 	eventQueue.at(0.00f, [this]{
 		countDown(startSceneDelay);
 		// Test lowering wall1
-		setPeiceWall1->lower();
-		setPieceStairs->lower();
+		//setPeiceWall1->lower();
+		//setPieceStairs->lower();
 	});
 
 	eventQueue.at(startSceneDelay - 5.0f, [this](){dimHouseLights();});
@@ -103,10 +107,6 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 		renfield->move(-7);
 		dracula->moveY(9);
 		renfield->moveY(9);
-	});
-
-	eventQueue.at(13.f + startSceneDelay + offset, [this](){
-		TTFB_ResourceManager::scenario->getAudio("HowlingWolf1")->sound->play();
 	});
 
 	eventQueue.at(17.f + startSceneDelay + offset, [this](){
@@ -300,8 +300,61 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 
 #pragma region Expectations 
 
-	// Add expectations here
-
+	//scene setup
+	eventQueue.expectAt(startSceneDelay + offset, 3.f, 
+		[this](){return !dialoguePlayer->muted;},
+			[this](){incScore();}, 
+			[this](){decScore();});
+	eventQueue.expectAt(startSceneDelay + offset, 3.f, 
+		[this](){return lights[1]->getIntensities().r > 3.5;},
+			[this](){incScore();}, 
+			[this](){decScore();});
+	eventQueue.expectAt(startSceneDelay + offset, 3.f, 
+		[this](){return stage->curtainLeft->firstParent()->getTranslationVector().x < -44.0f;},
+			[this](){incScore();}, 
+			[this](){decScore();});
+	//need to drop set pieces
+	//fog ON
+	eventQueue.expectAt(0.0f + startSceneDelay+ offset, 2.f, 
+		[this](){return fogActive == true;},
+			[this](){incScore();}, 
+			[this](){decScore();});
+	//dracula enters sound effect
+	//blue Light dim (outside) to 30%
+	eventQueue.expectAt(11.5f + startSceneDelay + offset, 3.f, 
+		[this](){return lights[1]->getIntensities().r > 0.2 && lights[1]->getIntensities().r < 1.5;},
+			[this](){incScore();}, 
+			[this](){decScore();});
+	//red Light full (inside)
+	eventQueue.expectAt(11.5f + startSceneDelay + offset, 3.f, 
+		[this](){return lights[2]->getIntensities().r > 3.5;},
+			[this](){incScore();}, 
+			[this](){decScore();});
+	//wolf call
+	eventQueue.expectAt(13.0f + offset + startSceneDelay, 4.f, 
+		[this](){return conditions["wolfCallPlayed"];},
+			[this](){incScore();}, 
+			[this](){decScore();});
+	//spider web set
+	//bedroom interior set
+	//fog OFF
+	eventQueue.expectAt(34.0f + startSceneDelay+ offset, 3.f, 
+		[this](){return fogActive == false;},
+			[this](){incScore();}, 
+			[this](){decScore();});
+	//fire ON
+	eventQueue.expectAt(35.0f + startSceneDelay+ offset, 3.f, 
+		[this](){return fireActive == true;},
+			[this](){incScore();}, 
+			[this](){decScore();});
+	//luggage placed set
+	//lights 70%
+	//lease appears set
+	//knocking sound set
+	//lights 30%
+	//lights 1 100%
+	//lights 2 30%
+	        
 #pragma endregion 
 
 #pragma region ControllerSetup
@@ -341,13 +394,29 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 		}
 	});
 
+	controller->specialFireButton.bind([this](int _value) {
+		if(controller->specialFireButton.justDown()) {
+			fireActive = !fireActive;
+		}
+	});
+
 	controller->soundMicSwitch.bind([this](int _value) {
 		if(_value == 1) {
 			dialoguePlayer->unmute();
 		}else {
-			dialoguePlayer->mute();
+			dialoguePlayer->mute(); 
 		}
 	});
+
+	controller->soundButtonOne.bind([this](int _value) {
+		if(controller->soundButtonOne.justDown()) {
+			if( eventQueue.getRelativeTime() > (11.0 + startSceneDelay) && eventQueue.getRelativeTime() < (15.0 + startSceneDelay)){
+				TTFB_ResourceManager::scenario->getAudio("HowlingWolf1" )->sound->play();
+				conditions["wolfCallPlayed"] = true;
+			}
+		}
+	});
+
 
 #pragma endregion 
 
@@ -375,6 +444,17 @@ void TTFB_DraculaScene::update(Step* _step) {
 	if(keyboard->keyDown(GLFW_KEY_K)) {
 		eventQueue.timeOffset += 0.01f;
 	}
+
+	//fireActive = true;
+	
+	if(fireTimer < 1.0 && fireActive && _step->time - lastFireEmission > 0.15f){
+		Particle * p = fireSystem->addParticle(glm::vec3(7,  stage->getVisibleBounds().getBottomRight().y + 2.2f, 0), TTFB_ResourceManager::scenario->getTexture("fireRed")->texture);
+		Particle * p1 = fireSystem->addParticle(glm::vec3(7, stage->getVisibleBounds().getBottomRight().y + 2.2f, 0), TTFB_ResourceManager::scenario->getTexture("fireOrange")->texture);
+		Particle * p2 = fireSystem->addParticle(glm::vec3(7, stage->getVisibleBounds().getBottomRight().y + 2.2f, 0), TTFB_ResourceManager::scenario->getTexture("fireYellow")->texture);
+		Particle * p3 = fireSystem->addParticle(glm::vec3(7, stage->getVisibleBounds().getBottomRight().y + 2.2f, 0), TTFB_ResourceManager::scenario->getTexture("smoke")->texture);
+		lastFireEmission = _step->time;
+	}
+
 
 	if(!sceneEnded){
 		eventQueue.update(_step);

@@ -1357,11 +1357,6 @@
       "type": "audio",
       "src": "TransitionDialogue/PreDracula_Excellent.ogg"
     },
-     {
-      "id": "L3_trees_n_bush",
-      "type": "textureSampler",
-      "src": "Level3_Assets/trees_n_bush.png.def"
-    },
 	{
       "id": "L3_Backdrop",
       "type": "textureSampler",
