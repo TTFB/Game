@@ -10,51 +10,16 @@
 #include <Game.h>
 #include <MeshEntity.h>
 #include <MeshInterface.h>
-#include <MeshFactory.h>
-#include <Resource.h>
 
-#include <DirectionalLight.h>
-#include <PointLight.h>
-#include <SpotLight.h>
-
-#include <shader\ComponentShaderBase.h>
-#include <shader\ComponentShaderText.h>
-#include <shader\ShaderComponentText.h>
-#include <shader\ShaderComponentTexture.h>
-#include <shader\ShaderComponentDiffuse.h>
-#include <shader\ShaderComponentHsv.h>
-#include <shader\ShaderComponentMVP.h>
-
-#include <shader\ShaderComponentIndexedTexture.h>
-#include <TextureColourTable.h>
-
-#include <Box2DWorld.h>
 #include <Box2DMeshEntity.h>
-#include <Box2DDebugDrawer.h>
-
-#include <MousePerspectiveCamera.h>
-#include <FollowCamera.h>
 
 #include <System.h>
-#include <Mouse.h>
-#include <Keyboard.h>
-#include <GLFW\glfw3.h>
 
-#include <RenderSurface.h>
-#include <StandardFrameBuffer.h>
-#include <NumberUtils.h>
-
-#include <NodeBulletBody.h>
-#include <BulletMeshEntity.h>
-#include <TextArea.h>
-#include <SpriteSheetAnimation.h>
-#include <Box2DSprite.h>
 #include <TTFB_Constants.h>
-#include <VerticalLinearLayout.h>
 #include <TTFB_SetPiece.h>
 #include <ParticleSystem.h>
-#include <TTFB_Audience.h>
 #include <TTFB_SpamalotStage.h>
+#include <TTFB_Audience.h>
 
 
 TTFB_SpamalotScene::TTFB_SpamalotScene(Game * _game) :
@@ -67,13 +32,15 @@ TTFB_SpamalotScene::TTFB_SpamalotScene(Game * _game) :
 	// Must setup the stage first
 	setStage(new TTFB_SpamalotStage(box2dWorld, baseShader));
 
+	addAudience("L1");
+	audience->firstParent()->translate(0.f, -1.f, 0.f);
+
 	conditions["blood1Played"] = false; //holds like a bool
 	conditions["blood2Played"] = false; 
 	conditions["blood3Played"] = false; 
 	conditions["blood4Played"] = false; 
 	conditions["whoosh1Played"] = false; 
 	conditions["chickenPlayed"] = false; 
-
 
 #pragma region SetSetup
 

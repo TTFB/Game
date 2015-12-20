@@ -131,7 +131,7 @@ TTFB_Actor::TTFB_Actor(std::string _name, Box2DWorld * _world, BulletWorld * _bu
 	b2RevoluteJointDef jl;
 	jl.bodyA = torso->body;
 	jl.bodyB = leftLeg->body;
-	jl.localAnchorA.Set(-0.3f * torso->getCorrectedWidth(), -0.4f * torso->getCorrectedHeight());
+	jl.localAnchorA.Set(-0.2f * torso->getCorrectedWidth(), -0.35f * torso->getCorrectedHeight());
 	jl.localAnchorB.Set(0,  0.5f * leftLeg->getCorrectedHeight());
 	jl.collideConnected = false;
 	jl.enableLimit = true;
@@ -146,7 +146,7 @@ TTFB_Actor::TTFB_Actor(std::string _name, Box2DWorld * _world, BulletWorld * _bu
 	b2RevoluteJointDef jr;
 	jr.bodyA = torso->body;
 	jr.bodyB = rightLeg->body;
-	jr.localAnchorA.Set(0.3f * torso->getCorrectedWidth(), -0.4f * torso->getCorrectedHeight());
+	jr.localAnchorA.Set(0.3f * torso->getCorrectedWidth(), -0.35f * torso->getCorrectedHeight());
 	jr.localAnchorB.Set(0,  0.5f * rightLeg->getCorrectedHeight());
 	jr.collideConnected = false;
 	jr.enableLimit = true;
@@ -168,11 +168,11 @@ TTFB_Actor::TTFB_Actor(std::string _name, Box2DWorld * _world, BulletWorld * _bu
 
 	leftLegJointTransform = new Transform();
 	torso->childTransform->addChild(leftLegJointTransform);
-	leftLegJointTransform->firstParent()->translate(-0.3 * torso->getCorrectedWidth(), -0.4 * torso->getCorrectedHeight(), 0.0f);
+	leftLegJointTransform->firstParent()->translate(-0.3 * torso->getCorrectedWidth(), -0.35 * torso->getCorrectedHeight(), 0.0f);
 
 	rightLegJointTransform = new Transform();
 	torso->childTransform->addChild(rightLegJointTransform);
-	rightLegJointTransform->firstParent()->translate(0.3 * torso->getCorrectedWidth(), -0.4 * torso->getCorrectedHeight(), 0.0f);
+	rightLegJointTransform->firstParent()->translate(0.3 * torso->getCorrectedWidth(), -0.35 * torso->getCorrectedHeight(), 0.0f);
 }
 
 TTFB_Actor::~TTFB_Actor() {
