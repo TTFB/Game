@@ -27,10 +27,10 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 	startSceneDelay = 3.0f;
 
 	// Set pieces
-	setPeiceWall1 = addSetPiece("L3_wall1", glm::vec3(10.f, 20.f, -0.5f), 1.5f);
-	setPeiceWall1->raise();
-	setPieceStairs = addSetPiece("L3_ramps", glm::vec3(0.f, 20.f, -0.5), 2.2f);
-	setPieceStairs->raise();
+//	setPeiceWall1 = addSetPiece("L3_wall1", glm::vec3(10.f, 20.f, -0.5f), 1.5f);
+//	setPeiceWall1->raise();
+//	setPieceStairs = addSetPiece("L3_ramps", glm::vec3(0.f, 20.f, -0.5), 2.2f);
+//	setPieceStairs->raise();
 
 #pragma  endregion 
 	 
@@ -65,8 +65,8 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 	eventQueue.at(0.00f, [this]{
 		countDown(startSceneDelay);
 		// Test lowering wall1
-		setPeiceWall1->lower();
-		setPieceStairs->lower();
+		//setPeiceWall1->lower();
+		//setPieceStairs->lower();
 	});
 
 	eventQueue.at(startSceneDelay - 5.0f, [this](){dimHouseLights();});

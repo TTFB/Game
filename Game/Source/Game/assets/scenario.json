@@ -1363,7 +1363,7 @@
       "src": "Level3_Assets/trees_n_bush.png.def"
     },
 	{
-      "id": "L3_Backdrop",
+      "id": "L3_Background",
       "type": "textureSampler",
       "src": "Level3_Assets/Level3_Backdrop.png.def"
     },
