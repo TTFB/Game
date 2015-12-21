@@ -6,9 +6,19 @@
 #include <iostream>
 #include <Log.h>
 #include <string>
+#include <glfw/glfw3.h>
 
 TTFB_Controller::TTFB_Controller() : Arduino(""),
-	lastQue(0)
+	lastQue(0),
+	soundButtonOne(GLFW_KEY_Q),
+	soundButtonTwo(GLFW_KEY_W),
+	soundButtonThree(GLFW_KEY_E),
+	soundMicSwitch(GLFW_KEY_R, true),
+	setButtonOne(GLFW_KEY_A),
+	setButtonTwo(GLFW_KEY_S),
+	setButtonThree(GLFW_KEY_D),
+	setButtonFour(GLFW_KEY_F)
+	
 {
 	// Go through the COM ports looking for one with data
 	// The controller is always writing so there should be something in the queue
@@ -25,24 +35,24 @@ TTFB_Controller::TTFB_Controller() : Arduino(""),
 }
 
 void TTFB_Controller::update(Step* _step) {
-	
-	if(connected){
-		// Update all components befor parsing new data
-		soundButtonOne.update(_step);
-		soundButtonTwo.update(_step);
-		soundButtonThree.update(_step);
-		soundMicSwitch.update(_step);
-		lightSliderOne.update(_step);
-		lightSliderTwo.update(_step);
-		lightSliderThree.update(_step);
-		setButtonOne.update(_step);
-		setButtonTwo.update(_step);
-		setButtonThree.update(_step);
-		setButtonFour.update(_step);
-		specialFogSwitch.update(_step);
-		specialFireButton.update(_step);
-		specialCurtainPot.update(_step);
 
+	// Update all components befor parsing new data
+	soundButtonOne.update(_step);
+	soundButtonTwo.update(_step);
+	soundButtonThree.update(_step);
+	soundMicSwitch.update(_step);
+	lightSliderOne.update(_step);
+	lightSliderTwo.update(_step);
+	lightSliderThree.update(_step);
+	setButtonOne.update(_step);
+	setButtonTwo.update(_step);
+	setButtonThree.update(_step);
+	setButtonFour.update(_step);
+	specialFogSwitch.update(_step);
+	specialFireButton.update(_step);
+	specialCurtainPot.update(_step);
+
+	if(connected){
 		ClearCommError(this->hSerial, &this->errors, &this->status);
 		int inQ = status.cbInQue;
 		char * buf = new char[lastQue + 1]();

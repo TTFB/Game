@@ -6,21 +6,21 @@
 #include <TTFB_Constants.h>
 
 TTFB_SetPiece::TTFB_SetPiece(Box2DWorld* _world, std::string _samplerResourceId, Shader* _shader, sweet::Rectangle _stageBounds, float _scaleMultiplier) :
-	Box2DSprite(_world, TTFB_ResourceManager::scenario->getTextureSampler(_samplerResourceId)->textureSampler),
+	Box2DSprite(_world, TTFB_ResourceManager::scenario->getTextureSampler(_samplerResourceId)->textureSampler, b2_kinematicBody),
 	raiseDir(0),
-	stageBounds(_stageBounds),
 	forceFrame(false),
 	lowered(false),
 	raised(true),
+	stageBounds(_stageBounds),
 	offset(0.f)
 {
 	b2Filter filt;
 	filt.categoryBits = Category::SET_PIECE;
 	filt.maskBits     = 0x000000 | Category::BOUNDARY;
 
-	setShader(_shader);
+	MeshEntity::setShader(_shader);
 	scale = B2_SCALE * _scaleMultiplier;
-	createFixture(filt);
+	Box2DSprite::createFixture(filt);
 	body->SetGravityScale(0.0f);
 }
 
@@ -61,11 +61,12 @@ bool TTFB_SetPiece::isLowered() const {
 	return lowered;
 }
 
-bool TTFB_SetPiece::isRaised() {
+bool TTFB_SetPiece::isRaised() const {
 	return raised;
 }
 
-void TTFB_SetPiece::toggle() {
+void TTFB_SetPiece::toggle(float _offset) {
+	offset = _offset;
 	if(stageBounds.getTopLeft().y + 10 < body->GetPosition().y + getCorrectedHeight() * 0.5f || raiseDir == 1) {
 		raiseDir = -4;	
 	}else {

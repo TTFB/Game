@@ -19,8 +19,8 @@
     },
 	{
       "id": "fireToContinue",
-      "type": "textureSampler",
-      "src": "fireToContinue.png.def"
+      "type": "texture",
+      "src": "fireToContinue.png"
     },
     {
       "id": "titleScreen",
@@ -111,11 +111,6 @@
       "id": "blackKnightLeftLeg",
       "type": "textureSampler",
       "src": "blackKnight/leg_left.png.def"
-    },
-    {
-      "id": "audience",
-      "type": "texture",
-      "src": "audience.png"
     },
     {
       "id": "renfieldHead",
@@ -325,7 +320,7 @@
     {
       "id": "L3_Luggage",
       "type": "textureSampler",
-      "src": "Props/luggageV2.png.def"
+      "src": "Props/luggage.png.def"
     },
     {
       "id": "L3_wineBottle",

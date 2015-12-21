@@ -8,11 +8,7 @@
 #include <Game.h>
 #include <MeshEntity.h>
 #include <MeshInterface.h>
-#include <MeshFactory.h>
-#include <Resource.h>
 
-#include <DirectionalLight.h>
-#include <PointLight.h>
 #include <SpotLight.h>
 
 #include <shader\ComponentShaderBase.h>
@@ -20,37 +16,25 @@
 #include <shader\ShaderComponentText.h>
 #include <shader\ShaderComponentTexture.h>
 #include <shader\ShaderComponentDiffuse.h>
-#include <shader\ShaderComponentHsv.h>
 #include <shader\ShaderComponentMVP.h>
 #include <shader\ShaderComponentDepthOffset.h>
-
-#include <shader\ShaderComponentIndexedTexture.h>
-#include <TextureColourTable.h>
 
 #include <Box2DWorld.h>
 #include <Box2DMeshEntity.h>
 #include <Box2DDebugDrawer.h>
 
 #include <MousePerspectiveCamera.h>
-#include <FollowCamera.h>
 #include <MouseCameraController.h>
 
 #include <System.h>
-#include <Mouse.h>
 #include <Keyboard.h>
 #include <GLFW\glfw3.h>
 
 #include <RenderSurface.h>
 #include <StandardFrameBuffer.h>
-#include <NumberUtils.h>
 
-#include <NodeBulletBody.h>
-#include <BulletMeshEntity.h>
 #include <TextArea.h>
 #include <TTFB_Actor.h>
-#include <TTFB_Stage.h>
-#include <Box2DWorld.h>
-#include <Box2DDebugDrawer.h>
 #include <Font.h>
 #include <TTFB_Controller.h>
 #include <RenderOptions.h>
@@ -60,20 +44,27 @@
 #include <TTFB_SetPiece.h>
 
 #include <ParticleSystem.h>
-#include <Particle.h>
 #include <TTFB_Game.h>
-#include <TextArea.h>
 
 TTFB_StageScene::TTFB_StageScene(Game * _game) :
 	TTFB_Scene(_game),
 	score(0),
 	scoreQueue(0),
+	countDownSec(-1),
+	countDownScaler(0.0f),
+	countDownAcc(0.0f),
+	sceneEnded(false),
+	showingNewsPaper(false),
+	endMessage(nullptr),
+	endSound(nullptr),
+	endAudioPlayed(false),
 	screenSurfaceShader(new Shader("assets/engine basics/DefaultRenderSurface", false, true)),
 	screenSurface(new RenderSurface(screenSurfaceShader)),
 	screenFBO(new StandardFrameBuffer(true)),
 	baseShader(new ComponentShaderBase(true)),
 	characterShader(new ComponentShaderBase(true)),
 	textShader(new ComponentShaderText(true)),
+	countdownTextShader(new ComponentShaderText(true)),
 	debugDrawer(nullptr),
 	box2dWorld(new Box2DWorld(b2Vec2(0.f, -10.0f))),
 	box2dDebug(box2dWorld->createDebugDrawer()),
@@ -83,19 +74,12 @@ TTFB_StageScene::TTFB_StageScene(Game * _game) :
 	fadeOutLights(false),
 	dimmingLights(false),
 	scoreTextShader(new ComponentShaderText(true)),
-	countdownTextShader(new ComponentShaderText(true)),
 	fireTimer(0),
 	scoreScaler(0.0f),
-	countDownSec(-1),
-	countDownScaler(0.0f),
-	countDownAcc(0.0f),
-	sceneEnded(false),
-	showingNewsPaper(false),
-	newsArticle(nullptr),
-	endMessage(nullptr),
-	endSound(nullptr),
-	endAudioPlayed(false)
+	newsArticle(nullptr)
 {
+	controller->clearBindings();
+
 	scoreFont = TTFB_ResourceManager::scenario->getFont("bebas")->font;
 	countDownFont = TTFB_ResourceManager::scenario->getFont("bebas_200")->font;
 
@@ -181,13 +165,6 @@ TTFB_StageScene::TTFB_StageScene(Game * _game) :
 	stageCam->yaw = 90.0f;
 	stageCam->pitch = -7.f;
 	activeCamera = stageCam;
-	
-	// remove initial camera
-	//childTransform->removeChild(cameras.at(0)->parents.at(0));
-	//delete cameras.at(0)->parents.at(0);
-	//cameras.pop_back();
-
-	//
 
 #ifdef _DEBUG
 	// mouse cursor
@@ -487,6 +464,12 @@ void TTFB_StageScene::endScene(std::string _currentScene, std::string _nextScene
 	uiLayer.addChild(articleContainer);
 
 	articleContainer->firstParent()->translate(uiLayer.getWidth()/2, uiLayer.getHeight()/2, 0, true);
+
+	NodeUI * pressFire = new NodeUI(bulletWorld);
+	pressFire->background->mesh->pushTexture2D(TTFB_ResourceManager::scenario->getTexture("fireToContinue")->texture);
+	pressFire->setRationalWidth(1.f);
+	pressFire->setRationalHeight(1.f);
+	uiLayer.addChild(pressFire);
 
 	fadeOutLights = true;
 	sceneEnded = true;

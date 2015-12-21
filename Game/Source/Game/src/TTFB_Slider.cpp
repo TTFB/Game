@@ -4,8 +4,8 @@
 
 TTFB_Slider::TTFB_Slider() :
 	NodeUpdatable(),
-	lastState(0),
-	currentState(0),
+	currentState(512),
+	lastState(512),
 	bindFunc(nullptr)
 {
 }

@@ -1,26 +1,36 @@
 #pragma once
 
 #include <TTFB_Button.h>
+#include <Keyboard.h>
 
-TTFB_Button::TTFB_Button() :
+TTFB_Button::TTFB_Button(int _keyboardKey, bool _toggle) :
 	NodeUpdatable(),
 	currentState(LOW),
 	lastState(LOW),
-	bindFunc(nullptr)
+	keyboardKey(_keyboardKey),
+	bindFunc(nullptr),
+	keyboard(&Keyboard::getInstance()),
+	toggle(_toggle)
 {
 }
 
-bool TTFB_Button::justUp() {
-	return currentState == LOW && lastState == HIGH;
+bool TTFB_Button::justUp() const {
+	return (currentState == LOW && lastState == HIGH) || keyboardKey != -1 && (keyboard->keyJustUp(keyboardKey));
 }
 
-bool TTFB_Button::justDown() {
-	return currentState == HIGH && lastState == LOW;
+bool TTFB_Button::justDown() const {
+	return (currentState == HIGH && lastState == LOW) || keyboardKey != -1 && (keyboard->keyJustDown(keyboardKey));
 }
 
-void TTFB_Button::update(Step* _step) {
+void TTFB_Button::update(Step * _step) {
+	if(toggle) {
+		if(keyboard->keyJustUp(keyboardKey)) {
+			currentState = currentState == LOW ? HIGH : LOW;
+		}
+	}
+
 	if(bindFunc != nullptr){
-		bindFunc((int)currentState);
+		bindFunc(static_cast<int>(currentState));
 	}
 	lastState = currentState;
 }

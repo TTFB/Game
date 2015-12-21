@@ -12,10 +12,10 @@ public:
 
 	void raise();
 	void lower(float _offset = 0.0f);
-	void toggle();
+	void toggle(float _offset = 0.f);
 
 	bool isLowered() const;
-	bool isRaised();
+	bool isRaised() const;
 
 private:
 	int  raiseDir;

@@ -19,9 +19,9 @@ TTFB_Game::TTFB_Game() :
 	controller->update(&sweet::step);
 
 	scenes["menu"]  = new TTFB_MenuScene(this);
-	scenes["spamalot"] = new TTFB_SpamalotScene(this);
-	scenes["dracula"]    = new TTFB_DraculaScene(this);
- 
+	scenes["dracula"] = new TTFB_DraculaScene(this);
+	scenes["spamalot"]  = new TTFB_SpamalotScene(this);
+	
 	switchScene("menu", false);
 }
 

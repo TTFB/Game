@@ -13,11 +13,13 @@
 #include <TTFB_Prop.h>
 #include <ParticleSystem.h>
 
+#define FORCE_ACTIONS true
+
 TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 	TTFB_StageScene(_game),
-	bgMusicStarted(false),
+	clapping(nullptr),
 	lastFireEmission(0.0),
-	clapping(nullptr)
+	bgMusicStarted(false)
 {
 
 #pragma region PreSetup
@@ -29,20 +31,24 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 	startSceneDelay = 3.0f;
 
 	// Set pieces
-
 	setPeiceBuilding = addSetPiece("L3_MainBuilding", glm::vec3(3.f, 20.f, -0.5f), 2.5f);
 	setPeiceBuilding->raise();
+	setPeiceBuilding->lower();
+
 	//setPeiceBuildingForeground= addSetPiece("L3_BuildingForeground", glm::vec3(3.f, 20.f, -0.5f), 2.5f);
 	//setPeiceBuildingForeground->raise();
-	setPieceWeb= addSetPiece("L3_spiderWeb2", glm::vec3(-2.f, 25.f, -0.5f), 1.0f);
+	setPieceWeb = addSetPiece("L3_spiderWeb2", glm::vec3(-2.f, 25.f, -0.5f), 1.0f);
 	setPieceWeb->raise();
 	setPieceBed = addSetPiece("L3_Bed", glm::vec3(20.f, 20.f, -0.5f), 0.2f);
 	setPieceBed->raise();
+	
 	setPieceFireplace = addSetPiece("L3_Fireplace", glm::vec3(15.f, 20.f, -0.5f), 0.3f);
 	setPieceFireplace->raise();
-	setPieceLuggage = addSetPiece("L3_Fireplace", glm::vec3(15.f, 20.f, -0.5f), 0.3f);
+	
+	setPieceLuggage = addSetPiece("L3_Luggage", glm::vec3(15.f, 20.f, -0.5f), 0.3f);
 	setPieceLuggage->raise();
-	setPieceLease = addSetPiece("L3_Fireplace", glm::vec3(15.f, 20.f, -0.5f), 0.3f);
+	
+	setPieceLease = addSetPiece("L3_Lease", glm::vec3(15.f, 20.f, -0.5f), 0.3f);
 	setPieceLease->raise();
 
 	//sound conditions
@@ -51,6 +57,11 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 	conditions["boxSound1Played"] = false;
 	conditions["boxSound2Played"] = false;
 	conditions["boxSound3Played"] = false;
+	conditions["paperCutSoundPlayed"] = false;
+	conditions["wineSoundPlayed"] = false;
+	conditions["doorSoundPlayed"] = false;
+	conditions["batSoundPlayed"] = false;
+	conditions["faintSoundPlayed"] = false;
 
 	wineProp = addProp("L3_wineBottle", glm::vec3(-8, 10, 0.f));
 	wineProp->setVisible(false);
@@ -88,9 +99,6 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 
 	eventQueue.at(0.00f, [this]{
 		countDown(startSceneDelay);
-		// Test lowering wall1
-		
-		//setPeiceBuildingForeground->lower();
 	});
 
 	eventQueue.at(startSceneDelay - 5.0f, [this](){dimHouseLights();});
@@ -99,6 +107,7 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 		dialoguePlayer->playNext();
 		dracula->move(-17);
 		renfield->move(-19);
+		dracula->flip();
 		dracula->say(3.0f, L"I am Dracula", true);
 	});
 
@@ -125,6 +134,7 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 	eventQueue.at(12.0f + startSceneDelay + offset, [this](){
 		dracula->move(-5);
 		renfield->move(-7);
+		dracula->flip();
 		dracula->moveY(11.7);
 		renfield->moveY(11.7);
 	});
@@ -135,7 +145,6 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 	});
 
 	// Walking through spider web
-
 	eventQueue.at(22.f + startSceneDelay + offset, [this](){
 		dialoguePlayer->playNext();
 		dracula->move(2);
@@ -154,7 +163,6 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 	});
 
 	// Enter bed chamber
-
 	eventQueue.at(30.f + startSceneDelay + offset, [this](){
 		dialoguePlayer->playNext();
 		dracula->say(4.f, L"I'm sure you will find this part of my castle more inviting.", true);
@@ -280,7 +288,6 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 		// Pours glass of wine
 		dracula->say(4.f, L"This...is very old wine. I hope you will like it.", true);
 		wineProp->setVisible(true);
-		
 	});
 
 	eventQueue.at(104.f + startSceneDelay + offset, [this](){
@@ -404,67 +411,130 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 		[this](){return conditions["boxSound3Played"];},
 			[this](){incScore();}, 
 			[this](){decScore();});
+
 	//lights 3 30%
+	eventQueue.expectAt(78.0f + offset + startSceneDelay, 2.f, 
+		[this](){return lights[3]->getIntensities().r > 0.2 && lights[3]->getIntensities().r < 1.5;},
+			[this](){incScore();}, 
+			[this](){decScore();});
+
 	//lights 3 100%
+	eventQueue.expectAt(86.0f + offset + startSceneDelay, 2.f, 
+		[this](){return lights[3]->getIntensities().r > 3.5;},
+			[this](){incScore();}, 
+			[this](){decScore();});
+
 	//lights 2 50%
+	eventQueue.expectAt(86.0f + offset + startSceneDelay, 2.f, 
+		[this](){return lights[2]->getIntensities().r > 0.5f && lights[2]->getIntensities().r < 3.2f;},
+			[this](){incScore();}, 
+			[this](){decScore();});
+
 	//paperclup cut sound effect
+	eventQueue.expectAt(93.0f + offset + startSceneDelay, 2.f, 
+		[this](){return conditions["paperCutSoundPlayed"];},
+			[this](){incScore();}, 
+			[this](){decScore();});
+
 	//pouring wine sound effect
+	eventQueue.expectAt(95.0f + offset + startSceneDelay, 2.f, 
+		[this](){return conditions["paperCutSoundPlayed"];},
+			[this](){incScore();}, 
+			[this](){decScore();});
+
 	//dracula leaving sound effeect (think closing door? exit stage left)
+	eventQueue.expectAt(120.0f + offset + startSceneDelay, 2.f, 
+		[this](){return conditions["doorSoundPlayed"];},
+			[this](){incScore();}, 
+			[this](){decScore();});
+
 	//bats sound effect
+	eventQueue.expectAt(122.0f + offset + startSceneDelay, 2.f, 
+		[this](){return conditions["batSoundPlayed"];},
+			[this](){incScore();}, 
+			[this](){decScore();});
+
 	//renfield fainting sound effect
+	eventQueue.expectAt(123.0f + offset + startSceneDelay, 2.f, 
+		[this](){return conditions["faintSoundPlayed"];},
+			[this](){incScore();}, 
+			[this](){decScore();});
+
 	//mic off
+	eventQueue.expectAt(125.0f + offset + startSceneDelay, 5.f, 
+		[this](){return dialoguePlayer->muted;},
+			[this](){incScore();}, 
+			[this](){decScore();});
+
 	//curtain close
+	eventQueue.expectAt(125.0f + offset + startSceneDelay, 5.f, 
+		[this](){return stage->curtainLeft->firstParent()->getTranslationVector().x < -5.0f;},
+			[this](){incScore();}, 
+			[this](){decScore();});
+	
 	//lights off
-	        
+	eventQueue.expectAt(125.0f + offset + startSceneDelay, 5.f, 
+		[this](){return lights[3]->getIntensities().r < 0.2;},
+			[this](){incScore();}, 
+			[this](){decScore();;});
+	eventQueue.expectAt(125.0f + offset + startSceneDelay, 5.f, 
+		[this](){return lights[1]->getIntensities().r < 0.2;},
+			[this](){score+= 100;}, 
+			[this](){score-= 100;});
+	eventQueue.expectAt(125.0f + offset + startSceneDelay, 5.f, 
+		[this](){return lights[3]->getIntensities().r < 0.2;},
+			[this](){incScore();}, 
+			[this](){decScore();});
+	
 #pragma endregion 
 
 #pragma region ControllerSetup
 
 	controller->lightSliderOne.bind([this](int _value){
-		lights[1]->setIntensities(glm::vec3(((float)_value + 0.0001f)/1024));
+		lights[1]->setIntensities(glm::vec3((static_cast<float>(_value) + 0.0001f)/1024));
 	});
 
 	controller->lightSliderTwo.bind([this](int _value){
-		lights[2]->setIntensities(glm::vec3(((float)_value + 0.0001f)/1024));
+		lights[2]->setIntensities(glm::vec3((static_cast<float>(_value) + 0.0001f)/1024));
 	});
 
 	controller->lightSliderThree.bind([this](int _value){
-		lights[3]->setIntensities(glm::vec3(((float)_value + 0.0001f)/1024));
+		lights[3]->setIntensities(glm::vec3((static_cast<float>(_value) + 0.0001f)/1024));
 	});
 
 	controller->setButtonOne.bind([this](int _value) {
 		if(controller->setButtonOne.justDown()) {
-			setPeiceBuilding->lower();
+			//setPeiceBuilding->lower();
 		}
 	});
 
 	controller->setButtonTwo.bind([this](int _value) {
-		if(controller->setButtonOne.justDown()) {
+		if(controller->setButtonTwo.justDown()) {
 			if( eventQueue.getRelativeTime() < (53.0 + startSceneDelay)){
-				setPieceLuggage->lower();
+				setPieceLuggage->toggle();
 			}
 			if( eventQueue.getRelativeTime() > (53.0 + startSceneDelay)){
-				setPieceLease->lower();
+				setPieceLease->toggle();
 			}
 		}
 	});
 
 	controller->setButtonThree.bind([this](int _value) {
-		if(controller->setButtonOne.justDown()) {
-			setPieceBed->lower(4.4f);
-			setPieceFireplace->lower(4.4f);
+		if(controller->setButtonThree.justDown()) {
+			setPieceBed->toggle(4.4f);
+			setPieceFireplace->toggle(4.4f);
 		}
 	});
 
 	controller->setButtonFour.bind([this](int _value) {
-		if(controller->setButtonOne.justDown()) {
-			setPieceWeb->lower(5.0f);
+		if(controller->setButtonFour.justDown()) {
+			setPieceWeb->toggle(5.0f);
 		}
 	});
 	
-	
 	// Move this into stage scene
 	controller->specialCurtainPot.bind([this](int _value){
+		_value = 1024; //Remove this
 		float increase = _value / 30.0f;
 		glm::vec3 leftTrans = stage->curtainLeft->firstParent()->getTranslationVector();
 		glm::vec3 rightTrans = stage->curtainRight->firstParent()->getTranslationVector();
@@ -511,6 +581,18 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 				}else
 					conditions["boxSound1Played"] = true;
 			}
+			if( eventQueue.getRelativeTime() > (87.0 + startSceneDelay) && eventQueue.getRelativeTime() < (100.0 + startSceneDelay)){
+				TTFB_ResourceManager::scenario->getAudio("PaperclipCut" )->sound->play();
+				conditions["paperCutSoundPlayed"] = true;
+			}
+			if( eventQueue.getRelativeTime() > (110.0 + startSceneDelay) && eventQueue.getRelativeTime() < (120.0 + startSceneDelay)){
+				TTFB_ResourceManager::scenario->getAudio("bat1" )->sound->play();
+				conditions["paperCutSoundPlayed"] = true;
+			}
+			if( eventQueue.getRelativeTime() > (120.0 + startSceneDelay) && eventQueue.getRelativeTime() < (130.0 + startSceneDelay)){
+				TTFB_ResourceManager::scenario->getAudio("fall" )->sound->play();
+				conditions["faintSoundPlayed"] = true;
+			}
 		}
 	});
 
@@ -520,10 +602,16 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 				TTFB_ResourceManager::scenario->getAudio("DraculaSound" )->sound->play();
 				conditions["draculaSoundPlayed"] = true;
 			}
-			
+			if( eventQueue.getRelativeTime() > (90.0 + startSceneDelay) && eventQueue.getRelativeTime() < (97.0 + startSceneDelay)){
+				TTFB_ResourceManager::scenario->getAudio("pouringWine" )->sound->play();
+				conditions["wineSoundPlayed"] = true;
+			}
+			if( eventQueue.getRelativeTime() > (110.0 + startSceneDelay) && eventQueue.getRelativeTime() < (130.0 + startSceneDelay)){
+				TTFB_ResourceManager::scenario->getAudio("doorClosing" )->sound->play();
+				conditions["doorSoundPlayed"] = true;
+			}
 		}
 	});
-
 
 #pragma endregion 
 
@@ -561,7 +649,6 @@ void TTFB_DraculaScene::update(Step* _step) {
 		Particle * p3 = fireSystem->addParticle(glm::vec3(7, stage->getVisibleBounds().getBottomRight().y + 2.2f, 0), TTFB_ResourceManager::scenario->getTexture("smoke")->texture);
 		lastFireEmission = _step->time;
 	}
-
 
 	if(!sceneEnded){
 		eventQueue.update(_step);

@@ -138,6 +138,7 @@ void TTFB_MenuScene::update(Step* _step) {
 
 	if((controller->IsConnected() && controller->specialFireButton.justDown()) || keyboard->keyJustUp(GLFW_KEY_P)) {
 		if(introScreen->isVisible()){
+			controller->clearBindings();
 			((TTFB_Game *)game)->switchToScene(DRACULA);
 			return;
 		}else {
@@ -145,7 +146,6 @@ void TTFB_MenuScene::update(Step* _step) {
 			introSpeech->play();
 		}
 	}
-
 	Scene::update(_step);
 }
 
