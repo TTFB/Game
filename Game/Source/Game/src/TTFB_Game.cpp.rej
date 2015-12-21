@@ -1,0 +1,9 @@
+diff a/Game/Source/Game/src/TTFB_Game.cpp b/Game/Source/Game/src/TTFB_Game.cpp	(rejected hunks)
+@@ -21,6 +21,7 @@
+ 	scenes["menu"]  = new TTFB_MenuScene(this);
+ 	scenes["dracula"] = new TTFB_DraculaScene(this);
+ 	scenes["spamalot"]  = new TTFB_SpamalotScene(this);
++	scenes["temp"]  = new Scene(this);
+ 	
+ 	switchScene("menu", false);
+ }

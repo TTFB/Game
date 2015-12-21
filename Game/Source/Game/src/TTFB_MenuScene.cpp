@@ -140,7 +140,7 @@ void TTFB_MenuScene::update(Step* _step) {
 		if(introScreen->isVisible()){
 			controller->clearBindings();
 			((TTFB_Game *)game)->switchToScene(SPAMALOT);
-			//return;
+			return;
 		}else {
 			introScreen->setVisible(true);
 			introSpeech->play();

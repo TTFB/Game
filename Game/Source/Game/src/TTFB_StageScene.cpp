@@ -383,7 +383,7 @@ void TTFB_StageScene::update(Step * _step){
 				endMessage->setVisible(true);
 			}else{
 				((TTFB_Game *)game)->switchToScene(pendingScene);
-				//return;
+				return;
 			}
 		}
 	}
