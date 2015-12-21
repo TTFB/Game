@@ -91,6 +91,9 @@ TTFB_SpamalotScene::TTFB_SpamalotScene(Game * _game) :
 	
 	// Move this into stage scene
 	controller->specialCurtainPot.bind([this](int _value){
+		if(!controller->connected){
+			_value = 1024; 
+		}
 		float increase = _value / 30.0f;
 		glm::vec3 leftTrans = stage->curtainLeft->firstParent()->getTranslationVector();
 		glm::vec3 rightTrans = stage->curtainRight->firstParent()->getTranslationVector();
@@ -201,6 +204,9 @@ TTFB_SpamalotScene::TTFB_SpamalotScene(Game * _game) :
 	});
 
 	controller->soundMicSwitch.bind([this](int _value) {
+		if(!controller->connected){
+			_value = 1; 
+		}
 		if(_value == 1) {
 			dialoguePlayer->unmute();
 		}else {
@@ -665,6 +671,7 @@ TTFB_SpamalotScene::TTFB_SpamalotScene(Game * _game) :
 	});
 
 	eventQueue.at(110.f + startSceneDelay, [this](){
+		score = 1400;
 		endScene();
 		clapping = TTFB_ResourceManager::scenario->getAudio("clapping1")->sound;
 		clapping->setGain(0.8f);

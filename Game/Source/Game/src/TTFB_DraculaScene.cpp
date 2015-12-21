@@ -28,7 +28,7 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 
 	addAudience("L3");
 
-	startSceneDelay = 3.0f;
+	startSceneDelay = 10.0f;
 
 	// Set pieces
 	setPeiceBuilding = addSetPiece("L3_MainBuilding", glm::vec3(3.f, 20.f, -0.5f), 2.5f);
@@ -330,11 +330,18 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 
 	eventQueue.at(121.f + startSceneDelay + offset, [this](){
 		dracula->flip();
-		dracula->move(-7.f);
+		dracula->move(-35.f);
 	});
 
-	eventQueue.at(123.f + startSceneDelay + offset, [this](){
-		dracula->moveY(-11.7f);
+	eventQueue.at(129.f + startSceneDelay + offset, [this](){
+		dracula->moveY(7.3f);
+	});
+
+	eventQueue.at(142.f + startSceneDelay + offset, [this](){
+		clapping = TTFB_ResourceManager::scenario->getAudio("clapping1")->sound;
+		clapping->setGain(0.8f);
+		clapping->play();
+		endScene();
 	});
 
 	// Dracula leaves
@@ -447,57 +454,57 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 			[this](){decScore();});
 
 	//paperclup cut sound effect
-	eventQueue.expectAt(92.0f + offset + startSceneDelay, 3.f, 
+	eventQueue.expectAt(92.0f + offset + startSceneDelay, 4.f, 
 		[this](){return conditions["paperCutSoundPlayed"];},
 			[this](){incScore();}, 
 			[this](){decScore();});
 
 	//pouring wine sound effect
-	eventQueue.expectAt(95.0f + offset + startSceneDelay, 3.f, 
+	eventQueue.expectAt(100.0f + offset + startSceneDelay, 3.f, 
 		[this](){return conditions["wineSoundPlayed"];},
 			[this](){incScore();}, 
 			[this](){decScore();});
 
 	//dracula leaving sound effeect (think closing door? exit stage left)
-	eventQueue.expectAt(120.0f + offset + startSceneDelay, 2.f, 
+	eventQueue.expectAt(130.0f + offset + startSceneDelay, 2.f, 
 		[this](){return conditions["doorSoundPlayed"];},
 			[this](){incScore();}, 
 			[this](){decScore();});
 
 	//bats sound effect
-	eventQueue.expectAt(122.0f + offset + startSceneDelay, 2.f, 
+	eventQueue.expectAt(132.0f + offset + startSceneDelay, 2.f, 
 		[this](){return conditions["batSoundPlayed"];},
 			[this](){incScore();}, 
 			[this](){decScore();});
 
 	//renfield fainting sound effect
-	eventQueue.expectAt(123.0f + offset + startSceneDelay, 2.f, 
+	eventQueue.expectAt(133.0f + offset + startSceneDelay, 2.f, 
 		[this](){return conditions["faintSoundPlayed"];},
 			[this](){incScore();}, 
 			[this](){decScore();});
 
 	//mic off
-	eventQueue.expectAt(125.0f + offset + startSceneDelay, 5.f, 
+	eventQueue.expectAt(135.0f + offset + startSceneDelay, 5.f, 
 		[this](){return dialoguePlayer->muted;},
 			[this](){incScore();}, 
 			[this](){decScore();});
 
 	//curtain close
-	eventQueue.expectAt(125.0f + offset + startSceneDelay, 5.f, 
+	eventQueue.expectAt(135.0f + offset + startSceneDelay, 5.f, 
 		[this](){return stage->curtainLeft->firstParent()->getTranslationVector().x < -5.0f;},
 			[this](){incScore();}, 
 			[this](){decScore();});
 	
 	//lights off
-	eventQueue.expectAt(125.0f + offset + startSceneDelay, 5.f, 
+	eventQueue.expectAt(135.0f + offset + startSceneDelay, 5.f, 
 		[this](){return lights[3]->getIntensities().r < 0.2;},
 			[this](){incScore();}, 
 			[this](){decScore();;});
-	eventQueue.expectAt(125.0f + offset + startSceneDelay, 5.f, 
+	eventQueue.expectAt(135.0f + offset + startSceneDelay, 5.f, 
 		[this](){return lights[1]->getIntensities().r < 0.2;},
 			[this](){score+= 100;}, 
 			[this](){score-= 100;});
-	eventQueue.expectAt(125.0f + offset + startSceneDelay, 5.f, 
+	eventQueue.expectAt(135.0f + offset + startSceneDelay, 5.f, 
 		[this](){return lights[3]->getIntensities().r < 0.2;},
 			[this](){incScore();}, 
 			[this](){decScore();});
@@ -550,7 +557,9 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 	
 	// Move this into stage scene
 	controller->specialCurtainPot.bind([this](int _value){
-		_value = 1024; //Remove this
+		if(!controller->connected){
+			_value = 1024; 
+		}
 		float increase = _value / 30.0f;
 		glm::vec3 leftTrans = stage->curtainLeft->firstParent()->getTranslationVector();
 		glm::vec3 rightTrans = stage->curtainRight->firstParent()->getTranslationVector();
@@ -574,7 +583,9 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 	});
 
 	controller->soundMicSwitch.bind([this](int _value) {
-		_value = 1;
+		if(!controller->connected){
+			_value = 1; 
+		}
 		if(_value == 1) {
 			dialoguePlayer->unmute();
 		}else {
@@ -584,7 +595,7 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 
 	controller->soundButtonOne.bind([this](int _value) {
 		if(controller->soundButtonOne.justDown()) {
-			if( eventQueue.getRelativeTime() > (11.0 + startSceneDelay) && eventQueue.getRelativeTime() < (20.0 + startSceneDelay)){
+			if( eventQueue.getRelativeTime() > (11.0 + startSceneDelay) && eventQueue.getRelativeTime() < (30.0 + startSceneDelay)){
 				TTFB_ResourceManager::scenario->getAudio("HowlingWolf1" )->sound->play();
 				conditions["wolfCallPlayed"] = true;
 			}
@@ -602,13 +613,11 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 				TTFB_ResourceManager::scenario->getAudio("PaperclipCut" )->sound->play();
 				conditions["paperCutSoundPlayed"] = true;
 			}
-			if( eventQueue.getRelativeTime() > (110.0 + startSceneDelay) && eventQueue.getRelativeTime() < (120.0 + startSceneDelay)){
-				TTFB_ResourceManager::scenario->getAudio("bat1" )->sound->play();
-				conditions["batSoundPlayed"] = true;
-			}
-			if( eventQueue.getRelativeTime() > (120.0 + startSceneDelay) && eventQueue.getRelativeTime() < (130.0 + startSceneDelay)){
+			if( eventQueue.getRelativeTime() > (120.0 + startSceneDelay)){
 				TTFB_ResourceManager::scenario->getAudio("fall" )->sound->play();
 				conditions["faintSoundPlayed"] = true;
+				TTFB_ResourceManager::scenario->getAudio("bat1" )->sound->play();
+				conditions["batSoundPlayed"] = true;
 			}
 		}
 	});
@@ -619,11 +628,11 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 				TTFB_ResourceManager::scenario->getAudio("DraculaSound" )->sound->play();
 				conditions["draculaSoundPlayed"] = true;
 			}
-			if( eventQueue.getRelativeTime() > (90.0 + startSceneDelay) && eventQueue.getRelativeTime() < (97.0 + startSceneDelay)){
+			if( eventQueue.getRelativeTime() > (90.0 + startSceneDelay) && eventQueue.getRelativeTime() < (110.0 + startSceneDelay)){
 				TTFB_ResourceManager::scenario->getAudio("pouringWine" )->sound->play();
 				conditions["wineSoundPlayed"] = true;
 			}
-			if( eventQueue.getRelativeTime() > (110.0 + startSceneDelay) && eventQueue.getRelativeTime() < (130.0 + startSceneDelay)){
+			if( eventQueue.getRelativeTime() > (110.0 + startSceneDelay)){
 				TTFB_ResourceManager::scenario->getAudio("doorClosing" )->sound->play();
 				conditions["doorSoundPlayed"] = true;
 			}
@@ -635,7 +644,7 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 #pragma region AdditionalSceneSetup
 
 	addFog();
-
+	
 #pragma endregion 	
 
 }

@@ -23,11 +23,6 @@ bool TTFB_Button::justDown() const {
 }
 
 void TTFB_Button::update(Step * _step) {
-	if(toggle) {
-		if(keyboard->keyJustUp(keyboardKey)) {
-			currentState = currentState == LOW ? HIGH : LOW;
-		}
-	}
 
 	if(bindFunc != nullptr){
 		bindFunc(static_cast<int>(currentState));
