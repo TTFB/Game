@@ -179,17 +179,15 @@ TTFB_SpamalotScene::TTFB_SpamalotScene(Game * _game) :
 		if(controller->soundButtonTwo.justDown()) {
 			if( eventQueue.getRelativeTime() > (57.0 + startSceneDelay) && eventQueue.getRelativeTime() < (61.0 + startSceneDelay)){
 				TTFB_ResourceManager::scenario->getAudio("bloodSpurt3" )->sound->play();
-				conditions["swordMiss"] = true;
+				conditions["whoosh1Played"] = true;
 			}
-			
+			if( eventQueue.getRelativeTime() > (61.0 + startSceneDelay) && eventQueue.getRelativeTime() < (67.0 + startSceneDelay)){
+				TTFB_ResourceManager::scenario->getAudio("chicken1" )->sound->play();
+				conditions["chickenPlayed"] = true;
+			}
 		}
 	});
 	
-	controller->soundButtonThree.bind([this](int _value) {
-		if(controller->soundButtonThree.justDown()) {
-			TTFB_ResourceManager::scenario->getAudio("chicken1" )->sound->play();
-		}
-	});
 
 	controller->specialFireButton.bind([this](int _value) {
 		if(controller->specialFireButton.justDown()) {
@@ -241,12 +239,6 @@ TTFB_SpamalotScene::TTFB_SpamalotScene(Game * _game) :
 		[this](){return stage->curtainLeft->firstParent()->getTranslationVector().x < -44.0f;},
 			[this](){incScore();}, 
 			[this](){decScore();});
-
-	//light 0%
-	eventQueue.expectAt(1.5f + startSceneDelay, 4.f, 
-		[this](){return lights[1]->getIntensities().r < 0.2;},
-			[this](){incScore();}, 
-			[this](){decScore();});
 	//fog ON
 	eventQueue.expectAt(11.5f + startSceneDelay, 4.f, 
 		[this](){return fogActive == true;},
@@ -284,13 +276,9 @@ TTFB_SpamalotScene::TTFB_SpamalotScene(Game * _game) :
 			[this](){decScore();});
 	//lights(1&3) 50%
 	eventQueue.expectAt(51.f + startSceneDelay, 6.0f, 
-		[this](){return lights[1]->getIntensities().r > 1 && lights[1]->getIntensities().r < 3;},
+		[this](){return lights[1]->getIntensities().r > 0.2 && lights[1]->getIntensities().r < 3;},
 			[this](){std::cout<<"SuccessL1";}, 
 			[this](){std::cout<<"FailureL1";});
-	eventQueue.expectAt(51.f + startSceneDelay, 6.0f, 
-		[this](){return lights[3]->getIntensities().r > 1 && lights[3]->getIntensities().r < 3;},
-			[this](){std::cout<<"SuccessL3";}, 
-			[this](){std::cout<<"FailureL3";});
 	//sound - whoosh
 	eventQueue.expectAt(59.f + startSceneDelay, 4.f, 
 		[this](){return conditions["whoosh1Played"];},

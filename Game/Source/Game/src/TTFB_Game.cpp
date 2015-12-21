@@ -23,7 +23,7 @@ TTFB_Game::TTFB_Game() :
 	scenes["spamalot"]  = new TTFB_SpamalotScene(this);
 	scenes["temp"]  = new Scene(this);
 	
-	switchScene("menu", false);
+	switchScene("menu", true);
 }
 
 TTFB_Game::~TTFB_Game(){
@@ -49,12 +49,12 @@ void TTFB_Game::switchToScene(std::string _scene) {
 		scenes["temp"] = new Scene(this);
 		switchScene("temp", true);
 		scenes["dracula"] = new TTFB_DraculaScene(this);
-		switchScene("dracula", true);
+		switchScene("dracula", false);
 	}else if(_scene == SPAMALOT) {
 		scenes["temp"] = new Scene(this);
 		switchScene("temp", true);
 		scenes["spamalot"] = new TTFB_SpamalotScene(this);
-		switchScene("spamalot", true);
+		switchScene("spamalot", false);
 	}else if(_scene == MENU) {
 		scenes["temp"] = new Scene(this);
 		switchScene("temp", true);
