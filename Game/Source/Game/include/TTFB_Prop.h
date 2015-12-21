@@ -5,6 +5,6 @@
 class TTFB_Prop : public Box2DSprite{
 public:
 
-	TTFB_Prop(Box2DWorld * _world, std::string _samplerResourceId, Shader * _shader = nullptr);
+	TTFB_Prop(Box2DWorld * _world, std::string _samplerResourceId, Shader * _shader = nullptr, float _scaleMult = 1.0f);
 	
 };

@@ -59,8 +59,8 @@ TTFB_DraculaStage::TTFB_DraculaStage(Box2DWorld * _world, Shader * _shader) :
 	Sprite * foreground = new Sprite(_shader);
 	foreground->setPrimaryTexture(TTFB_ResourceManager::scenario->getTextureSampler("L3_Foreground")->textureSampler);
 	childTransform->addChild(foreground);
-	foreground->firstParent()->scale(58, 58 , 1.f);
-	foreground->firstParent()->translate(0.f, 15.f, 2.5f);
+	foreground->firstParent()->scale(60, 65, 1.f);
+	foreground->firstParent()->translate(0.f, 18.f, 2.5f);
 
 	curtainLeft = new Sprite(_shader);
 	curtainLeft->setPrimaryTexture(TTFB_ResourceManager::scenario->getTextureSampler("L1_Curtain")->textureSampler);

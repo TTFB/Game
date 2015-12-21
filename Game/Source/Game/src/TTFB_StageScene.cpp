@@ -494,8 +494,8 @@ void TTFB_StageScene::endScene(std::string _currentScene, std::string _nextScene
 	}
 }
 
-TTFB_Prop * TTFB_StageScene::addProp(std::string _samplerResourceId, glm::vec3 _pos) {
-	TTFB_Prop * prop = new TTFB_Prop(box2dWorld, _samplerResourceId, baseShader);
+TTFB_Prop * TTFB_StageScene::addProp(std::string _samplerResourceId, glm::vec3 _pos, float _scale) {
+	TTFB_Prop * prop = new TTFB_Prop(box2dWorld, _samplerResourceId, baseShader, _scale);
 	childTransform->addChild(prop);
 	prop->setTranslationPhysical(_pos);
 	return prop;

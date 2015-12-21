@@ -40,7 +40,7 @@ public:
 
 	bool bgMusicStarted;
 	float startSceneDelay;
-	
+	TTFB_Prop* lease;
 	TTFB_DraculaScene(Game * _game);
 	~TTFB_DraculaScene();
 
