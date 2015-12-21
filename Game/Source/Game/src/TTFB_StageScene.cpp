@@ -221,11 +221,6 @@ TTFB_StageScene::TTFB_StageScene(Game * _game) :
 }
 
 TTFB_StageScene::~TTFB_StageScene(){
-	deleteChildTransform();
-	baseShader->safeDelete();
-	characterShader->safeDelete();
-	textShader->safeDelete();
-
 	screenSurface->safeDelete();
 	//screenSurfaceShader->safeDelete();
 	screenFBO->safeDelete();
@@ -388,7 +383,7 @@ void TTFB_StageScene::update(Step * _step){
 				endMessage->setVisible(true);
 			}else{
 				((TTFB_Game *)game)->switchToScene(pendingScene);
-				return;
+				//return;
 			}
 		}
 	}

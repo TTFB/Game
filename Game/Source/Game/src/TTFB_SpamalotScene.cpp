@@ -671,11 +671,7 @@ TTFB_SpamalotScene::TTFB_SpamalotScene(Game * _game) :
 	});
 
 	eventQueue.at(110.f + startSceneDelay, [this](){
-		score = 1400;
 		endScene();
-		clapping = TTFB_ResourceManager::scenario->getAudio("clapping1")->sound;
-		clapping->setGain(0.8f);
-		clapping->play();
 	});
 
 #pragma endregion 
@@ -684,9 +680,6 @@ TTFB_SpamalotScene::TTFB_SpamalotScene(Game * _game) :
 }
 
 TTFB_SpamalotScene::~TTFB_SpamalotScene(){
-	if(clapping != nullptr) {
-		clapping->stop();
-	}
 	delete dialoguePlayer;
 }
 

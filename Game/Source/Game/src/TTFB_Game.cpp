@@ -21,6 +21,7 @@ TTFB_Game::TTFB_Game() :
 	scenes["menu"]  = new TTFB_MenuScene(this);
 	scenes["dracula"] = new TTFB_DraculaScene(this);
 	scenes["spamalot"]  = new TTFB_SpamalotScene(this);
+	scenes["temp"]  = new Scene(this);
 	
 	switchScene("menu", false);
 }
@@ -45,22 +46,19 @@ void TTFB_Game::draw() {
 
 void TTFB_Game::switchToScene(std::string _scene) {
 	if(_scene == DRACULA) {
-		delete currentScene;
-		currentScene = nullptr;
-		scenes.erase("dracula");
+		scenes["temp"] = new Scene(this);
+		switchScene("temp", true);
 		scenes["dracula"] = new TTFB_DraculaScene(this);
-		switchScene("dracula", false);
+		switchScene("dracula", true);
 	}else if(_scene == SPAMALOT) {
-		delete currentScene;
-		currentScene = nullptr;
-		scenes.erase("spamalot");
+		scenes["temp"] = new Scene(this);
+		switchScene("temp", true);
 		scenes["spamalot"] = new TTFB_SpamalotScene(this);
-		switchScene("spamalot", false);
+		switchScene("spamalot", true);
 	}else if(_scene == MENU) {
-		delete currentScene;
-		currentScene = nullptr;
-		scenes.erase("menu");
+		scenes["temp"] = new Scene(this);
+		switchScene("temp", true);
 		scenes["menu"] = new TTFB_MenuScene(this);
-		switchScene("menu", false);
+		switchScene("menu", true);
 	}
 }
