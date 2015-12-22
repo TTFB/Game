@@ -45,7 +45,7 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 	setPieceFireplace = addSetPiece("L3_Fireplace", glm::vec3(15.f, 20.f, -0.5f), 0.3f);
 	setPieceFireplace->raise();
 	
-	setPieceLuggage = addSetPiece("L3_Luggage", glm::vec3(5.f, 20.f, -0.5f), 0.3f);
+	setPieceLuggage = addSetPiece("L3_Luggage", glm::vec3(5.f, 20.f, -0.5f), 0.5f);
 	setPieceLuggage->raise();
 	
 	setPieceLease = addSetPiece("L3_Lease", glm::vec3(15.f, 20.f, -0.5f), 0.3f);
@@ -399,6 +399,11 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 		[this](){return setPieceWeb->isLowered();},
 		[this](){incScore();}, 
 		[this](){decScore();});
+	//lights 3 30%
+	eventQueue.expectAt(29.0f + offset + startSceneDelay, 2.f, 
+		[this](){return lights[3]->getIntensities().r > 0.2 && lights[3]->getIntensities().r < 1.5;},
+			[this](){incScore();}, 
+			[this](){decScore();});
 	//bedroom interior set
 	eventQueue.expectAt(30.f, 4.f, 
 		[this](){return setPieceBed->isLowered();},
@@ -421,6 +426,10 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 			[this](){incScore();}, 
 			[this](){decScore();});
 	//lease appears set
+	eventQueue.expectAt(66.0f + startSceneDelay+ offset, 3.f, 
+	[this](){return lease->isVisible() == true;},
+			[this](){incScore();}, 
+			[this](){decScore();});
 	//knocking sound set (boxes)
 	eventQueue.expectAt(75.0f + offset + startSceneDelay, 2.f, 
 		[this](){return conditions["boxSound1Played"];},
@@ -430,14 +439,8 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 		[this](){return conditions["boxSound2Played"];},
 			[this](){incScore();}, 
 			[this](){decScore();});
-	eventQueue.expectAt(75.0f + offset + startSceneDelay, 2.f, 
+	eventQueue.expectAt(75.0f + offset + startSceneDelay, 3.f, 
 		[this](){return conditions["boxSound3Played"];},
-			[this](){incScore();}, 
-			[this](){decScore();});
-
-	//lights 3 30%
-	eventQueue.expectAt(78.0f + offset + startSceneDelay, 2.f, 
-		[this](){return lights[3]->getIntensities().r > 0.2 && lights[3]->getIntensities().r < 1.5;},
 			[this](){incScore();}, 
 			[this](){decScore();});
 
@@ -614,8 +617,6 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 				conditions["paperCutSoundPlayed"] = true;
 			}
 			if( eventQueue.getRelativeTime() > (120.0 + startSceneDelay)){
-				TTFB_ResourceManager::scenario->getAudio("fall" )->sound->play();
-				conditions["faintSoundPlayed"] = true;
 				TTFB_ResourceManager::scenario->getAudio("bat1" )->sound->play();
 				conditions["batSoundPlayed"] = true;
 			}
@@ -633,8 +634,14 @@ TTFB_DraculaScene::TTFB_DraculaScene(Game* _game) :
 				conditions["wineSoundPlayed"] = true;
 			}
 			if( eventQueue.getRelativeTime() > (110.0 + startSceneDelay)){
+				if(conditions["doorSoundPlayed"] == true){
+					TTFB_ResourceManager::scenario->getAudio("fall" )->sound->play();
+					conditions["faintSoundPlayed"] = true;
+				}
+				else{
 				TTFB_ResourceManager::scenario->getAudio("doorClosing" )->sound->play();
 				conditions["doorSoundPlayed"] = true;
+				}
 			}
 		}
 	});
@@ -667,10 +674,10 @@ void TTFB_DraculaScene::update(Step* _step) {
 	}
 
 	if(fireTimer < 1.0 && fireActive && _step->time - lastFireEmission > 0.15f){
-		Particle * p = fireSystem->addParticle(glm::vec3(7,  stage->getVisibleBounds().getBottomRight().y + 2.2f, 0), TTFB_ResourceManager::scenario->getTexture("fireRed")->texture);
-		Particle * p1 = fireSystem->addParticle(glm::vec3(7, stage->getVisibleBounds().getBottomRight().y + 2.2f, 0), TTFB_ResourceManager::scenario->getTexture("fireOrange")->texture);
-		Particle * p2 = fireSystem->addParticle(glm::vec3(7, stage->getVisibleBounds().getBottomRight().y + 2.2f, 0), TTFB_ResourceManager::scenario->getTexture("fireYellow")->texture);
-		Particle * p3 = fireSystem->addParticle(glm::vec3(7, stage->getVisibleBounds().getBottomRight().y + 2.2f, 0), TTFB_ResourceManager::scenario->getTexture("smoke")->texture);
+		Particle * p = fireSystem->addParticle(glm::vec3(16,  stage->getVisibleBounds().getBottomRight().y + 5.f, 0), TTFB_ResourceManager::scenario->getTexture("fireRed")->texture);
+		Particle * p1 = fireSystem->addParticle(glm::vec3(16, stage->getVisibleBounds().getBottomRight().y + 5.f, 0), TTFB_ResourceManager::scenario->getTexture("fireOrange")->texture);
+		Particle * p2 = fireSystem->addParticle(glm::vec3(16, stage->getVisibleBounds().getBottomRight().y + 5.f, 0), TTFB_ResourceManager::scenario->getTexture("fireYellow")->texture);
+		Particle * p3 = fireSystem->addParticle(glm::vec3(16, stage->getVisibleBounds().getBottomRight().y + 5.f, 0), TTFB_ResourceManager::scenario->getTexture("smoke")->texture);
 		lastFireEmission = _step->time;
 	}
 

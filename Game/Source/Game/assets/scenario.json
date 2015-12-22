@@ -545,7 +545,7 @@
     {
       "id": "L3_Curtain",
       "type": "textureSampler",
-      "src": "Level3_Assets/Level3_Curtain.png.def"
+      "src": "Level3_Assets/Level3_Curtains.png.def"
     },
     {
       "id": "openingMusic",

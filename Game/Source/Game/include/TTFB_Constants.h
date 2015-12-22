@@ -5,5 +5,5 @@
 #define MENU "menu"
 #define DRACULA "dracula"
 #define B2_SCALE 0.0135
-#define ONE_STAR -1000
-#define THREE_STARS 1000
+#define ONE_STAR -800
+#define THREE_STARS 900

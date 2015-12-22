@@ -178,7 +178,7 @@ TTFB_SpamalotScene::TTFB_SpamalotScene(Game * _game) :
 	controller->soundButtonTwo.bind([this](int _value) {
 		if(controller->soundButtonTwo.justDown()) {
 			if( eventQueue.getRelativeTime() > (57.0 + startSceneDelay) && eventQueue.getRelativeTime() < (61.0 + startSceneDelay)){
-				TTFB_ResourceManager::scenario->getAudio("bloodSpurt3" )->sound->play();
+				TTFB_ResourceManager::scenario->getAudio("swordMiss" )->sound->play();
 				conditions["whoosh1Played"] = true;
 			}
 			if( eventQueue.getRelativeTime() > (61.0 + startSceneDelay) && eventQueue.getRelativeTime() < (67.0 + startSceneDelay)){
@@ -275,10 +275,10 @@ TTFB_SpamalotScene::TTFB_SpamalotScene(Game * _game) :
 			[this](){incScore();}, 
 			[this](){decScore();});
 	//lights(1&3) 50%
-	eventQueue.expectAt(51.f + startSceneDelay, 6.0f, 
+	eventQueue.expectAt(51.f + startSceneDelay, 3.0f, 
 		[this](){return lights[1]->getIntensities().r > 0.2 && lights[1]->getIntensities().r < 3;},
-			[this](){std::cout<<"SuccessL1";}, 
-			[this](){std::cout<<"FailureL1";});
+			[this](){incScore();}, 
+			[this](){decScore();});
 	//sound - whoosh
 	eventQueue.expectAt(59.f + startSceneDelay, 4.f, 
 		[this](){return conditions["whoosh1Played"];},
@@ -295,24 +295,24 @@ TTFB_SpamalotScene::TTFB_SpamalotScene(Game * _game) :
 			[this](){incScore();}, 
 			[this](){decScore();});
 	//sound2 - blood
-	eventQueue.expectAt(65.0f + startSceneDelay, 4.f, 
+	eventQueue.expectAt(66.0f + startSceneDelay, 3.f, 
 		[this](){return conditions["blood3Played"];},
 			[this](){incScore();}, 
 			[this](){decScore();});
 	//set3 - leg off
-	eventQueue.expectAt(67.0f + startSceneDelay, 4.f, 
+	eventQueue.expectAt(67.0f + startSceneDelay, 3.f, 
 		[this](){return blackKnight->leftLegBroken;},
 			[this](){incScore();}, 
 			[this](){decScore();});
 	//lights(1&3) 100%
-	eventQueue.expectAt(76.f + startSceneDelay, 6.0f, 
-		[this](){return lights[1]->getIntensities().r > 3.5;},
-			[this](){std::cout<<"SuccessL1";}, 
-			[this](){std::cout<<"FailureL1";});
-	eventQueue.expectAt(76.f + startSceneDelay, 6.0f, 
-		[this](){return lights[3]->getIntensities().r > 3.5;},
-			[this](){std::cout<<"SuccessL3";}, 
-			[this](){std::cout<<"FailureL3";});
+	eventQueue.expectAt(76.f + startSceneDelay, 3.0f, 
+		[this](){return lights[1]->getIntensities().r > 3.0;},
+			[this](){incScore();}, 
+			[this](){decScore();});
+	eventQueue.expectAt(76.f + startSceneDelay, 3.0f, 
+		[this](){return lights[3]->getIntensities().r > 3.0;},
+			[this](){incScore();}, 
+			[this](){decScore();});
 	//sound2 - blood
 	eventQueue.expectAt(83.0f + startSceneDelay, 4.f, 
 		[this](){return conditions["blood4Played"];},
@@ -530,7 +530,7 @@ TTFB_SpamalotScene::TTFB_SpamalotScene(Game * _game) :
 
 	eventQueue.at(47.0f + startSceneDelay, [this](){
 		dialoguePlayer->playNext();
-		kingArthur->say(2.0f, L"You are indeed brave, Sir Knight?", false);
+		kingArthur->say(2.0f, L"You are indeed brave, Sir Knight,", false);
 	});
 
 	eventQueue.at(49.0f + startSceneDelay, [this](){
